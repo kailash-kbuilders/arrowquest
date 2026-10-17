@@ -51,10 +51,10 @@ class GameEngine {
 
   final Level level;
 
-  List<List<String?>> board;
-  List<Emitter> rail;
-  List<Emitter?> buffer;
-  int switchTokens;
+  late List<List<String?>> board;
+  late List<Emitter> rail;
+  late List<Emitter?> buffer;
+  late int switchTokens;
 
   /// +1 means the rail flows forward, -1 means it has been switched.
   int direction = 1;
