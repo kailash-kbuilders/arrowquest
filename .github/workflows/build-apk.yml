@@ -139,6 +139,28 @@ jobs:
               print("AdMob manifest configured")
           PY
 
+      # Install the brand launcher icon into the generated android/ project.
+      # The android/ folder is regenerated on every run, so the icon has to be
+      # copied in each time rather than committed.
+      - name: Install launcher icons
+        run: |
+          RES="android/app/src/main/res"
+          if [ -d "branding/android" ] && [ -d "$RES" ]; then
+            mkdir -p "$RES/drawable" "$RES/mipmap-anydpi-v26"
+            for d in branding/android/mipmap-*/; do
+              name="$(basename "$d")"
+              mkdir -p "$RES/$name"
+              cp -f "$d"*.png "$RES/$name/"
+            done
+            cp -f branding/android/ic_launcher_background.xml "$RES/drawable/ic_launcher_background.xml"
+            cp -f branding/android/ic_launcher.xml "$RES/mipmap-anydpi-v26/ic_launcher.xml"
+            cp -f branding/android/ic_launcher.xml "$RES/mipmap-anydpi-v26/ic_launcher_round.xml"
+            echo "installed launcher icons:"
+            find "$RES" -name 'ic_launcher*' | sort
+          else
+            echo "no branding/android folder; keeping the template icon"
+          fi
+
       # Print the resolved SDK versions so a future failure is easy to read.
       - name: Show Android SDK configuration
         run: |

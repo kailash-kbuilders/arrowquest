@@ -24,6 +24,12 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 const Spacer(flex: 2),
+                Image.asset(
+                  'assets/branding/logo.png',
+                  height: 148,
+                  filterQuality: FilterQuality.high,
+                ),
+                const SizedBox(height: 10),
                 const Text(
                   'HUE RUSH',
                   textAlign: TextAlign.center,
