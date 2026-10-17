@@ -1,29 +1,22 @@
 import 'package:flutter/material.dart';
 
-/// Central palette. Tile colours are keyed by a single letter so level files
-/// stay readable ("RRBB" = two red tiles then two blue).
+/// Central palette. Arrows are coloured by the direction they point, which is
+/// what makes a dense board readable at a glance.
 class AppColors {
   AppColors._();
 
-  static const Map<String, Color> tile = <String, Color>{
-    'R': Color(0xFFE5484D), // red
-    'B': Color(0xFF3E7BFA), // blue
-    'G': Color(0xFF30A46C), // green
-    'Y': Color(0xFFF5D90A), // yellow
-    'P': Color(0xFF8E4EC6), // purple
-    'O': Color(0xFFF76B15), // orange
-    'C': Color(0xFF00A2C7), // cyan
-    'M': Color(0xFFE93D82), // magenta
-  };
+  static const Color bg = Color(0xFF0C0F16);
+  static const Color panel = Color(0xFF171B24);
+  static const Color panelHi = Color(0xFF232833);
+  static const Color accent = Color(0xFFFFB020);
+  static const Color ok = Color(0xFF2FC7A8);
+  static const Color danger = Color(0xFFFF5C7A);
+  static const Color text = Color(0xFFE8EAF0);
+  static const Color textDim = Color(0xFF8A93A6);
 
-  static Color forKey(String key) => tile[key] ?? const Color(0xFF9E9E9E);
-
-  static const Color bg = Color(0xFF0E0E16);
-  static const Color panel = Color(0xFF1B1B27);
-  static const Color panelHi = Color(0xFF262636);
-  static const Color accent = Color(0xFF7C6CFF);
-  static const Color accentSoft = Color(0xFF9E93FF);
-  static const Color danger = Color(0xFFE5484D);
-  static const Color ok = Color(0xFF30A46C);
-  static const Color textDim = Color(0xFF9A9AB0);
+  // Direction colours.
+  static const Color dirUp = Color(0xFFFF5C7A);
+  static const Color dirDown = Color(0xFF2FC7A8);
+  static const Color dirLeft = Color(0xFFE8804B);
+  static const Color dirRight = Color(0xFF5B8DEF);
 }

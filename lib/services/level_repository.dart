@@ -26,8 +26,7 @@ class LevelRepository {
   }
 
   Future<Level?> byId(int id) async {
-    final all = await load();
-    for (final level in all) {
+    for (final level in await load()) {
       if (level.id == id) return level;
     }
     return null;

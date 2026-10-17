@@ -8,17 +8,17 @@ class ProgressService {
 
   static const String _kUnlocked = 'unlocked_level';
   static const String _kCompleted = 'completed_ids';
+  static const String _kBest = 'best_moves'; // "id:moves,id:moves"
   static const String _kSound = 'sound_on';
   static const String _kHaptics = 'haptics_on';
-  static const String _kRemoveAds = 'remove_ads';
 
   SharedPreferences? _prefs;
 
   int _unlocked = 1;
   Set<int> _completed = <int>{};
+  Map<int, int> _best = <int, int>{};
   bool _sound = true;
   bool _haptics = true;
-  bool _removeAds = false;
 
   Future<SharedPreferences> _p() async =>
       _prefs ??= await SharedPreferences.getInstance();
@@ -30,43 +30,50 @@ class ProgressService {
     _completed = csv.isEmpty
         ? <int>{}
         : csv.split(',').where((s) => s.isNotEmpty).map(int.parse).toSet();
+    _best = <int, int>{};
+    for (final part in (p.getString(_kBest) ?? '').split(',')) {
+      final bits = part.split(':');
+      if (bits.length == 2) {
+        final id = int.tryParse(bits[0]);
+        final mv = int.tryParse(bits[1]);
+        if (id != null && mv != null) _best[id] = mv;
+      }
+    }
     _sound = p.getBool(_kSound) ?? true;
     _haptics = p.getBool(_kHaptics) ?? true;
-    _removeAds = p.getBool(_kRemoveAds) ?? false;
   }
 
   int get unlocked => _unlocked;
   Set<int> get completed => _completed;
   bool get soundOn => _sound;
   bool get hapticsOn => _haptics;
-  bool get removeAds => _removeAds;
 
   bool isCompleted(int id) => _completed.contains(id);
   bool isUnlocked(int id) => id <= _unlocked;
+  int? bestFor(int id) => _best[id];
 
-  Future<void> completeLevel(int id) async {
+  Future<void> completeLevel(int id, int movesUsed) async {
     _completed.add(id);
     if (id + 1 > _unlocked) _unlocked = id + 1;
+    final prev = _best[id];
+    if (prev == null || movesUsed < prev) _best[id] = movesUsed;
+
     final p = await _p();
     await p.setString(_kCompleted, _completed.join(','));
     await p.setInt(_kUnlocked, _unlocked);
+    await p.setString(
+      _kBest,
+      _best.entries.map((e) => '${e.key}:${e.value}').join(','),
+    );
   }
 
   Future<void> setSound(bool value) async {
     _sound = value;
-    final p = await _p();
-    await p.setBool(_kSound, value);
+    await (await _p()).setBool(_kSound, value);
   }
 
   Future<void> setHaptics(bool value) async {
     _haptics = value;
-    final p = await _p();
-    await p.setBool(_kHaptics, value);
-  }
-
-  Future<void> setRemoveAds(bool value) async {
-    _removeAds = value;
-    final p = await _p();
-    await p.setBool(_kRemoveAds, value);
+    await (await _p()).setBool(_kHaptics, value);
   }
 }

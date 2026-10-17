@@ -1,34 +1,32 @@
 #!/usr/bin/env python3
-"""Render the Hue Rush brand mark into every asset the project needs.
+"""Render the Quiver brand mark into every asset the project needs.
+
+Design notes
+------------
+The mark is one chunky arrow, flying out of a faint grid of board cells — the
+game in a single glance. Two flat colours, one restrained background gradient,
+rounded joins throughout. Deliberately designed, not an AI gradient mesh.
 
 Outputs (relative to the Flutter project root):
-  assets/branding/logo.png                     -> shown on the home screen
+  assets/branding/logo.png
   branding/android/mipmap-<density>/ic_launcher.png
+  branding/android/mipmap-<density>/ic_launcher_round.png
   branding/android/mipmap-<density>/ic_launcher_foreground.png
-  branding/android/ic_launcher_background.xml  -> gradient adaptive background
-  branding/android/ic_launcher.xml             -> adaptive-icon descriptor
-
-The android/* files live outside assets/ on purpose: they are build inputs the
-CI workflow copies into the generated android/ folder, not app-bundled assets.
+  branding/android/ic_launcher.xml
+  branding/android/ic_launcher_background.xml
 """
 import os
 
 import cairosvg
 
 W = 1024
-BG_TOP = "#2A1D5E"
-BG_BOT = "#0C0C14"
-C1 = "#9A6BFF"
-C2 = "#E93D82"
-C3 = "#FF8A3D"
-
-RIBBON = "M300 372 H700 V652 H340"
-STROKE = 120
-DX, DY = 16, -29
+BG_TOP = "#1B2340"
+BG_BOT = "#0B0E16"
+ARROW = "#FFB020"
+ARROW_DEEP = "#E08A00"
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# density -> (legacy icon px, adaptive foreground px)   [48dp / 108dp baselines]
 DENSITIES = {
     "mdpi": (48, 108),
     "hdpi": (72, 162),
@@ -45,55 +43,65 @@ def defs() -> str:
       <stop offset="0" stop-color="{BG_TOP}"/>
       <stop offset="1" stop-color="{BG_BOT}"/>
     </linearGradient>
-    <radialGradient id="hl" gradientUnits="userSpaceOnUse" cx="380" cy="300" r="640">
-      <stop offset="0" stop-color="#9A8BFF" stop-opacity="0.40"/>
-      <stop offset="1" stop-color="#9A8BFF" stop-opacity="0"/>
+    <radialGradient id="hl" gradientUnits="userSpaceOnUse" cx="360" cy="300" r="620">
+      <stop offset="0" stop-color="#FFB020" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#FFB020" stop-opacity="0"/>
     </radialGradient>
-    <linearGradient id="rib" gradientUnits="userSpaceOnUse" x1="0" y1="300" x2="0" y2="740">
-      <stop offset="0" stop-color="{C1}"/>
-      <stop offset="0.52" stop-color="{C2}"/>
-      <stop offset="1" stop-color="{C3}"/>
-    </linearGradient>
   </defs>"""
 
 
-def _inner(halo=0.16) -> str:
+def grid_cells() -> str:
+    """A faint hint of the board behind the arrow."""
+    out = []
+    size, gap = 96, 22
+    span = 3 * size + 2 * gap
+    start = (W - span) / 2
+    for r in range(3):
+        for c in range(3):
+            x = start + c * (size + gap)
+            y = start + r * (size + gap)
+            out.append(
+                f'<rect x="{x:.0f}" y="{y:.0f}" width="{size}" height="{size}" rx="26" '
+                f'fill="none" stroke="#FFFFFF" stroke-opacity="0.06" stroke-width="3"/>'
+            )
+    return "\n    ".join(out)
+
+
+def arrow(scale: float = 1.0, dx: float = 0.0, dy: float = 0.0) -> str:
+    """A right-pointing arrow, rotated -45deg so it flies up and to the right."""
     return f"""
-    <path d="{RIBBON}" fill="none" stroke="#7C6CFF" stroke-width="176"
-          stroke-linecap="round" stroke-linejoin="round" opacity="{halo}"/>
-    <path d="{RIBBON}" fill="none" stroke="{C2}" stroke-width="146"
-          stroke-linecap="round" stroke-linejoin="round" opacity="{halo * 0.9:.3f}"/>
-    <rect x="234" y="306" width="132" height="132" rx="36" fill="url(#rib)"/>
-    <path d="{RIBBON}" fill="none" stroke="url(#rib)" stroke-width="{STROKE}"
-          stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M232 652 L392 528 L352 652 L392 776 Z" fill="url(#rib)"/>"""
+    <g transform="translate({dx} {dy}) translate(512 512) scale({scale}) translate(-512 -512) rotate(-45 512 512)">
+      <path d="M300 512 H660" fill="none" stroke="{ARROW_DEEP}" stroke-width="150"
+            stroke-linecap="round" opacity="0.35"/>
+      <path d="M300 512 H650" fill="none" stroke="{ARROW}" stroke-width="118"
+            stroke-linecap="round"/>
+      <path d="M596 372 L790 512 L596 652 Z" fill="{ARROW}"/>
+    </g>"""
 
 
-def mark(scale: float, halo=0.16) -> str:
-    return (f'<g transform="translate({DX} {DY}) translate(512 512) '
-            f'scale({scale}) translate(-512 -512)">{_inner(halo)}</g>')
-
-
-def svg_icon(halo=0.20) -> str:
+def svg_icon() -> str:
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{W}" viewBox="0 0 {W} {W}">
 {defs()}
   <rect x="0" y="0" width="{W}" height="{W}" rx="228" fill="url(#bg)"/>
   <rect x="0" y="0" width="{W}" height="{W}" rx="228" fill="url(#hl)"/>
-  {mark(0.84, halo)}
+  <g opacity="0.9">
+    {grid_cells()}
+  </g>
+  {arrow(0.86, dx=-22, dy=22)}
 </svg>"""
 
 
-def svg_mark(halo=0.14) -> str:
+def svg_mark() -> str:
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{W}" viewBox="0 0 {W} {W}">
 {defs()}
-  {mark(0.84, halo)}
+  {arrow(0.86, dx=-22, dy=22)}
 </svg>"""
 
 
-def svg_adaptive_fg(halo=0.16) -> str:
+def svg_adaptive_fg() -> str:
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{W}" viewBox="0 0 {W} {W}">
 {defs()}
-  {mark(0.60, halo)}
+  {arrow(0.60)}
 </svg>"""
 
 
@@ -122,26 +130,17 @@ BACKGROUND_XML = f"""<?xml version="1.0" encoding="utf-8"?>
 
 
 def main() -> None:
-    icon_svg = svg_icon()
-    fg_svg = svg_adaptive_fg()
-    mark_svg = svg_mark()
-
-    # In-app logo (home screen).
-    render(mark_svg, f"{ROOT}/assets/branding/logo.png", 512)
-
-    # Launcher icons.
+    render(svg_mark(), f"{ROOT}/assets/branding/logo.png", 512)
     for density, (icon_px, fg_px) in DENSITIES.items():
         base = f"{ROOT}/branding/android/mipmap-{density}"
-        render(icon_svg, f"{base}/ic_launcher.png", icon_px)
-        render(icon_svg, f"{base}/ic_launcher_round.png", icon_px)
-        render(fg_svg, f"{base}/ic_launcher_foreground.png", fg_px)
+        render(svg_icon(), f"{base}/ic_launcher.png", icon_px)
+        render(svg_icon(), f"{base}/ic_launcher_round.png", icon_px)
+        render(svg_adaptive_fg(), f"{base}/ic_launcher_foreground.png", fg_px)
         print(f"  mipmap-{density}: icon {icon_px}px, foreground {fg_px}px")
-
     with open(f"{ROOT}/branding/android/ic_launcher.xml", "w") as fh:
         fh.write(ADAPTIVE_XML)
     with open(f"{ROOT}/branding/android/ic_launcher_background.xml", "w") as fh:
         fh.write(BACKGROUND_XML)
-
     print("done: logo.png + launcher icons + adaptive icon xml")
 
 

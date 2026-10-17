@@ -1,5 +1,5 @@
-name: hue_rush
-description: "Colour-sort flow puzzle — clear each colour with its emitter, and flip the rail direction when the flow jams."
+name: quiver
+description: "An arrow-clearing puzzle. Tap an arrow and it slides out in its own direction — unless something is in the way."
 publish_to: 'none'
 version: 0.1.0+1
 
@@ -12,10 +12,6 @@ dependencies:
   cupertino_icons: ^1.0.6
   # Range is deliberately broad so the newest version that supports the runner's
   # Flutter SDK is selected, rather than failing to resolve.
-  #
-  # google_mobile_ads is removed for now: it was the prime suspect for a launch
-  # crash on device. Restore it (and lib/services/ads_service.dart) to bring ads
-  # back.
   shared_preferences: '>=2.2.0 <3.0.0'
 
 dev_dependencies:

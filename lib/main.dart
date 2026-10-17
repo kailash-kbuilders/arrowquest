@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'screens/home_screen.dart';
-import 'services/ads_service.dart';
 import 'services/progress_service.dart';
 import 'theme/app_colors.dart';
 
@@ -24,12 +23,7 @@ Future<void> main() async {
         // Fall back to in-memory defaults.
       }
 
-      // Ads initialise after the first frame so they can never block startup.
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        AdsService.instance.init();
-      });
-
-      runApp(const HueRushApp());
+      runApp(const QuiverApp());
     },
     (Object error, StackTrace stack) {
       debugPrint('Uncaught error: $error');
@@ -37,13 +31,13 @@ Future<void> main() async {
   );
 }
 
-class HueRushApp extends StatelessWidget {
-  const HueRushApp({super.key});
+class QuiverApp extends StatelessWidget {
+  const QuiverApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Hue Rush',
+      title: 'Quiver',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,

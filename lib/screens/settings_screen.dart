@@ -15,6 +15,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final done = _progress.completed.length;
     return Scaffold(
       appBar: AppBar(title: const Text('Settings')),
       body: SafeArea(
@@ -37,20 +38,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
               },
             ),
             const Divider(),
-            const ListTile(
-              leading: Icon(Icons.block, color: AppColors.textDim),
-              title: Text('Remove ads'),
-              subtitle: Text('Coming with the in-app purchase.'),
-              enabled: false,
+            ListTile(
+              leading: const Icon(Icons.emoji_events_outlined,
+                  color: AppColors.accent),
+              title: const Text('Levels cleared'),
+              subtitle: Text('$done of 100'),
             ),
             const Divider(),
             const Padding(
               padding: EdgeInsets.all(16),
               child: Text(
-                'Hue Rush uses Google AdMob. During development only Google '
-                'test ad units are used, and no personal data is collected by '
-                'this build.',
-                style: TextStyle(color: AppColors.textDim, fontSize: 12, height: 1.5),
+                'Quiver is a puzzle game. Progress is stored on your device '
+                'only — nothing is uploaded anywhere.',
+                style: TextStyle(
+                  color: AppColors.textDim,
+                  fontSize: 12,
+                  height: 1.5,
+                ),
               ),
             ),
           ],

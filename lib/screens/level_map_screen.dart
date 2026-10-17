@@ -4,7 +4,6 @@ import '../models/level.dart';
 import '../services/level_repository.dart';
 import '../services/progress_service.dart';
 import '../theme/app_colors.dart';
-import '../widgets/ad_banner.dart';
 import 'gameplay_screen.dart';
 
 class LevelMapScreen extends StatefulWidget {
@@ -27,7 +26,6 @@ class _LevelMapScreenState extends State<LevelMapScreen> {
     await Navigator.of(context).push(
       MaterialPageRoute<void>(builder: (_) => GameplayScreen(level: level)),
     );
-    // Progress may have changed while playing.
     if (mounted) setState(() {});
   }
 
@@ -36,42 +34,64 @@ class _LevelMapScreenState extends State<LevelMapScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text('Levels')),
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: FutureBuilder<List<Level>>(
-                future: _future,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState != ConnectionState.done) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  final levels = snapshot.data ?? const <Level>[];
-                  if (levels.isEmpty) {
-                    return const Center(
-                      child: Text('No levels found.',
-                          style: TextStyle(color: AppColors.textDim)),
-                    );
-                  }
-                  return GridView.builder(
-                    padding: const EdgeInsets.all(16),
+        child: FutureBuilder<List<Level>>(
+          future: _future,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState != ConnectionState.done) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            final levels = snapshot.data ?? const <Level>[];
+            if (levels.isEmpty) {
+              return const Center(
+                child: Text('No levels found.',
+                    style: TextStyle(color: AppColors.textDim)),
+              );
+            }
+
+            // Group by chapter, preserving level order.
+            final grouped = <String, List<Level>>{};
+            for (final level in levels) {
+              grouped.putIfAbsent(level.chapter, () => <Level>[]).add(level);
+            }
+
+            return ListView(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+              children: <Widget>[
+                for (final entry in grouped.entries) ...<Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12, bottom: 8),
+                    child: Text(
+                      entry.key.toUpperCase(),
+                      style: const TextStyle(
+                        color: AppColors.textDim,
+                        fontSize: 12,
+                        letterSpacing: 2,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4,
-                      mainAxisSpacing: 12,
-                      crossAxisSpacing: 12,
+                      crossAxisCount: 5,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
                       childAspectRatio: 1,
                     ),
-                    itemCount: levels.length,
+                    itemCount: entry.value.length,
                     itemBuilder: (context, index) {
-                      final level = levels[index];
-                      return _LevelTile(level: level, onOpen: _open);
+                      return _LevelTile(
+                        level: entry.value[index],
+                        onOpen: _open,
+                      );
                     },
-                  );
-                },
-              ),
-            ),
-            const AdBanner(),
-          ],
+                  ),
+                ],
+              ],
+            );
+          },
         ),
       ),
     );
@@ -101,21 +121,21 @@ class _LevelTile extends StatelessWidget {
 
     return Material(
       color: bg,
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: BorderRadius.circular(12),
       child: InkWell(
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(12),
         onTap: unlocked ? () => onOpen(level) : null,
         child: Center(
           child: unlocked
               ? Text(
                   '${level.id}',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 22,
+                  style: TextStyle(
+                    color: done ? Colors.white : AppColors.bg,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 )
-              : const Icon(Icons.lock_outline, color: AppColors.textDim),
+              : const Icon(Icons.lock_outline, color: AppColors.textDim, size: 18),
         ),
       ),
     );

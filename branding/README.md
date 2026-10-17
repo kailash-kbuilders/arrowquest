@@ -1,19 +1,16 @@
 # Branding
 
-The Hue Rush mark is a **switchback ribbon**: it flows right, turns, and doubles
-back — which is the game's core verb, flipping the rail's direction. It grows
-out of a rounded tile (the emitter chip) and its colour sweeps top-to-bottom
-through three of the game's own hues.
-
-Everything is axis-aligned geometry, one stroke weight, round joins, and a
-single restrained three-stop gradient — deliberately designed rather than a
-rainbow mesh.
+The Quiver mark is one chunky arrow flying out of a faint grid of board cells —
+the game in a single glance. Two flat colours, one restrained background
+gradient, rounded joins throughout. Deliberately designed rather than an AI
+gradient mesh.
 
 ## Files
 
 | Path | What it is |
 | --- | --- |
 | `android/mipmap-<density>/ic_launcher.png` | legacy launcher icon |
+| `android/mipmap-<density>/ic_launcher_round.png` | round launcher icon |
 | `android/mipmap-<density>/ic_launcher_foreground.png` | adaptive icon foreground (inside the 66% safe zone) |
 | `android/ic_launcher.xml` | adaptive-icon descriptor |
 | `android/ic_launcher_background.xml` | gradient adaptive background |

@@ -35,44 +35,17 @@ jobs:
         run: |
           if [ ! -d "android" ]; then
             TMP="$(mktemp -d)"
-            flutter create "$TMP/seed" --platforms=android --project-name hue_rush
+            flutter create "$TMP/seed" --platforms=android --project-name quiver
             cp -r "$TMP/seed/android" ./android
             rm -rf "$TMP"
           fi
 
-      # url_launcher needs these intents declared so canLaunchUrl() works on
-      # Android 11+ (WhatsApp, dialer, browser, email).
-      - name: Ensure Android intent queries (url_launcher)
-        run: |
-          python3 - <<'PY'
-          import pathlib
-          p = pathlib.Path("android/app/src/main/AndroidManifest.xml")
-          if p.exists():
-              s = p.read_text()
-              if "<queries>" not in s:
-                  queries = (
-                      '    <queries>\n'
-                      '        <intent><action android:name="android.intent.action.VIEW" />'
-                      '<data android:scheme="https" /></intent>\n'
-                      '        <intent><action android:name="android.intent.action.VIEW" />'
-                      '<data android:scheme="whatsapp" /></intent>\n'
-                      '        <intent><action android:name="android.intent.action.DIAL" />'
-                      '<data android:scheme="tel" /></intent>\n'
-                      '        <intent><action android:name="android.intent.action.SENDTO" />'
-                      '<data android:scheme="mailto" /></intent>\n'
-                      '    </queries>\n'
-                  )
-                  s = s.replace("</manifest>", queries + "</manifest>")
-                  p.write_text(s)
-          PY
-
       # Give the app a repo-specific applicationId / namespace.
       #
-      # NOTE: we deliberately DO NOT touch compileSdk here. The Flutter
-      # template already sets `compileSdk = flutter.compileSdkVersion`, which is
-      # 36 on current stable, and the plugins compile against that same value.
-      # Pinning it to a lower number is exactly what makes the "AAR metadata"
-      # check fail.
+      # NOTE: we deliberately DO NOT touch compileSdk here. The Flutter template
+      # already sets `compileSdk = flutter.compileSdkVersion`, which is 36 on
+      # current stable, and the plugins compile against that same value. Pinning
+      # it lower is exactly what makes the "AAR metadata" check fail.
       - name: Configure Android project
         run: |
           python3 - <<'PY'
@@ -85,63 +58,24 @@ jobs:
               if not path.exists():
                   continue
               text = path.read_text()
-
-              text = re.sub(
-                  r'(applicationId[ \t]*=?[ \t]*)"[^"]*"',
-                  lambda m: m.group(1) + '"' + app_id + '"',
-                  text,
-              )
-              text = re.sub(
-                  r'(namespace[ \t]*=?[ \t]*)"[^"]*"',
-                  lambda m: m.group(1) + '"' + app_id + '"',
-                  text,
-              )
-
+              text = re.sub(r'(applicationId[ \t]*=?[ \t]*)"[^"]*"',
+                            lambda m: m.group(1) + '"' + app_id + '"', text)
+              text = re.sub(r'(namespace[ \t]*=?[ \t]*)"[^"]*"',
+                            lambda m: m.group(1) + '"' + app_id + '"', text)
               path.write_text(text)
               print("configured", name, "->", app_id)
 
           manifest = pathlib.Path("android/app/src/main/AndroidManifest.xml")
           if manifest.exists():
               m = manifest.read_text()
-              m = re.sub(r'android:label="[^"]*"', 'android:label="Hue Rush"', m)
+              m = re.sub(r'android:label="[^"]*"', 'android:label="Quiver"', m)
               manifest.write_text(m)
-              print("labelled the app as Hue Rush")
-          PY
-
-      # AdMob needs its App ID in the manifest, and a release build needs the
-      # INTERNET permission — which the Flutter template only puts in the debug
-      # manifest. Both are injected here, using Google's public test App ID.
-      - name: Configure AdMob (test app id + network permissions)
-        run: |
-          python3 - <<'PY'
-          import pathlib
-          p = pathlib.Path("android/app/src/main/AndroidManifest.xml")
-          if p.exists():
-              s = p.read_text()
-
-              if "android.permission.INTERNET" not in s:
-                  perms = (
-                      '    <uses-permission android:name="android.permission.INTERNET" />\n'
-                      '    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />\n'
-                  )
-                  idx = s.find(">", s.find("<manifest"))
-                  s = s[:idx + 1] + "\n" + perms + s[idx + 1:]
-
-              if "com.google.android.gms.ads.APPLICATION_ID" not in s:
-                  meta = (
-                      '        <meta-data\n'
-                      '            android:name="com.google.android.gms.ads.APPLICATION_ID"\n'
-                      '            android:value="ca-app-pub-3940256099942544~3347511713" />\n'
-                  )
-                  s = s.replace("</application>", meta + "</application>")
-
-              p.write_text(s)
-              print("AdMob manifest configured")
+              print("labelled the app as Quiver")
           PY
 
       # Install the brand launcher icon into the generated android/ project.
-      # The android/ folder is regenerated on every run, so the icon has to be
-      # copied in each time rather than committed.
+      # android/ is regenerated on every run, so the icon is copied in each time
+      # rather than committed.
       - name: Install launcher icons
         run: |
           RES="android/app/src/main/res"
@@ -170,10 +104,8 @@ jobs:
       - name: Gradle fixes (R8 rules)
         run: |
           cat > android/app/proguard-rules.pro <<'EOF'
-          -dontwarn com.google.android.play.core.**
           -dontwarn io.flutter.**
           -keep class io.flutter.** { *; }
-          -keep class com.google.android.play.core.** { *; }
           EOF
 
       - name: Install dependencies
@@ -189,8 +121,7 @@ jobs:
           name: release-apk
           path: build/app/outputs/flutter-apk/app-release.apk
 
-      # When the user asks for the APK (manual run) or a version tag is pushed,
-      # attach the APK to a GitHub Release so it is downloadable as a proper release.
+      # A manual run (or a v* tag) also publishes the APK to a GitHub Release.
       - name: Publish APK to GitHub Release
         if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2

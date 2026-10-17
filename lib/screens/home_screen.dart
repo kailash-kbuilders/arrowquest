@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: <Color>[Color(0xFF1A1440), AppColors.bg],
+            colors: <Color>[Color(0xFF141A2E), AppColors.bg],
           ),
         ),
         child: SafeArea(
@@ -26,23 +26,23 @@ class HomeScreen extends StatelessWidget {
                 const Spacer(flex: 2),
                 Image.asset(
                   'assets/branding/logo.png',
-                  height: 148,
+                  height: 150,
                   filterQuality: FilterQuality.high,
                 ),
                 const SizedBox(height: 10),
                 const Text(
-                  'HUE RUSH',
+                  'QUIVER',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 44,
+                    fontSize: 42,
                     fontWeight: FontWeight.w800,
-                    letterSpacing: 4,
+                    letterSpacing: 8,
                     color: Colors.white,
                   ),
                 ),
                 const SizedBox(height: 12),
                 const Text(
-                  'Clear each colour with its emitter.\nFlip the flow when the rail jams.',
+                  'Tap an arrow and it slides out —\nunless something is in the way.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: AppColors.textDim,
@@ -110,11 +110,12 @@ class HomeScreen extends StatelessWidget {
       builder: (ctx) => AlertDialog(
         title: const Text('How to play'),
         content: const Text(
-          'The front emitter on the rail is the one you act on.\n\n'
-          'FIRE clears one tile of its colour.\n'
-          'PARK sends it to the buffer — you lose when the buffer is full.\n'
-          'SWITCH reverses the rail so a different emitter comes forward.\n\n'
-          'Clear the whole board to win. Order and timing are everything.',
+          'Tap an arrow and it shoots in the direction it points.\n\n'
+          'It keeps going until it reaches the edge — then it leaves the '
+          'board — or until another arrow is in the way, in which case it '
+          'stops right there.\n\n'
+          'An arrow with something directly in front of it cannot move at '
+          'all. Clear the board to finish the level.',
           style: TextStyle(height: 1.5),
         ),
         actions: <Widget>[

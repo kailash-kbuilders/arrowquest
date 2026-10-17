@@ -1,1113 +1,7704 @@
 {
-  "levels": [
+ "levels": [
+  {
+   "id": 1,
+   "chapter": "First Flight",
+   "rows": 4,
+   "cols": 4,
+   "par": 4,
+   "arrows": [
     {
-      "id": 1,
-      "name": "First Drop",
-      "chapter": "Rain",
-      "rows": 4,
-      "cols": 4,
-      "tiles": [
-        "RR..",
-        "RR..",
-        "....",
-        "...."
-      ],
-      "emitters": [
-        {
-          "color": "R",
-          "ammo": 1
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        }
-      ],
-      "switchTokens": 2,
-      "bufferSize": 5
+     "r": 1,
+     "c": 0,
+     "d": "R"
     },
     {
-      "id": 2,
-      "name": "Two Tones",
-      "chapter": "Rain",
-      "rows": 4,
-      "cols": 4,
-      "tiles": [
-        "RRBB",
-        "RRBB",
-        "....",
-        "...."
-      ],
-      "emitters": [
-        {
-          "color": "B",
-          "ammo": 1
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 1
-        },
-        {
-          "color": "B",
-          "ammo": 3
-        }
-      ],
-      "switchTokens": 2,
-      "bufferSize": 5
+     "r": 1,
+     "c": 3,
+     "d": "D"
     },
     {
-      "id": 3,
-      "name": "Third Hue",
-      "chapter": "Rain",
-      "rows": 4,
-      "cols": 4,
-      "tiles": [
-        "RRBB",
-        "RRBB",
-        "GG..",
-        "GG.."
-      ],
-      "emitters": [
-        {
-          "color": "B",
-          "ammo": 3
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "G",
-          "ammo": 1
-        },
-        {
-          "color": "R",
-          "ammo": 1
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "B",
-          "ammo": 1
-        }
-      ],
-      "switchTokens": 2,
-      "bufferSize": 5
+     "r": 2,
+     "c": 0,
+     "d": "R"
     },
     {
-      "id": 4,
-      "name": "Tight Grid",
-      "chapter": "Rain",
-      "rows": 5,
-      "cols": 5,
-      "tiles": [
-        "RRRBB",
-        "RRRBB",
-        "GGGBB",
-        "GGG..",
-        "....."
-      ],
-      "emitters": [
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "B",
-          "ammo": 3
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "B",
-          "ammo": 3
-        }
-      ],
-      "switchTokens": 2,
-      "bufferSize": 5
-    },
-    {
-      "id": 5,
-      "name": "Rain Drops",
-      "chapter": "Rain",
-      "rows": 4,
-      "cols": 4,
-      "tiles": [
-        "RRBB",
-        "GGYY",
-        "RRBB",
-        "GGYY"
-      ],
-      "emitters": [
-        {
-          "color": "Y",
-          "ammo": 3
-        },
-        {
-          "color": "G",
-          "ammo": 1
-        },
-        {
-          "color": "B",
-          "ammo": 1
-        },
-        {
-          "color": "B",
-          "ammo": 3
-        },
-        {
-          "color": "Y",
-          "ammo": 1
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 1
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        }
-      ],
-      "switchTokens": 2,
-      "bufferSize": 5
-    },
-    {
-      "id": 6,
-      "name": "First Thread",
-      "chapter": "Yarn",
-      "rows": 4,
-      "cols": 4,
-      "tiles": [
-        "RRRG",
-        "RRRG",
-        "BBGG",
-        "BBGG"
-      ],
-      "emitters": [
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "B",
-          "ammo": 1
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "B",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        }
-      ],
-      "switchTokens": 2,
-      "bufferSize": 5
-    },
-    {
-      "id": 7,
-      "name": "Knot",
-      "chapter": "Yarn",
-      "rows": 4,
-      "cols": 4,
-      "tiles": [
-        "RRBB",
-        "RRBB",
-        "GGYY",
-        "GGYY"
-      ],
-      "emitters": [
-        {
-          "color": "Y",
-          "ammo": 3
-        },
-        {
-          "color": "Y",
-          "ammo": 1
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "B",
-          "ammo": 3
-        },
-        {
-          "color": "G",
-          "ammo": 1
-        },
-        {
-          "color": "B",
-          "ammo": 1
-        },
-        {
-          "color": "R",
-          "ammo": 2
-        }
-      ],
-      "switchTokens": 2,
-      "bufferSize": 5
-    },
-    {
-      "id": 8,
-      "name": "Loose End",
-      "chapter": "Yarn",
-      "rows": 5,
-      "cols": 5,
-      "tiles": [
-        "RRRBB",
-        "RRRBB",
-        "GGGBB",
-        "GGG..",
-        "....."
-      ],
-      "emitters": [
-        {
-          "color": "G",
-          "ammo": 2
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "B",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "B",
-          "ammo": 3
-        }
-      ],
-      "switchTokens": 1,
-      "bufferSize": 5
-    },
-    {
-      "id": 9,
-      "name": "Weave",
-      "chapter": "Yarn",
-      "rows": 5,
-      "cols": 6,
-      "tiles": [
-        "RRRBBB",
-        "RRRBBB",
-        "GGGYYY",
-        "GGGYYY",
-        "......"
-      ],
-      "emitters": [
-        {
-          "color": "Y",
-          "ammo": 1
-        },
-        {
-          "color": "Y",
-          "ammo": 3
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "B",
-          "ammo": 1
-        },
-        {
-          "color": "B",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "B",
-          "ammo": 3
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "Y",
-          "ammo": 3
-        }
-      ],
-      "switchTokens": 1,
-      "bufferSize": 5
-    },
-    {
-      "id": 10,
-      "name": "Spool",
-      "chapter": "Yarn",
-      "rows": 4,
-      "cols": 6,
-      "tiles": [
-        "RRBBGG",
-        "RRBBGG",
-        "RRBBGG",
-        "......"
-      ],
-      "emitters": [
-        {
-          "color": "B",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 2
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "B",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        }
-      ],
-      "switchTokens": 1,
-      "bufferSize": 5
-    },
-    {
-      "id": 11,
-      "name": "First Bead",
-      "chapter": "Beads",
-      "rows": 5,
-      "cols": 5,
-      "tiles": [
-        "RRRBB",
-        "RRRBB",
-        "GGGYY",
-        "GGGYY",
-        "....."
-      ],
-      "emitters": [
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 1
-        },
-        {
-          "color": "B",
-          "ammo": 3
-        },
-        {
-          "color": "B",
-          "ammo": 1
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "Y",
-          "ammo": 1
-        },
-        {
-          "color": "Y",
-          "ammo": 3
-        }
-      ],
-      "switchTokens": 1,
-      "bufferSize": 5
-    },
-    {
-      "id": 12,
-      "name": "Strand",
-      "chapter": "Beads",
-      "rows": 4,
-      "cols": 5,
-      "tiles": [
-        "RBYGP",
-        "RBYGP",
-        "RBYGP",
-        "....."
-      ],
-      "emitters": [
-        {
-          "color": "Y",
-          "ammo": 3
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "B",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "G",
-          "ammo": 2
-        },
-        {
-          "color": "P",
-          "ammo": 3
-        }
-      ],
-      "switchTokens": 1,
-      "bufferSize": 5
-    },
-    {
-      "id": 13,
-      "name": "Cluster",
-      "chapter": "Beads",
-      "rows": 6,
-      "cols": 4,
-      "tiles": [
-        "RRBB",
-        "RRBB",
-        "GGYY",
-        "GGYY",
-        "PPCC",
-        "PPCC"
-      ],
-      "emitters": [
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "P",
-          "ammo": 1
-        },
-        {
-          "color": "B",
-          "ammo": 3
-        },
-        {
-          "color": "Y",
-          "ammo": 3
-        },
-        {
-          "color": "G",
-          "ammo": 1
-        },
-        {
-          "color": "B",
-          "ammo": 2
-        },
-        {
-          "color": "P",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 2
-        },
-        {
-          "color": "C",
-          "ammo": 1
-        },
-        {
-          "color": "C",
-          "ammo": 3
-        },
-        {
-          "color": "Y",
-          "ammo": 1
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        }
-      ],
-      "switchTokens": 1,
-      "bufferSize": 5
-    },
-    {
-      "id": 14,
-      "name": "Facets",
-      "chapter": "Beads",
-      "rows": 5,
-      "cols": 6,
-      "tiles": [
-        "RRRRBB",
-        "RRRRBB",
-        "GGGGYY",
-        "GGGGYY",
-        "......"
-      ],
-      "emitters": [
-        {
-          "color": "Y",
-          "ammo": 1
-        },
-        {
-          "color": "B",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "G",
-          "ammo": 1
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "Y",
-          "ammo": 3
-        },
-        {
-          "color": "B",
-          "ammo": 1
-        }
-      ],
-      "switchTokens": 1,
-      "bufferSize": 5
-    },
-    {
-      "id": 15,
-      "name": "Chandelier",
-      "chapter": "Beads",
-      "rows": 4,
-      "cols": 6,
-      "tiles": [
-        "RBYGPC",
-        "RBYGPC",
-        "RBYGPC",
-        "RBYGPC"
-      ],
-      "emitters": [
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "Y",
-          "ammo": 1
-        },
-        {
-          "color": "P",
-          "ammo": 2
-        },
-        {
-          "color": "P",
-          "ammo": 3
-        },
-        {
-          "color": "G",
-          "ammo": 1
-        },
-        {
-          "color": "R",
-          "ammo": 1
-        },
-        {
-          "color": "B",
-          "ammo": 3
-        },
-        {
-          "color": "C",
-          "ammo": 3
-        },
-        {
-          "color": "Y",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "B",
-          "ammo": 3
-        },
-        {
-          "color": "C",
-          "ammo": 1
-        }
-      ],
-      "switchTokens": 1,
-      "bufferSize": 5
-    },
-    {
-      "id": 16,
-      "name": "Sherbet",
-      "chapter": "Candy",
-      "rows": 6,
-      "cols": 6,
-      "tiles": [
-        "RRRBBB",
-        "RRRBBB",
-        "GGGYYY",
-        "GGGYYY",
-        "PPPOOO",
-        "PPPOOO"
-      ],
-      "emitters": [
-        {
-          "color": "B",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "Y",
-          "ammo": 3
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "P",
-          "ammo": 3
-        },
-        {
-          "color": "B",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "O",
-          "ammo": 2
-        },
-        {
-          "color": "O",
-          "ammo": 3
-        },
-        {
-          "color": "Y",
-          "ammo": 3
-        },
-        {
-          "color": "P",
-          "ammo": 3
-        },
-        {
-          "color": "O",
-          "ammo": 3
-        }
-      ],
-      "switchTokens": 1,
-      "bufferSize": 5
-    },
-    {
-      "id": 17,
-      "name": "Jelly Lines",
-      "chapter": "Candy",
-      "rows": 6,
-      "cols": 6,
-      "tiles": [
-        "RRBBGG",
-        "RRBBGG",
-        "RRBBGG",
-        "YYPPCC",
-        "YYPPCC",
-        "YYPPCC"
-      ],
-      "emitters": [
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "P",
-          "ammo": 3
-        },
-        {
-          "color": "Y",
-          "ammo": 3
-        },
-        {
-          "color": "C",
-          "ammo": 3
-        },
-        {
-          "color": "B",
-          "ammo": 3
-        },
-        {
-          "color": "Y",
-          "ammo": 3
-        },
-        {
-          "color": "B",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "C",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 1
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "C",
-          "ammo": 2
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "P",
-          "ammo": 3
-        }
-      ],
-      "switchTokens": 1,
-      "bufferSize": 5
-    },
-    {
-      "id": 18,
-      "name": "Sugar Rush",
-      "chapter": "Candy",
-      "rows": 6,
-      "cols": 6,
-      "tiles": [
-        "RBYGPC",
-        "RBYGPC",
-        "RBYGPC",
-        "RBYGPC",
-        "RBYGPC",
-        "RBYGPC"
-      ],
-      "emitters": [
-        {
-          "color": "B",
-          "ammo": 3
-        },
-        {
-          "color": "Y",
-          "ammo": 3
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "P",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "Y",
-          "ammo": 3
-        },
-        {
-          "color": "C",
-          "ammo": 3
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "P",
-          "ammo": 3
-        },
-        {
-          "color": "Y",
-          "ammo": 3
-        },
-        {
-          "color": "B",
-          "ammo": 3
-        },
-        {
-          "color": "C",
-          "ammo": 3
-        }
-      ],
-      "switchTokens": 1,
-      "bufferSize": 5
-    },
-    {
-      "id": 19,
-      "name": "Neon Blocks",
-      "chapter": "Candy",
-      "rows": 6,
-      "cols": 8,
-      "tiles": [
-        "RRRRBBBB",
-        "RRRRBBBB",
-        "GGGGYYYY",
-        "GGGGYYYY",
-        "PPPPCCCC",
-        "PPPPCCCC"
-      ],
-      "emitters": [
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "B",
-          "ammo": 3
-        },
-        {
-          "color": "P",
-          "ammo": 2
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "Y",
-          "ammo": 3
-        },
-        {
-          "color": "P",
-          "ammo": 3
-        },
-        {
-          "color": "Y",
-          "ammo": 2
-        },
-        {
-          "color": "P",
-          "ammo": 3
-        },
-        {
-          "color": "B",
-          "ammo": 3
-        },
-        {
-          "color": "G",
-          "ammo": 1
-        },
-        {
-          "color": "C",
-          "ammo": 3
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "C",
-          "ammo": 2
-        },
-        {
-          "color": "R",
-          "ammo": 2
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "C",
-          "ammo": 3
-        },
-        {
-          "color": "Y",
-          "ammo": 3
-        },
-        {
-          "color": "B",
-          "ammo": 3
-        }
-      ],
-      "switchTokens": 1,
-      "bufferSize": 5
-    },
-    {
-      "id": 20,
-      "name": "Cascade",
-      "chapter": "Candy",
-      "rows": 6,
-      "cols": 7,
-      "tiles": [
-        "RBYGPCO",
-        "RBYGPCO",
-        "RBYGPCO",
-        "RBYGPCO",
-        "RBYGPCO",
-        "RBYGPCO"
-      ],
-      "emitters": [
-        {
-          "color": "P",
-          "ammo": 3
-        },
-        {
-          "color": "O",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "O",
-          "ammo": 3
-        },
-        {
-          "color": "O",
-          "ammo": 3
-        },
-        {
-          "color": "C",
-          "ammo": 3
-        },
-        {
-          "color": "B",
-          "ammo": 3
-        },
-        {
-          "color": "Y",
-          "ammo": 3
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "B",
-          "ammo": 3
-        },
-        {
-          "color": "G",
-          "ammo": 3
-        },
-        {
-          "color": "C",
-          "ammo": 3
-        },
-        {
-          "color": "P",
-          "ammo": 3
-        },
-        {
-          "color": "R",
-          "ammo": 3
-        },
-        {
-          "color": "Y",
-          "ammo": 3
-        }
-      ],
-      "switchTokens": 1,
-      "bufferSize": 5
+     "r": 3,
+     "c": 2,
+     "d": "U"
     }
-  ]
+   ]
+  },
+  {
+   "id": 2,
+   "chapter": "First Flight",
+   "rows": 4,
+   "cols": 4,
+   "par": 4,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "L"
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "chapter": "First Flight",
+   "rows": 4,
+   "cols": 4,
+   "par": 4,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 4,
+   "chapter": "First Flight",
+   "rows": 4,
+   "cols": 4,
+   "par": 5,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 5,
+   "chapter": "First Flight",
+   "rows": 4,
+   "cols": 4,
+   "par": 5,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 6,
+   "chapter": "First Flight",
+   "rows": 4,
+   "cols": 4,
+   "par": 5,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "L"
+    }
+   ]
+  },
+  {
+   "id": 7,
+   "chapter": "First Flight",
+   "rows": 4,
+   "cols": 4,
+   "par": 5,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "L"
+    }
+   ]
+  },
+  {
+   "id": 8,
+   "chapter": "First Flight",
+   "rows": 4,
+   "cols": 4,
+   "par": 5,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "D"
+    }
+   ]
+  },
+  {
+   "id": 9,
+   "chapter": "First Flight",
+   "rows": 4,
+   "cols": 4,
+   "par": 6,
+   "arrows": [
+    {
+     "r": 1,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 10,
+   "chapter": "First Flight",
+   "rows": 4,
+   "cols": 4,
+   "par": 6,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 11,
+   "chapter": "First Flight",
+   "rows": 4,
+   "cols": 4,
+   "par": 7,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 12,
+   "chapter": "First Flight",
+   "rows": 4,
+   "cols": 4,
+   "par": 7,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 13,
+   "chapter": "First Flight",
+   "rows": 4,
+   "cols": 4,
+   "par": 8,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 14,
+   "chapter": "First Flight",
+   "rows": 4,
+   "cols": 4,
+   "par": 7,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 15,
+   "chapter": "First Flight",
+   "rows": 4,
+   "cols": 4,
+   "par": 7,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 16,
+   "chapter": "First Flight",
+   "rows": 4,
+   "cols": 4,
+   "par": 7,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 17,
+   "chapter": "First Flight",
+   "rows": 4,
+   "cols": 4,
+   "par": 7,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 18,
+   "chapter": "First Flight",
+   "rows": 4,
+   "cols": 4,
+   "par": 8,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "L"
+    }
+   ]
+  },
+  {
+   "id": 19,
+   "chapter": "First Flight",
+   "rows": 4,
+   "cols": 4,
+   "par": 8,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 20,
+   "chapter": "First Flight",
+   "rows": 4,
+   "cols": 4,
+   "par": 8,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 21,
+   "chapter": "Sidewinder",
+   "rows": 5,
+   "cols": 5,
+   "par": 7,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 0,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "R"
+    }
+   ]
+  },
+  {
+   "id": 22,
+   "chapter": "Sidewinder",
+   "rows": 5,
+   "cols": 5,
+   "par": 7,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "L"
+    }
+   ]
+  },
+  {
+   "id": 23,
+   "chapter": "Sidewinder",
+   "rows": 5,
+   "cols": 5,
+   "par": 9,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 24,
+   "chapter": "Sidewinder",
+   "rows": 5,
+   "cols": 5,
+   "par": 8,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 25,
+   "chapter": "Sidewinder",
+   "rows": 5,
+   "cols": 5,
+   "par": 10,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 26,
+   "chapter": "Sidewinder",
+   "rows": 5,
+   "cols": 5,
+   "par": 8,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "L"
+    }
+   ]
+  },
+  {
+   "id": 27,
+   "chapter": "Sidewinder",
+   "rows": 5,
+   "cols": 5,
+   "par": 11,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 0,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "L"
+    }
+   ]
+  },
+  {
+   "id": 28,
+   "chapter": "Sidewinder",
+   "rows": 5,
+   "cols": 5,
+   "par": 9,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 1,
+     "d": "R"
+    }
+   ]
+  },
+  {
+   "id": 29,
+   "chapter": "Sidewinder",
+   "rows": 5,
+   "cols": 5,
+   "par": 10,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "R"
+    }
+   ]
+  },
+  {
+   "id": 30,
+   "chapter": "Sidewinder",
+   "rows": 5,
+   "cols": 5,
+   "par": 10,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 31,
+   "chapter": "Sidewinder",
+   "rows": 5,
+   "cols": 5,
+   "par": 10,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "L"
+    }
+   ]
+  },
+  {
+   "id": 32,
+   "chapter": "Sidewinder",
+   "rows": 5,
+   "cols": 5,
+   "par": 10,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 0,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 33,
+   "chapter": "Sidewinder",
+   "rows": 5,
+   "cols": 5,
+   "par": 10,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "L"
+    }
+   ]
+  },
+  {
+   "id": 34,
+   "chapter": "Sidewinder",
+   "rows": 5,
+   "cols": 5,
+   "par": 11,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 1,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 35,
+   "chapter": "Sidewinder",
+   "rows": 5,
+   "cols": 5,
+   "par": 12,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "L"
+    }
+   ]
+  },
+  {
+   "id": 36,
+   "chapter": "Sidewinder",
+   "rows": 5,
+   "cols": 5,
+   "par": 12,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 0,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 1,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 37,
+   "chapter": "Sidewinder",
+   "rows": 5,
+   "cols": 5,
+   "par": 17,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 38,
+   "chapter": "Sidewinder",
+   "rows": 5,
+   "cols": 5,
+   "par": 13,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 0,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 1,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 39,
+   "chapter": "Sidewinder",
+   "rows": 5,
+   "cols": 5,
+   "par": 12,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 0,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 40,
+   "chapter": "Sidewinder",
+   "rows": 5,
+   "cols": 5,
+   "par": 16,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "R"
+    }
+   ]
+  },
+  {
+   "id": 41,
+   "chapter": "Crossfire",
+   "rows": 6,
+   "cols": 6,
+   "par": 10,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 0,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 42,
+   "chapter": "Crossfire",
+   "rows": 6,
+   "cols": 6,
+   "par": 11,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 5,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 2,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 43,
+   "chapter": "Crossfire",
+   "rows": 6,
+   "cols": 6,
+   "par": 13,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 0,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 5,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 44,
+   "chapter": "Crossfire",
+   "rows": 6,
+   "cols": 6,
+   "par": 13,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 3,
+     "d": "R"
+    }
+   ]
+  },
+  {
+   "id": 45,
+   "chapter": "Crossfire",
+   "rows": 6,
+   "cols": 6,
+   "par": 14,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 2,
+     "d": "R"
+    }
+   ]
+  },
+  {
+   "id": 46,
+   "chapter": "Crossfire",
+   "rows": 6,
+   "cols": 6,
+   "par": 16,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 5,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 5,
+     "d": "L"
+    }
+   ]
+  },
+  {
+   "id": 47,
+   "chapter": "Crossfire",
+   "rows": 6,
+   "cols": 6,
+   "par": 15,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 2,
+     "d": "R"
+    }
+   ]
+  },
+  {
+   "id": 48,
+   "chapter": "Crossfire",
+   "rows": 6,
+   "cols": 6,
+   "par": 18,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 3,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 49,
+   "chapter": "Crossfire",
+   "rows": 6,
+   "cols": 6,
+   "par": 15,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 0,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 5,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 50,
+   "chapter": "Crossfire",
+   "rows": 6,
+   "cols": 6,
+   "par": 21,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 5,
+     "d": "L"
+    }
+   ]
+  },
+  {
+   "id": 51,
+   "chapter": "Crossfire",
+   "rows": 6,
+   "cols": 6,
+   "par": 16,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 2,
+     "d": "R"
+    }
+   ]
+  },
+  {
+   "id": 52,
+   "chapter": "Crossfire",
+   "rows": 6,
+   "cols": 6,
+   "par": 16,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 0,
+     "d": "R"
+    }
+   ]
+  },
+  {
+   "id": 53,
+   "chapter": "Crossfire",
+   "rows": 6,
+   "cols": 6,
+   "par": 19,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 5,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 4,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 54,
+   "chapter": "Crossfire",
+   "rows": 6,
+   "cols": 6,
+   "par": 16,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 5,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 5,
+     "d": "L"
+    }
+   ]
+  },
+  {
+   "id": 55,
+   "chapter": "Crossfire",
+   "rows": 6,
+   "cols": 6,
+   "par": 20,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "R"
+    }
+   ]
+  },
+  {
+   "id": 56,
+   "chapter": "Crossfire",
+   "rows": 6,
+   "cols": 6,
+   "par": 16,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 5,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 4,
+     "d": "L"
+    }
+   ]
+  },
+  {
+   "id": 57,
+   "chapter": "Crossfire",
+   "rows": 6,
+   "cols": 6,
+   "par": 17,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 2,
+     "d": "R"
+    }
+   ]
+  },
+  {
+   "id": 58,
+   "chapter": "Crossfire",
+   "rows": 6,
+   "cols": 6,
+   "par": 21,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 3,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 59,
+   "chapter": "Crossfire",
+   "rows": 6,
+   "cols": 6,
+   "par": 16,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 3,
+     "d": "L"
+    }
+   ]
+  },
+  {
+   "id": 60,
+   "chapter": "Crossfire",
+   "rows": 6,
+   "cols": 6,
+   "par": 21,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 2,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 61,
+   "chapter": "Knotwork",
+   "rows": 7,
+   "cols": 7,
+   "par": 14,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 6,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 4,
+     "d": "L"
+    }
+   ]
+  },
+  {
+   "id": 62,
+   "chapter": "Knotwork",
+   "rows": 7,
+   "cols": 7,
+   "par": 15,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 6,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 6,
+     "d": "L"
+    }
+   ]
+  },
+  {
+   "id": 63,
+   "chapter": "Knotwork",
+   "rows": 7,
+   "cols": 7,
+   "par": 18,
+   "arrows": [
+    {
+     "r": 1,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 6,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 6,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 3,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 64,
+   "chapter": "Knotwork",
+   "rows": 7,
+   "cols": 7,
+   "par": 19,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 3,
+     "d": "R"
+    }
+   ]
+  },
+  {
+   "id": 65,
+   "chapter": "Knotwork",
+   "rows": 7,
+   "cols": 7,
+   "par": 19,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 6,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 5,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 5,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 66,
+   "chapter": "Knotwork",
+   "rows": 7,
+   "cols": 7,
+   "par": 21,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 6,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 67,
+   "chapter": "Knotwork",
+   "rows": 7,
+   "cols": 7,
+   "par": 22,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 6,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 6,
+     "c": 4,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 68,
+   "chapter": "Knotwork",
+   "rows": 7,
+   "cols": 7,
+   "par": 27,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 0,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 0,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 6,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 6,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 4,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 69,
+   "chapter": "Knotwork",
+   "rows": 7,
+   "cols": 7,
+   "par": 25,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 6,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 4,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 70,
+   "chapter": "Knotwork",
+   "rows": 7,
+   "cols": 7,
+   "par": 27,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 6,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "R"
+    },
+    {
+     "r": 6,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 5,
+     "d": "L"
+    }
+   ]
+  },
+  {
+   "id": 71,
+   "chapter": "Knotwork",
+   "rows": 7,
+   "cols": 7,
+   "par": 25,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 4,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 5,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 6,
+     "d": "L"
+    }
+   ]
+  },
+  {
+   "id": 72,
+   "chapter": "Knotwork",
+   "rows": 7,
+   "cols": 7,
+   "par": 28,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 6,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 6,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 6,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 6,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 73,
+   "chapter": "Knotwork",
+   "rows": 7,
+   "cols": 7,
+   "par": 34,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 1,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 74,
+   "chapter": "Knotwork",
+   "rows": 7,
+   "cols": 7,
+   "par": 26,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 5,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 4,
+     "d": "R"
+    },
+    {
+     "r": 6,
+     "c": 5,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 75,
+   "chapter": "Knotwork",
+   "rows": 7,
+   "cols": 7,
+   "par": 27,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 0,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 0,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 4,
+     "d": "R"
+    }
+   ]
+  },
+  {
+   "id": 76,
+   "chapter": "Knotwork",
+   "rows": 7,
+   "cols": 7,
+   "par": 27,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 5,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 4,
+     "d": "R"
+    },
+    {
+     "r": 6,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 6,
+     "c": 3,
+     "d": "R"
+    }
+   ]
+  },
+  {
+   "id": 77,
+   "chapter": "Knotwork",
+   "rows": 7,
+   "cols": 7,
+   "par": 29,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "L"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 0,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 0,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 5,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 5,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 78,
+   "chapter": "Knotwork",
+   "rows": 7,
+   "cols": 7,
+   "par": 37,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 5,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 6,
+     "c": 5,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 79,
+   "chapter": "Knotwork",
+   "rows": 7,
+   "cols": 7,
+   "par": 27,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 5,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 5,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 80,
+   "chapter": "Knotwork",
+   "rows": 7,
+   "cols": 7,
+   "par": 29,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 6,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 6,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 6,
+     "d": "L"
+    }
+   ]
+  },
+  {
+   "id": 81,
+   "chapter": "Overdrive",
+   "rows": 8,
+   "cols": 8,
+   "par": 18,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 7,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 7,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 7,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 7,
+     "c": 4,
+     "d": "R"
+    }
+   ]
+  },
+  {
+   "id": 82,
+   "chapter": "Overdrive",
+   "rows": 8,
+   "cols": 8,
+   "par": 20,
+   "arrows": [
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 5,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 4,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 6,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 6,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 6,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 5,
+     "d": "R"
+    },
+    {
+     "r": 6,
+     "c": 6,
+     "d": "D"
+    }
+   ]
+  },
+  {
+   "id": 83,
+   "chapter": "Overdrive",
+   "rows": 8,
+   "cols": 8,
+   "par": 23,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 7,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 7,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 7,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 7,
+     "c": 7,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 84,
+   "chapter": "Overdrive",
+   "rows": 8,
+   "cols": 8,
+   "par": 21,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 0,
+     "c": 6,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 7,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 6,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 7,
+     "d": "U"
+    },
+    {
+     "r": 7,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 7,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 7,
+     "c": 7,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 85,
+   "chapter": "Overdrive",
+   "rows": 8,
+   "cols": 8,
+   "par": 25,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 5,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 7,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 5,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 7,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 5,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 6,
+     "d": "U"
+    },
+    {
+     "r": 7,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 7,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 7,
+     "c": 5,
+     "d": "U"
+    },
+    {
+     "r": 7,
+     "c": 6,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 86,
+   "chapter": "Overdrive",
+   "rows": 8,
+   "cols": 8,
+   "par": 24,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 6,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 6,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 6,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 6,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 7,
+     "d": "L"
+    },
+    {
+     "r": 7,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 7,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 7,
+     "c": 7,
+     "d": "L"
+    }
+   ]
+  },
+  {
+   "id": 87,
+   "chapter": "Overdrive",
+   "rows": 8,
+   "cols": 8,
+   "par": 29,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 7,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 7,
+     "d": "D"
+    },
+    {
+     "r": 5,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 6,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 7,
+     "c": 0,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 88,
+   "chapter": "Overdrive",
+   "rows": 8,
+   "cols": 8,
+   "par": 30,
+   "arrows": [
+    {
+     "r": 1,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 7,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 7,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 6,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 7,
+     "c": 1,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 89,
+   "chapter": "Overdrive",
+   "rows": 8,
+   "cols": 8,
+   "par": 33,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 0,
+     "c": 7,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 6,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 7,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 6,
+     "d": "D"
+    },
+    {
+     "r": 5,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 7,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 7,
+     "c": 0,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 90,
+   "chapter": "Overdrive",
+   "rows": 8,
+   "cols": 8,
+   "par": 29,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 0,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 0,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 7,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 7,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 7,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 7,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 5,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 6,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 6,
+     "c": 6,
+     "d": "U"
+    },
+    {
+     "r": 7,
+     "c": 6,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 91,
+   "chapter": "Overdrive",
+   "rows": 8,
+   "cols": 8,
+   "par": 32,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 7,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 7,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 5,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 7,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 7,
+     "c": 4,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 92,
+   "chapter": "Overdrive",
+   "rows": 8,
+   "cols": 8,
+   "par": 39,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 5,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 7,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 5,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 7,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 6,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 6,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 6,
+     "c": 5,
+     "d": "R"
+    },
+    {
+     "r": 7,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 7,
+     "c": 2,
+     "d": "R"
+    }
+   ]
+  },
+  {
+   "id": 93,
+   "chapter": "Overdrive",
+   "rows": 8,
+   "cols": 8,
+   "par": 42,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 7,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 5,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 7,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 7,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 5,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 7,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 5,
+     "d": "U"
+    },
+    {
+     "r": 7,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 7,
+     "c": 5,
+     "d": "U"
+    },
+    {
+     "r": 7,
+     "c": 7,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 94,
+   "chapter": "Overdrive",
+   "rows": 8,
+   "cols": 8,
+   "par": 31,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 7,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 5,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 7,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 7,
+     "d": "L"
+    },
+    {
+     "r": 7,
+     "c": 7,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 95,
+   "chapter": "Overdrive",
+   "rows": 8,
+   "cols": 8,
+   "par": 36,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 5,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 7,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 5,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 7,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 6,
+     "d": "U"
+    },
+    {
+     "r": 7,
+     "c": 2,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 96,
+   "chapter": "Overdrive",
+   "rows": 8,
+   "cols": 8,
+   "par": 45,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 7,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 5,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 6,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 7,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 7,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 7,
+     "c": 3,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 97,
+   "chapter": "Overdrive",
+   "rows": 8,
+   "cols": 8,
+   "par": 34,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 0,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 7,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 7,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 7,
+     "d": "U"
+    },
+    {
+     "r": 7,
+     "c": 7,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 98,
+   "chapter": "Overdrive",
+   "rows": 8,
+   "cols": 8,
+   "par": 37,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 6,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 7,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 6,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 7,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 6,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 6,
+     "d": "D"
+    },
+    {
+     "r": 5,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 6,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 6,
+     "c": 5,
+     "d": "R"
+    },
+    {
+     "r": 7,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 7,
+     "c": 1,
+     "d": "U"
+    },
+    {
+     "r": 7,
+     "c": 2,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 99,
+   "chapter": "Overdrive",
+   "rows": 8,
+   "cols": 8,
+   "par": 36,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 1,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 2,
+     "c": 5,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 7,
+     "d": "L"
+    },
+    {
+     "r": 4,
+     "c": 0,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 5,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 2,
+     "d": "D"
+    },
+    {
+     "r": 5,
+     "c": 3,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 5,
+     "c": 7,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 7,
+     "d": "U"
+    },
+    {
+     "r": 7,
+     "c": 7,
+     "d": "U"
+    }
+   ]
+  },
+  {
+   "id": 100,
+   "chapter": "Overdrive",
+   "rows": 8,
+   "cols": 8,
+   "par": 39,
+   "arrows": [
+    {
+     "r": 0,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 0,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 1,
+     "c": 5,
+     "d": "L"
+    },
+    {
+     "r": 1,
+     "c": 7,
+     "d": "L"
+    },
+    {
+     "r": 2,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 2,
+     "c": 3,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 2,
+     "c": 6,
+     "d": "L"
+    },
+    {
+     "r": 3,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 3,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 3,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 1,
+     "d": "D"
+    },
+    {
+     "r": 4,
+     "c": 2,
+     "d": "U"
+    },
+    {
+     "r": 4,
+     "c": 3,
+     "d": "R"
+    },
+    {
+     "r": 4,
+     "c": 4,
+     "d": "D"
+    },
+    {
+     "r": 5,
+     "c": 0,
+     "d": "U"
+    },
+    {
+     "r": 5,
+     "c": 1,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 2,
+     "d": "R"
+    },
+    {
+     "r": 5,
+     "c": 5,
+     "d": "D"
+    },
+    {
+     "r": 6,
+     "c": 4,
+     "d": "L"
+    },
+    {
+     "r": 6,
+     "c": 7,
+     "d": "L"
+    },
+    {
+     "r": 7,
+     "c": 2,
+     "d": "U"
+    }
+   ]
+  }
+ ]
 }
