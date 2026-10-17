@@ -1,0 +1,1113 @@
+{
+  "levels": [
+    {
+      "id": 1,
+      "name": "First Drop",
+      "chapter": "Rain",
+      "rows": 4,
+      "cols": 4,
+      "tiles": [
+        "RR..",
+        "RR..",
+        "....",
+        "...."
+      ],
+      "emitters": [
+        {
+          "color": "R",
+          "ammo": 1
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        }
+      ],
+      "switchTokens": 2,
+      "bufferSize": 5
+    },
+    {
+      "id": 2,
+      "name": "Two Tones",
+      "chapter": "Rain",
+      "rows": 4,
+      "cols": 4,
+      "tiles": [
+        "RRBB",
+        "RRBB",
+        "....",
+        "...."
+      ],
+      "emitters": [
+        {
+          "color": "B",
+          "ammo": 1
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 1
+        },
+        {
+          "color": "B",
+          "ammo": 3
+        }
+      ],
+      "switchTokens": 2,
+      "bufferSize": 5
+    },
+    {
+      "id": 3,
+      "name": "Third Hue",
+      "chapter": "Rain",
+      "rows": 4,
+      "cols": 4,
+      "tiles": [
+        "RRBB",
+        "RRBB",
+        "GG..",
+        "GG.."
+      ],
+      "emitters": [
+        {
+          "color": "B",
+          "ammo": 3
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "G",
+          "ammo": 1
+        },
+        {
+          "color": "R",
+          "ammo": 1
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "B",
+          "ammo": 1
+        }
+      ],
+      "switchTokens": 2,
+      "bufferSize": 5
+    },
+    {
+      "id": 4,
+      "name": "Tight Grid",
+      "chapter": "Rain",
+      "rows": 5,
+      "cols": 5,
+      "tiles": [
+        "RRRBB",
+        "RRRBB",
+        "GGGBB",
+        "GGG..",
+        "....."
+      ],
+      "emitters": [
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "B",
+          "ammo": 3
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "B",
+          "ammo": 3
+        }
+      ],
+      "switchTokens": 2,
+      "bufferSize": 5
+    },
+    {
+      "id": 5,
+      "name": "Rain Drops",
+      "chapter": "Rain",
+      "rows": 4,
+      "cols": 4,
+      "tiles": [
+        "RRBB",
+        "GGYY",
+        "RRBB",
+        "GGYY"
+      ],
+      "emitters": [
+        {
+          "color": "Y",
+          "ammo": 3
+        },
+        {
+          "color": "G",
+          "ammo": 1
+        },
+        {
+          "color": "B",
+          "ammo": 1
+        },
+        {
+          "color": "B",
+          "ammo": 3
+        },
+        {
+          "color": "Y",
+          "ammo": 1
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 1
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        }
+      ],
+      "switchTokens": 2,
+      "bufferSize": 5
+    },
+    {
+      "id": 6,
+      "name": "First Thread",
+      "chapter": "Yarn",
+      "rows": 4,
+      "cols": 4,
+      "tiles": [
+        "RRRG",
+        "RRRG",
+        "BBGG",
+        "BBGG"
+      ],
+      "emitters": [
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "B",
+          "ammo": 1
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "B",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        }
+      ],
+      "switchTokens": 2,
+      "bufferSize": 5
+    },
+    {
+      "id": 7,
+      "name": "Knot",
+      "chapter": "Yarn",
+      "rows": 4,
+      "cols": 4,
+      "tiles": [
+        "RRBB",
+        "RRBB",
+        "GGYY",
+        "GGYY"
+      ],
+      "emitters": [
+        {
+          "color": "Y",
+          "ammo": 3
+        },
+        {
+          "color": "Y",
+          "ammo": 1
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "B",
+          "ammo": 3
+        },
+        {
+          "color": "G",
+          "ammo": 1
+        },
+        {
+          "color": "B",
+          "ammo": 1
+        },
+        {
+          "color": "R",
+          "ammo": 2
+        }
+      ],
+      "switchTokens": 2,
+      "bufferSize": 5
+    },
+    {
+      "id": 8,
+      "name": "Loose End",
+      "chapter": "Yarn",
+      "rows": 5,
+      "cols": 5,
+      "tiles": [
+        "RRRBB",
+        "RRRBB",
+        "GGGBB",
+        "GGG..",
+        "....."
+      ],
+      "emitters": [
+        {
+          "color": "G",
+          "ammo": 2
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "B",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "B",
+          "ammo": 3
+        }
+      ],
+      "switchTokens": 1,
+      "bufferSize": 5
+    },
+    {
+      "id": 9,
+      "name": "Weave",
+      "chapter": "Yarn",
+      "rows": 5,
+      "cols": 6,
+      "tiles": [
+        "RRRBBB",
+        "RRRBBB",
+        "GGGYYY",
+        "GGGYYY",
+        "......"
+      ],
+      "emitters": [
+        {
+          "color": "Y",
+          "ammo": 1
+        },
+        {
+          "color": "Y",
+          "ammo": 3
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "B",
+          "ammo": 1
+        },
+        {
+          "color": "B",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "B",
+          "ammo": 3
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "Y",
+          "ammo": 3
+        }
+      ],
+      "switchTokens": 1,
+      "bufferSize": 5
+    },
+    {
+      "id": 10,
+      "name": "Spool",
+      "chapter": "Yarn",
+      "rows": 4,
+      "cols": 6,
+      "tiles": [
+        "RRBBGG",
+        "RRBBGG",
+        "RRBBGG",
+        "......"
+      ],
+      "emitters": [
+        {
+          "color": "B",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 2
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "B",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        }
+      ],
+      "switchTokens": 1,
+      "bufferSize": 5
+    },
+    {
+      "id": 11,
+      "name": "First Bead",
+      "chapter": "Beads",
+      "rows": 5,
+      "cols": 5,
+      "tiles": [
+        "RRRBB",
+        "RRRBB",
+        "GGGYY",
+        "GGGYY",
+        "....."
+      ],
+      "emitters": [
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 1
+        },
+        {
+          "color": "B",
+          "ammo": 3
+        },
+        {
+          "color": "B",
+          "ammo": 1
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "Y",
+          "ammo": 1
+        },
+        {
+          "color": "Y",
+          "ammo": 3
+        }
+      ],
+      "switchTokens": 1,
+      "bufferSize": 5
+    },
+    {
+      "id": 12,
+      "name": "Strand",
+      "chapter": "Beads",
+      "rows": 4,
+      "cols": 5,
+      "tiles": [
+        "RBYGP",
+        "RBYGP",
+        "RBYGP",
+        "....."
+      ],
+      "emitters": [
+        {
+          "color": "Y",
+          "ammo": 3
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "B",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "G",
+          "ammo": 2
+        },
+        {
+          "color": "P",
+          "ammo": 3
+        }
+      ],
+      "switchTokens": 1,
+      "bufferSize": 5
+    },
+    {
+      "id": 13,
+      "name": "Cluster",
+      "chapter": "Beads",
+      "rows": 6,
+      "cols": 4,
+      "tiles": [
+        "RRBB",
+        "RRBB",
+        "GGYY",
+        "GGYY",
+        "PPCC",
+        "PPCC"
+      ],
+      "emitters": [
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "P",
+          "ammo": 1
+        },
+        {
+          "color": "B",
+          "ammo": 3
+        },
+        {
+          "color": "Y",
+          "ammo": 3
+        },
+        {
+          "color": "G",
+          "ammo": 1
+        },
+        {
+          "color": "B",
+          "ammo": 2
+        },
+        {
+          "color": "P",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 2
+        },
+        {
+          "color": "C",
+          "ammo": 1
+        },
+        {
+          "color": "C",
+          "ammo": 3
+        },
+        {
+          "color": "Y",
+          "ammo": 1
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        }
+      ],
+      "switchTokens": 1,
+      "bufferSize": 5
+    },
+    {
+      "id": 14,
+      "name": "Facets",
+      "chapter": "Beads",
+      "rows": 5,
+      "cols": 6,
+      "tiles": [
+        "RRRRBB",
+        "RRRRBB",
+        "GGGGYY",
+        "GGGGYY",
+        "......"
+      ],
+      "emitters": [
+        {
+          "color": "Y",
+          "ammo": 1
+        },
+        {
+          "color": "B",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "G",
+          "ammo": 1
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "Y",
+          "ammo": 3
+        },
+        {
+          "color": "B",
+          "ammo": 1
+        }
+      ],
+      "switchTokens": 1,
+      "bufferSize": 5
+    },
+    {
+      "id": 15,
+      "name": "Chandelier",
+      "chapter": "Beads",
+      "rows": 4,
+      "cols": 6,
+      "tiles": [
+        "RBYGPC",
+        "RBYGPC",
+        "RBYGPC",
+        "RBYGPC"
+      ],
+      "emitters": [
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "Y",
+          "ammo": 1
+        },
+        {
+          "color": "P",
+          "ammo": 2
+        },
+        {
+          "color": "P",
+          "ammo": 3
+        },
+        {
+          "color": "G",
+          "ammo": 1
+        },
+        {
+          "color": "R",
+          "ammo": 1
+        },
+        {
+          "color": "B",
+          "ammo": 3
+        },
+        {
+          "color": "C",
+          "ammo": 3
+        },
+        {
+          "color": "Y",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "B",
+          "ammo": 3
+        },
+        {
+          "color": "C",
+          "ammo": 1
+        }
+      ],
+      "switchTokens": 1,
+      "bufferSize": 5
+    },
+    {
+      "id": 16,
+      "name": "Sherbet",
+      "chapter": "Candy",
+      "rows": 6,
+      "cols": 6,
+      "tiles": [
+        "RRRBBB",
+        "RRRBBB",
+        "GGGYYY",
+        "GGGYYY",
+        "PPPOOO",
+        "PPPOOO"
+      ],
+      "emitters": [
+        {
+          "color": "B",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "Y",
+          "ammo": 3
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "P",
+          "ammo": 3
+        },
+        {
+          "color": "B",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "O",
+          "ammo": 2
+        },
+        {
+          "color": "O",
+          "ammo": 3
+        },
+        {
+          "color": "Y",
+          "ammo": 3
+        },
+        {
+          "color": "P",
+          "ammo": 3
+        },
+        {
+          "color": "O",
+          "ammo": 3
+        }
+      ],
+      "switchTokens": 1,
+      "bufferSize": 5
+    },
+    {
+      "id": 17,
+      "name": "Jelly Lines",
+      "chapter": "Candy",
+      "rows": 6,
+      "cols": 6,
+      "tiles": [
+        "RRBBGG",
+        "RRBBGG",
+        "RRBBGG",
+        "YYPPCC",
+        "YYPPCC",
+        "YYPPCC"
+      ],
+      "emitters": [
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "P",
+          "ammo": 3
+        },
+        {
+          "color": "Y",
+          "ammo": 3
+        },
+        {
+          "color": "C",
+          "ammo": 3
+        },
+        {
+          "color": "B",
+          "ammo": 3
+        },
+        {
+          "color": "Y",
+          "ammo": 3
+        },
+        {
+          "color": "B",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "C",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 1
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "C",
+          "ammo": 2
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "P",
+          "ammo": 3
+        }
+      ],
+      "switchTokens": 1,
+      "bufferSize": 5
+    },
+    {
+      "id": 18,
+      "name": "Sugar Rush",
+      "chapter": "Candy",
+      "rows": 6,
+      "cols": 6,
+      "tiles": [
+        "RBYGPC",
+        "RBYGPC",
+        "RBYGPC",
+        "RBYGPC",
+        "RBYGPC",
+        "RBYGPC"
+      ],
+      "emitters": [
+        {
+          "color": "B",
+          "ammo": 3
+        },
+        {
+          "color": "Y",
+          "ammo": 3
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "P",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "Y",
+          "ammo": 3
+        },
+        {
+          "color": "C",
+          "ammo": 3
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "P",
+          "ammo": 3
+        },
+        {
+          "color": "Y",
+          "ammo": 3
+        },
+        {
+          "color": "B",
+          "ammo": 3
+        },
+        {
+          "color": "C",
+          "ammo": 3
+        }
+      ],
+      "switchTokens": 1,
+      "bufferSize": 5
+    },
+    {
+      "id": 19,
+      "name": "Neon Blocks",
+      "chapter": "Candy",
+      "rows": 6,
+      "cols": 8,
+      "tiles": [
+        "RRRRBBBB",
+        "RRRRBBBB",
+        "GGGGYYYY",
+        "GGGGYYYY",
+        "PPPPCCCC",
+        "PPPPCCCC"
+      ],
+      "emitters": [
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "B",
+          "ammo": 3
+        },
+        {
+          "color": "P",
+          "ammo": 2
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "Y",
+          "ammo": 3
+        },
+        {
+          "color": "P",
+          "ammo": 3
+        },
+        {
+          "color": "Y",
+          "ammo": 2
+        },
+        {
+          "color": "P",
+          "ammo": 3
+        },
+        {
+          "color": "B",
+          "ammo": 3
+        },
+        {
+          "color": "G",
+          "ammo": 1
+        },
+        {
+          "color": "C",
+          "ammo": 3
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "C",
+          "ammo": 2
+        },
+        {
+          "color": "R",
+          "ammo": 2
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "C",
+          "ammo": 3
+        },
+        {
+          "color": "Y",
+          "ammo": 3
+        },
+        {
+          "color": "B",
+          "ammo": 3
+        }
+      ],
+      "switchTokens": 1,
+      "bufferSize": 5
+    },
+    {
+      "id": 20,
+      "name": "Cascade",
+      "chapter": "Candy",
+      "rows": 6,
+      "cols": 7,
+      "tiles": [
+        "RBYGPCO",
+        "RBYGPCO",
+        "RBYGPCO",
+        "RBYGPCO",
+        "RBYGPCO",
+        "RBYGPCO"
+      ],
+      "emitters": [
+        {
+          "color": "P",
+          "ammo": 3
+        },
+        {
+          "color": "O",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "O",
+          "ammo": 3
+        },
+        {
+          "color": "O",
+          "ammo": 3
+        },
+        {
+          "color": "C",
+          "ammo": 3
+        },
+        {
+          "color": "B",
+          "ammo": 3
+        },
+        {
+          "color": "Y",
+          "ammo": 3
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "B",
+          "ammo": 3
+        },
+        {
+          "color": "G",
+          "ammo": 3
+        },
+        {
+          "color": "C",
+          "ammo": 3
+        },
+        {
+          "color": "P",
+          "ammo": 3
+        },
+        {
+          "color": "R",
+          "ammo": 3
+        },
+        {
+          "color": "Y",
+          "ammo": 3
+        }
+      ],
+      "switchTokens": 1,
+      "bufferSize": 5
+    }
+  ]
+}
