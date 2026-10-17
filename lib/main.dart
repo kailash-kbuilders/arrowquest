@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'screens/home_screen.dart';
@@ -6,12 +8,33 @@ import 'services/progress_service.dart';
 import 'theme/app_colors.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await ProgressService.instance.init();
-  // Ad initialisation is fire-and-forget: a slow or unavailable ad SDK must
-  // never block the first frame.
-  AdsService.instance.init();
-  runApp(const HueRushApp());
+  runZonedGuarded(
+    () async {
+      WidgetsFlutterBinding.ensureInitialized();
+
+      FlutterError.onError = (FlutterErrorDetails details) {
+        FlutterError.presentError(details);
+      };
+
+      // Saved progress is best-effort: a storage problem must never stop the
+      // app from starting.
+      try {
+        await ProgressService.instance.init();
+      } catch (_) {
+        // Fall back to in-memory defaults.
+      }
+
+      // Ads initialise after the first frame so they can never block startup.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        AdsService.instance.init();
+      });
+
+      runApp(const HueRushApp());
+    },
+    (Object error, StackTrace stack) {
+      debugPrint('Uncaught error: $error');
+    },
+  );
 }
 
 class HueRushApp extends StatelessWidget {
