@@ -45,6 +45,19 @@ jobs:
             rm -rf "$TMP"
           fi
 
+      # `flutter build apk --no-shrink` no longer turns R8 off: the flag is gone
+      # from this Flutter version and the Gradle plugin enables minification for
+      # release builds by default. The plugin reads a `shrink` Gradle property,
+      # so the only reliable switch is to set it here. Without this, R8 strips
+      # and renames the AdMob SDK and the app dies the moment it is opened.
+      - name: Disable R8 shrinking
+        run: |
+          GP=android/gradle.properties
+          if ! grep -q '^shrink=' "$GP"; then
+            printf '\n# Keep R8 minification and resource shrinking off.\nshrink=false\n' >> "$GP"
+          fi
+          cat "$GP"
+
       # Give the app a repo-specific applicationId / namespace and label.
       #
       # NOTE: compileSdk is deliberately left alone. The Flutter template sets
@@ -111,32 +124,52 @@ jobs:
       - name: Install launcher icons
         run: |
           RES="android/app/src/main/res"
-          if [ -d "branding/android" ] && [ -d "$RES" ]; then
-            mkdir -p "$RES/drawable" "$RES/mipmap-anydpi-v26"
-            for d in branding/android/mipmap-*/; do
-              name="$(basename "$d")"
-              mkdir -p "$RES/$name"
-              cp -f "$d"*.png "$RES/$name/"
-            done
-            cp -f branding/android/ic_launcher_background.xml "$RES/drawable/ic_launcher_background.xml"
-            cp -f branding/android/ic_launcher.xml "$RES/mipmap-anydpi-v26/ic_launcher.xml"
-            cp -f branding/android/ic_launcher.xml "$RES/mipmap-anydpi-v26/ic_launcher_round.xml"
-            echo "installed launcher icons"
-          else
-            echo "no branding/android folder; keeping the template icon"
+          if [ ! -d "branding/android" ]; then
+            echo "::error::branding/android is missing — the app would ship with the Flutter template icon"
+            exit 1
           fi
+          mkdir -p "$RES/drawable" "$RES/mipmap-anydpi-v26"
+          for d in branding/android/mipmap-*/; do
+            name="$(basename "$d")"
+            mkdir -p "$RES/$name"
+            cp -f "$d"*.png "$RES/$name/"
+          done
+          cp -f branding/android/ic_launcher_background.xml "$RES/drawable/ic_launcher_background.xml"
+          cp -f branding/android/ic_launcher.xml "$RES/mipmap-anydpi-v26/ic_launcher.xml"
+          cp -f branding/android/ic_launcher.xml "$RES/mipmap-anydpi-v26/ic_launcher_round.xml"
+          echo "installed launcher icons:"
+          find "$RES" -name 'ic_launcher*' | sort
 
       - name: Show Android SDK configuration
         run: |
           grep -rnE "compileSdk|targetSdk|minSdk|ndkVersion" android/app/build.gradle* || true
 
-      # R8 keep rules (minification itself is skipped via --no-shrink).
-      - name: Gradle fixes (R8 rules)
+      # Belt and braces: these rules are only consulted if R8 is ever switched
+      # back on, and they are what keeps the ads SDK alive when it is.
+      - name: Gradle fixes (R8 keep rules)
         run: |
           cat > android/app/proguard-rules.pro <<'EOF'
           -dontwarn io.flutter.**
           -keep class io.flutter.** { *; }
+          -keep class io.flutter.plugins.** { *; }
+          -keep class com.google.android.gms.** { *; }
+          -dontwarn com.google.android.gms.**
+          -keep class com.google.android.ump.** { *; }
+          -dontwarn com.google.android.ump.**
           EOF
+          cat android/app/proguard-rules.pro
+
+      # Print everything that has to be right, and fail loudly if it is not.
+      - name: Verify Android configuration
+        run: |
+          echo "--- gradle.properties ---"
+          cat android/gradle.properties
+          echo "--- shrink property ---"
+          grep -n '^shrink=' android/gradle.properties || (echo "shrink property missing" && exit 1)
+          echo "--- manifest ---"
+          grep -nE "APPLICATION_ID|INTERNET" android/app/src/main/AndroidManifest.xml
+          echo "--- launcher icons ---"
+          find android/app/src/main/res -name 'ic_launcher*' | sort
 
       - name: Install dependencies
         run: flutter pub get
