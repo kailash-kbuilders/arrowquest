@@ -120,10 +120,10 @@ void main() {
     await tester.tap(find.text('Settings'));
     await tester.pump();
     await tester.pump(const Duration(seconds: 1));
-    expect(find.text('Sound'), findsOneWidget);
+    expect(find.text('Sound effects'), findsOneWidget);
     expect(SettingsService.instance.soundOn, isTrue);
 
-    await tester.tap(find.text('Sound'));
+    await tester.tap(find.text('Sound effects'));
     await tester.pump(const Duration(milliseconds: 200));
 
     expect(SettingsService.instance.soundOn, isFalse);

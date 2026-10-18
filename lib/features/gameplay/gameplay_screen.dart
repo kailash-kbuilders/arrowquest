@@ -364,6 +364,8 @@ class _GameplayScreenState extends State<GameplayScreen>
   Widget build(BuildContext context) {
     final AppPalette palette = AppPalette.of(context);
     final Level level = widget.level;
+    final Size screen = MediaQuery.sizeOf(context);
+    final bool compact = screen.height < 720;
 
     return Scaffold(
       appBar: AppBar(
@@ -408,7 +410,7 @@ class _GameplayScreenState extends State<GameplayScreen>
                           'Level ${level.id}',
                           style: TextStyle(
                             color: palette.text,
-                            fontSize: 26,
+                            fontSize: compact ? 21 : 26,
                             fontWeight: FontWeight.w800,
                           ),
                         ),
@@ -425,23 +427,30 @@ class _GameplayScreenState extends State<GameplayScreen>
                   _Hearts(hearts: _engine.hearts, palette: palette),
                 ],
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: compact ? 4 : 10),
               Expanded(
-                child: BoardView(
-                  rows: _engine.rows,
-                  cols: _engine.cols,
-                  arrows: _engine.arrows,
-                  onTapCell: _onTapCell,
-                  ghost: _ghost,
-                  ghostT: _ghostT,
-                  blockedArrow: _blocked,
-                  blockedT: _blockedT,
-                  hintHead: _hintHead,
-                  hintT: 0.5,
-                  zoomable: _zoomed,
+                child: Center(
+                  child: ConstrainedBox(
+                    // Keeps the board a sensible size on tablets and in
+                    // landscape instead of stretching it across the screen.
+                    constraints: const BoxConstraints(maxWidth: 560),
+                    child: BoardView(
+                      rows: _engine.rows,
+                      cols: _engine.cols,
+                      arrows: _engine.arrows,
+                      onTapCell: _onTapCell,
+                      ghost: _ghost,
+                      ghostT: _ghostT,
+                      blockedArrow: _blocked,
+                      blockedT: _blockedT,
+                      hintHead: _hintHead,
+                      hintT: 0.5,
+                      zoomable: _zoomed,
+                    ),
+                  ),
                 ),
               ),
-              const SizedBox(height: 14),
+              SizedBox(height: compact ? 8 : 14),
               ActionBar(
                 canUndo: _engine.canUndo && !_busy,
                 canHint: !_busy && !_engine.isOver && !_adBusy,

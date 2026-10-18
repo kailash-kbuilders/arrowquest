@@ -19,7 +19,8 @@ class SettingsService extends ChangeNotifier {
   SharedPreferences? _prefs;
 
   bool _sound = true;
-  bool _music = true;
+  // Ambient music is opt-in: it never starts on its own.
+  bool _music = false;
   bool _vibration = true;
   bool _reducedMotion = false;
   bool _darkTheme = true;
@@ -32,7 +33,7 @@ class SettingsService extends ChangeNotifier {
     try {
       final SharedPreferences p = await _prefsInstance();
       _sound = p.getBool(_kSound) ?? true;
-      _music = p.getBool(_kMusic) ?? true;
+      _music = p.getBool(_kMusic) ?? false;
       _vibration = p.getBool(_kVibration) ?? true;
       _reducedMotion = p.getBool(_kReducedMotion) ?? false;
       _darkTheme = p.getBool(_kDarkTheme) ?? true;

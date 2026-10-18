@@ -13,6 +13,10 @@ import '../settings/settings_screen.dart';
 import '../statistics/statistics_screen.dart';
 
 /// The main menu.
+///
+/// Laid out as a centred, scrollable column capped at a comfortable reading
+/// width, so it fits a small phone without overflowing and still looks right on
+/// a tablet.
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -68,9 +72,7 @@ class _HomeScreenState extends State<HomeScreen>
   void _push(Widget screen) {
     AudioService.instance.tap();
     Navigator.of(context)
-        .push(
-      MaterialPageRoute<void>(builder: (_) => screen),
-    )
+        .push(MaterialPageRoute<void>(builder: (_) => screen))
         .then((_) {
       if (mounted) setState(() {});
     });
@@ -80,6 +82,9 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     final AppPalette palette = AppPalette.of(context);
     final ProgressService progress = ProgressService.instance;
+    final Size screen = MediaQuery.sizeOf(context);
+    final bool compact = screen.height < 700;
+
     // Resume where the player left off, never past what they have unlocked.
     final int current = progress.currentLevel <= progress.unlocked
         ? progress.currentLevel
@@ -100,106 +105,147 @@ class _HomeScreenState extends State<HomeScreen>
               child: CustomPaint(painter: _GridPainter(palette: palette)),
             ),
             SafeArea(
-              child: FadeTransition(
-                opacity: _fade,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Column(
-                    children: <Widget>[
-                      const Spacer(flex: 2),
-                      Image.asset(
-                        AppConstants.logoAsset,
-                        height: 128,
-                        filterQuality: FilterQuality.high,
-                        errorBuilder: (_, __, ___) => Icon(
-                          Icons.explore,
-                          size: 96,
-                          color: palette.primary,
-                        ),
+              child: LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+                  return SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: constraints.maxHeight,
                       ),
-                      const SizedBox(height: 10),
-                      Text(
-                        AppConstants.appName.toUpperCase(),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 36,
-                          fontWeight: FontWeight.w800,
-                          letterSpacing: 6,
-                          color: palette.text,
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        AppConstants.tagline,
-                        style: TextStyle(
-                          color: palette.textDim,
-                          fontSize: 13,
-                          letterSpacing: 3,
-                        ),
-                      ),
-                      const Spacer(flex: 2),
-                      _ProgressCard(
-                        level: current,
-                        progress: progress.overallProgress,
-                        stars: progress.totalStars,
-                        palette: palette,
-                      ),
-                      const SizedBox(height: 16),
-                      SizedBox(
-                        width: double.infinity,
-                        child: FilledButton(
-                          onPressed: () => _openLevel(current),
-                          child: const Text('CONTINUE'),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      SizedBox(
-                        width: double.infinity,
-                        child: OutlinedButton.icon(
-                          onPressed: () => _push(const LevelSelectScreen()),
-                          icon: const Icon(Icons.grid_view_rounded, size: 18),
-                          label: const Text('Play Levels'),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      SizedBox(
-                        width: double.infinity,
-                        child: OutlinedButton.icon(
-                          onPressed: () => _openLevel(_dailyLevelId),
-                          icon: const Icon(Icons.today, size: 18),
-                          label: const Text('Daily Puzzle'),
-                        ),
-                      ),
-                      const SizedBox(height: 14),
-                      Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: OutlinedButton.icon(
-                              onPressed: () => _push(const StatisticsScreen()),
-                              icon: const Icon(Icons.bar_chart, size: 18),
-                              label: const Text('Stats'),
+                      child: Center(
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 460),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 24,
+                              vertical: 16,
+                            ),
+                            child: FadeTransition(
+                              opacity: _fade,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  SizedBox(height: compact ? 8 : 28),
+                                  Image.asset(
+                                    AppConstants.logoAsset,
+                                    height: compact ? 96 : 128,
+                                    filterQuality: FilterQuality.high,
+                                    errorBuilder: (_, __, ___) => Icon(
+                                      Icons.explore,
+                                      size: compact ? 72 : 96,
+                                      color: palette.primary,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    AppConstants.appName.toUpperCase(),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: compact ? 28 : 34,
+                                      fontWeight: FontWeight.w800,
+                                      letterSpacing: 5,
+                                      color: palette.text,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    AppConstants.tagline,
+                                    style: TextStyle(
+                                      color: palette.textDim,
+                                      fontSize: 12,
+                                      letterSpacing: 3,
+                                    ),
+                                  ),
+                                  SizedBox(height: compact ? 14 : 24),
+                                  _ProgressCard(
+                                    level: current,
+                                    progress: progress.overallProgress,
+                                    stars: progress.totalStars,
+                                    hints: progress.hintsAvailable,
+                                    palette: palette,
+                                  ),
+                                  const SizedBox(height: 14),
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: FilledButton(
+                                      onPressed: () => _openLevel(current),
+                                      child: const Text('CONTINUE'),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  _MenuButton(
+                                    icon: Icons.grid_view_rounded,
+                                    label: 'Play Levels',
+                                    onPressed: () =>
+                                        _push(const LevelSelectScreen()),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  _MenuButton(
+                                    icon: Icons.today,
+                                    label: 'Daily Puzzle',
+                                    onPressed: () => _openLevel(_dailyLevelId),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Row(
+                                    children: <Widget>[
+                                      Expanded(
+                                        child: _MenuButton(
+                                          icon: Icons.bar_chart,
+                                          label: 'Stats',
+                                          onPressed: () =>
+                                              _push(const StatisticsScreen()),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 10),
+                                      Expanded(
+                                        child: _MenuButton(
+                                          icon: Icons.settings_outlined,
+                                          label: 'Settings',
+                                          onPressed: () =>
+                                              _push(const SettingsScreen()),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 12),
+                                  const AdBanner(),
+                                ],
+                              ),
                             ),
                           ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: OutlinedButton.icon(
-                              onPressed: () => _push(const SettingsScreen()),
-                              icon:
-                                  const Icon(Icons.settings_outlined, size: 18),
-                              label: const Text('Settings'),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                      const Spacer(flex: 1),
-                      const AdBanner(),
-                    ],
-                  ),
-                ),
+                    ),
+                  );
+                },
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _MenuButton extends StatelessWidget {
+  const _MenuButton({
+    required this.icon,
+    required this.label,
+    required this.onPressed,
+  });
+
+  final IconData icon;
+  final String label;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: OutlinedButton.icon(
+        onPressed: onPressed,
+        icon: Icon(icon, size: 18),
+        label: Text(label),
       ),
     );
   }
@@ -210,12 +256,14 @@ class _ProgressCard extends StatelessWidget {
     required this.level,
     required this.progress,
     required this.stars,
+    required this.hints,
     required this.palette,
   });
 
   final int level;
   final double progress;
   final int stars;
+  final int hints;
   final AppPalette palette;
 
   @override
@@ -233,12 +281,15 @@ class _ProgressCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(
-                'Level $level of ${AppConstants.totalLevels}',
-                style: TextStyle(
-                  color: palette.text,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
+              Flexible(
+                child: Text(
+                  'Level $level of ${AppConstants.totalLevels}',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: palette.text,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
               Row(
@@ -247,6 +298,18 @@ class _ProgressCard extends StatelessWidget {
                   const SizedBox(width: 4),
                   Text(
                     '$stars',
+                    style: TextStyle(
+                      color: palette.text,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Icon(Icons.lightbulb_outline,
+                      size: 16, color: palette.dirLeft),
+                  const SizedBox(width: 4),
+                  Text(
+                    '$hints',
                     style: TextStyle(
                       color: palette.text,
                       fontSize: 14,

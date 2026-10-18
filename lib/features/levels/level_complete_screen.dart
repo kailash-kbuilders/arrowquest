@@ -137,71 +137,76 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen>
             Expanded(
               child: Center(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(28),
-                  child: ScaleTransition(
-                    scale: _pop,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Icon(Icons.check_circle,
-                            color: palette.success, size: 60),
-                        const SizedBox(height: 14),
-                        Text(
-                          isLast ? 'All levels cleared!' : 'Level cleared',
-                          style: TextStyle(
-                            color: palette.text,
-                            fontSize: 26,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                        const SizedBox(height: 6),
-                        Text(
-                          'Level ${widget.level.id} · ${widget.level.difficulty.label}',
-                          style:
-                              TextStyle(color: palette.textDim, fontSize: 14),
-                        ),
-                        const SizedBox(height: 18),
-                        _StarsRow(stars: widget.stars, palette: palette),
-                        const SizedBox(height: 22),
-                        _StatRow(
-                          label: 'Arrows cleared',
-                          value: '${widget.arrowsCleared}',
-                        ),
-                        _StatRow(label: 'Moves', value: '${widget.moves}'),
-                        if (widget.timed) _StatRow(label: 'Time', value: _time),
-                        const SizedBox(height: 18),
-                        _RewardedHintCard(
-                          hints: _progress.hintsAvailable,
-                          busy: _adBusy,
-                          onWatch: _watchForHint,
-                        ),
-                        const SizedBox(height: 22),
-                        SizedBox(
-                          width: double.infinity,
-                          child: FilledButton(
-                            onPressed: isLast ? _home : _next,
-                            child: Text(isLast ? 'Back to home' : 'Next level'),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: OutlinedButton(
-                                onPressed: _replay,
-                                child: const Text('Replay'),
-                              ),
+                  padding: const EdgeInsets.all(24),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 440),
+                    child: ScaleTransition(
+                      scale: _pop,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Icon(Icons.check_circle,
+                              color: palette.success, size: 60),
+                          const SizedBox(height: 14),
+                          Text(
+                            isLast ? 'All levels cleared!' : 'Level cleared',
+                            style: TextStyle(
+                              color: palette.text,
+                              fontSize: 26,
+                              fontWeight: FontWeight.w800,
                             ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: OutlinedButton(
-                                onPressed: _home,
-                                child: const Text('Home'),
-                              ),
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            'Level ${widget.level.id} · ${widget.level.difficulty.label}',
+                            style:
+                                TextStyle(color: palette.textDim, fontSize: 14),
+                          ),
+                          const SizedBox(height: 18),
+                          _StarsRow(stars: widget.stars, palette: palette),
+                          const SizedBox(height: 22),
+                          _StatRow(
+                            label: 'Arrows cleared',
+                            value: '${widget.arrowsCleared}',
+                          ),
+                          _StatRow(label: 'Moves', value: '${widget.moves}'),
+                          if (widget.timed)
+                            _StatRow(label: 'Time', value: _time),
+                          const SizedBox(height: 18),
+                          _RewardedHintCard(
+                            hints: _progress.hintsAvailable,
+                            busy: _adBusy,
+                            onWatch: _watchForHint,
+                          ),
+                          const SizedBox(height: 22),
+                          SizedBox(
+                            width: double.infinity,
+                            child: FilledButton(
+                              onPressed: isLast ? _home : _next,
+                              child:
+                                  Text(isLast ? 'Back to home' : 'Next level'),
                             ),
-                          ],
-                        ),
-                      ],
+                          ),
+                          const SizedBox(height: 10),
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: OutlinedButton(
+                                  onPressed: _replay,
+                                  child: const Text('Replay'),
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: OutlinedButton(
+                                  onPressed: _home,
+                                  child: const Text('Home'),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

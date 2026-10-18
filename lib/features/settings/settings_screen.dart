@@ -83,7 +83,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           children: <Widget>[
             const _SectionHeader('Audio'),
             SwitchListTile(
-              title: const Text('Sound'),
+              title: const Text('Sound effects'),
+              subtitle: const Text('Tap, escape, blocked and win sounds'),
               value: _settings.soundOn,
               onChanged: (bool v) async {
                 await _settings.setSound(v);
@@ -93,6 +94,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             SwitchListTile(
               title: const Text('Music'),
+              subtitle: const Text('Soft ambient loop'),
               value: _settings.musicOn,
               onChanged: (bool v) async {
                 await _settings.setMusic(v);
@@ -104,6 +106,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               value: _settings.vibrationOn,
               onChanged: (bool v) async {
                 await _settings.setVibration(v);
+                if (v) AudioService.instance.escape();
                 if (mounted) setState(() {});
               },
             ),

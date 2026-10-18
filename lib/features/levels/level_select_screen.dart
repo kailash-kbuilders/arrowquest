@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../core/constants/app_constants.dart';
@@ -63,21 +65,33 @@ class _LevelSelectScreenState extends State<LevelSelectScreen> {
                       ),
                     );
                   }
-                  return GridView.builder(
-                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 5,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
-                      childAspectRatio: 0.82,
-                    ),
-                    itemCount: levels.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return _LevelTile(
-                        level: levels[index],
-                        onOpen: _open,
-                        progress: progress,
+                  // Column count follows the available width, so the grid is
+                  // comfortable on a small phone and still tight on a tablet.
+                  return LayoutBuilder(
+                    builder: (
+                      BuildContext context,
+                      BoxConstraints constraints,
+                    ) {
+                      final int columns = math.max(
+                        4,
+                        math.min(9, (constraints.maxWidth / 74).floor()),
+                      );
+                      return GridView.builder(
+                        padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: columns,
+                          mainAxisSpacing: 10,
+                          crossAxisSpacing: 10,
+                          childAspectRatio: 0.82,
+                        ),
+                        itemCount: levels.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return _LevelTile(
+                            level: levels[index],
+                            onOpen: _open,
+                            progress: progress,
+                          );
+                        },
                       );
                     },
                   );

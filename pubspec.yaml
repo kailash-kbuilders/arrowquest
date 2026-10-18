@@ -16,6 +16,7 @@ dependencies:
   # 8.x is the line that builds against the Gradle version the current Flutter
   # stable template ships (5.x used `configurations.all`, removed in Gradle 9).
   google_mobile_ads: '>=8.0.0 <9.0.0'
+  audioplayers: ^6.8.1
 
 dev_dependencies:
   flutter_test:
@@ -27,3 +28,4 @@ flutter:
   assets:
     - assets/levels/levels.json
     - assets/branding/
+    - assets/sounds/

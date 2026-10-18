@@ -116,7 +116,19 @@ def draw_mark(img, size, scale=1.0, offset=(0.0, 0.0), alpha=255):
     inner = width * 0.32
     d.line(pts, fill=BLUE_HI + (int(alpha * 0.55),), width=int(inner), joint="curve")
 
-    # head
+    # motion trail behind the tail — a small original flourish
+    tail = pt(PATH[0])
+    nxt = pt(PATH[1])
+    tdx, tdy = tail[0] - nxt[0], tail[1] - nxt[1]
+    tlen = max(1.0, (tdx * tdx + tdy * tdy) ** 0.5)
+    tux, tuy = tdx / tlen, tdy / tlen
+    for step, radius in ((0.22, 0.30), (0.40, 0.20), (0.56, 0.13)):
+        cx = tail[0] + tux * width * step * 2.2
+        cy = tail[1] + tuy * width * step * 2.2
+        r = width * radius
+        d.ellipse((cx - r, cy - r, cx + r, cy + r), fill=BLUE + (int(alpha * 0.65),))
+
+    # head: the same notched dart the in-game arrows use
     tip = pt(TIP)
     base = pt(PATH[-1])
     dx = tip[0] - base[0]
@@ -124,13 +136,15 @@ def draw_mark(img, size, scale=1.0, offset=(0.0, 0.0), alpha=255):
     length = max(1.0, (dx * dx + dy * dy) ** 0.5)
     ux, uy = dx / length, dy / length
     px, py = -uy, ux
-    half = width * 0.78
-    back = width * 0.55
+    half = width * 0.85
+    back = length * 0.82
+    notch = length * 0.46
     d.polygon(
         [
-            tip,
-            (tip[0] - ux * (length + back) + px * half, tip[1] - uy * (length + back) + py * half),
-            (tip[0] - ux * (length + back) - px * half, tip[1] - uy * (length + back) - py * half),
+            (tip[0] + ux * width * 0.45, tip[1] + uy * width * 0.45),
+            (tip[0] - ux * back + px * half, tip[1] - uy * back + py * half),
+            (tip[0] - ux * notch, tip[1] - uy * notch),
+            (tip[0] - ux * back - px * half, tip[1] - uy * back - py * half),
         ],
         fill=WHITE + (alpha,),
     )

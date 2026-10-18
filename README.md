@@ -77,6 +77,41 @@ Levels get steadily longer and denser; there are no chapters or categories.
 Progress — unlocks, stars, statistics, the hint wallet and the level you were on
 — is saved on the device, so closing the app never sends you back to level 1.
 
+## Sound and haptics
+
+Every effect is original audio, synthesised by `tools/gen_sounds.py` — no
+third-party sounds ship with the game.
+
+| File | Used for |
+| --- | --- |
+| `tap.wav` | button presses |
+| `escape.wav` | an arrow escaping |
+| `blocked.wav` | a refused move |
+| `win.wav` | clearing a level, and earning a reward |
+| `music.wav` | the ambient loop behind **Settings → Music** (off by default) |
+
+Effects play through a small pool of players so quick taps overlap instead of
+cutting each other off. Haptics are tied to the same events. Everything is
+defensive: if the audio engine is unavailable the game plays exactly the same,
+just silently — and `AudioService` is only started from `main()`, so tests never
+touch the platform audio channels.
+
+```bash
+python3 tools/gen_sounds.py
+```
+
+## Look and layout
+
+Arrows are drawn as a rounded tube with a wide **dart-shaped head**, a tail dot
+and a darker outline, so the direction is obvious at a glance and overlapping
+paths still read as separate arrows. The art is deliberately its own thing —
+bold, coloured, and nothing like the thin black line art of other arrow puzzles.
+
+The layout is responsive: the menu and end-of-level screens are centred and
+scrollable with a capped reading width, the board is capped so it stays a
+sensible size on tablets, and the level grid picks its column count from the
+available width.
+
 ## Ads
 
 The game ships with **Google's official test ad units**, so it shows demo ads and
