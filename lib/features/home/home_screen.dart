@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/constants/app_constants.dart';
+import '../../core/services/ads_service.dart';
 import '../../core/services/audio_service.dart';
 import '../../core/storage/progress_service.dart';
 import '../../core/theme/app_theme.dart';
@@ -79,7 +80,10 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     final AppPalette palette = AppPalette.of(context);
     final ProgressService progress = ProgressService.instance;
-    final int current = progress.unlocked;
+    // Resume where the player left off, never past what they have unlocked.
+    final int current = progress.currentLevel <= progress.unlocked
+        ? progress.currentLevel
+        : progress.unlocked;
 
     return Scaffold(
       body: Container(
@@ -188,6 +192,7 @@ class _HomeScreenState extends State<HomeScreen>
                         ],
                       ),
                       const Spacer(flex: 1),
+                      const AdBanner(),
                     ],
                   ),
                 ),

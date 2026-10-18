@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../core/constants/app_constants.dart';
+import '../../core/services/ads_service.dart';
+import '../../core/services/audio_service.dart';
+import '../../core/storage/progress_service.dart';
 import '../../core/storage/settings_service.dart';
 import '../../core/theme/app_theme.dart';
 import '../data/levels/level_repository.dart';
@@ -34,6 +37,9 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen>
     with SingleTickerProviderStateMixin {
   late final AnimationController _ctrl;
   late final Animation<double> _pop;
+  bool _adBusy = false;
+
+  ProgressService get _progress => ProgressService.instance;
 
   @override
   void initState() {
@@ -59,6 +65,7 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen>
     final Level? next =
         await LevelRepository.instance.byId(widget.level.id + 1);
     if (!mounted) return;
+    AdsService.instance.showInterstitial();
     if (next == null) {
       Navigator.of(context).popUntil((Route<dynamic> r) => r.isFirst);
       return;
@@ -71,12 +78,45 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen>
   void _replay() {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute<void>(
-          builder: (_) => GameplayScreen(level: widget.level)),
+        builder: (_) => GameplayScreen(level: widget.level),
+      ),
     );
   }
 
   void _home() {
     Navigator.of(context).popUntil((Route<dynamic> r) => r.isFirst);
+  }
+
+  /// Rewarded ad -> one more hint.
+  Future<void> _watchForHint() async {
+    if (_adBusy) return;
+    if (!AdsService.instance.ready) {
+      _toast('Ads are not available right now.');
+      return;
+    }
+    setState(() => _adBusy = true);
+    final bool earned = await AdsService.instance.showRewarded();
+    if (!mounted) return;
+    setState(() => _adBusy = false);
+    if (!earned) {
+      _toast('No reward this time — try again.');
+      return;
+    }
+    await _progress.grantHint();
+    if (!mounted) return;
+    setState(() {});
+    AudioService.instance.tap();
+    _toast('Hint added — you now have ${_progress.hintsAvailable}.');
+  }
+
+  void _toast(String message) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(milliseconds: 1600),
+      ),
+    );
   }
 
   String get _time {
@@ -92,68 +132,144 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen>
 
     return Scaffold(
       body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(28),
-            child: ScaleTransition(
-              scale: _pop,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Icon(Icons.check_circle, color: palette.success, size: 64),
-                  const SizedBox(height: 16),
-                  Text(
-                    isLast ? 'All levels cleared!' : 'Level cleared',
-                    style: TextStyle(
-                      color: palette.text,
-                      fontSize: 26,
-                      fontWeight: FontWeight.w800,
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: Center(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(28),
+                  child: ScaleTransition(
+                    scale: _pop,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Icon(Icons.check_circle,
+                            color: palette.success, size: 60),
+                        const SizedBox(height: 14),
+                        Text(
+                          isLast ? 'All levels cleared!' : 'Level cleared',
+                          style: TextStyle(
+                            color: palette.text,
+                            fontSize: 26,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          'Level ${widget.level.id} · ${widget.level.difficulty.label}',
+                          style:
+                              TextStyle(color: palette.textDim, fontSize: 14),
+                        ),
+                        const SizedBox(height: 18),
+                        _StarsRow(stars: widget.stars, palette: palette),
+                        const SizedBox(height: 22),
+                        _StatRow(
+                          label: 'Arrows cleared',
+                          value: '${widget.arrowsCleared}',
+                        ),
+                        _StatRow(label: 'Moves', value: '${widget.moves}'),
+                        if (widget.timed) _StatRow(label: 'Time', value: _time),
+                        const SizedBox(height: 18),
+                        _RewardedHintCard(
+                          hints: _progress.hintsAvailable,
+                          busy: _adBusy,
+                          onWatch: _watchForHint,
+                        ),
+                        const SizedBox(height: 22),
+                        SizedBox(
+                          width: double.infinity,
+                          child: FilledButton(
+                            onPressed: isLast ? _home : _next,
+                            child: Text(isLast ? 'Back to home' : 'Next level'),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: OutlinedButton(
+                                onPressed: _replay,
+                                child: const Text('Replay'),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: OutlinedButton(
+                                onPressed: _home,
+                                child: const Text('Home'),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 6),
-                  Text(
-                    'Level ${widget.level.id} · ${widget.level.chapter}',
-                    style: TextStyle(color: palette.textDim, fontSize: 14),
-                  ),
-                  const SizedBox(height: 20),
-                  _StarsRow(stars: widget.stars, palette: palette),
-                  const SizedBox(height: 24),
-                  _StatRow(
-                      label: 'Arrows cleared',
-                      value: '${widget.arrowsCleared}'),
-                  _StatRow(label: 'Moves', value: '${widget.moves}'),
-                  if (widget.timed) _StatRow(label: 'Time', value: _time),
-                  const SizedBox(height: 28),
-                  SizedBox(
-                    width: double.infinity,
-                    child: FilledButton(
-                      onPressed: isLast ? _home : _next,
-                      child: Text(isLast ? 'Back to home' : 'Next level'),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: OutlinedButton(
-                          onPressed: _replay,
-                          child: const Text('Replay'),
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: OutlinedButton(
-                          onPressed: _home,
-                          child: const Text('Home'),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                ),
               ),
             ),
-          ),
+            const AdBanner(),
+          ],
         ),
+      ),
+    );
+  }
+}
+
+class _RewardedHintCard extends StatelessWidget {
+  const _RewardedHintCard({
+    required this.hints,
+    required this.busy,
+    required this.onWatch,
+  });
+
+  final int hints;
+  final bool busy;
+  final Future<void> Function() onWatch;
+
+  @override
+  Widget build(BuildContext context) {
+    final AppPalette palette = AppPalette.of(context);
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      decoration: BoxDecoration(
+        color: palette.panel,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: palette.panelHi),
+      ),
+      child: Column(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Icon(Icons.lightbulb_outline, color: palette.dirLeft, size: 20),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  'Hints: $hints',
+                  style: TextStyle(
+                    color: palette.text,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton.icon(
+              onPressed: busy ? null : () => onWatch(),
+              icon: busy
+                  ? const SizedBox(
+                      width: 16,
+                      height: 16,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : const Icon(Icons.play_circle_outline, size: 18),
+              label: const Text('Watch ad · +1 hint'),
+            ),
+          ),
+        ],
       ),
     );
   }

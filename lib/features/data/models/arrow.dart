@@ -49,6 +49,8 @@ class Cell {
   final int r;
   final int c;
 
+  Cell step(Dir dir) => Cell(r + dir.dr, c + dir.dc);
+
   @override
   bool operator ==(Object other) =>
       other is Cell && other.r == r && other.c == c;
@@ -66,8 +68,9 @@ enum ArrowState { idle, selected, blocked, escaping, removed }
 
 /// A live arrow on the board.
 ///
-/// [cells] is an ordered path — index 0 is the head, the cell the arrow points
-/// from. Because the path is a straight line, the tail is simply the last cell.
+/// [cells] is the arrow's path, head first — index 0 is the cell the arrow
+/// points from, the last cell is the tail. The path may bend: it is a connected
+/// run of grid cells, not necessarily a straight line.
 class Arrow {
   Arrow({
     required this.id,
@@ -87,10 +90,10 @@ class Arrow {
   /// The trailing cell.
   Cell get tail => cells.last;
 
-  /// Every cell this arrow occupies.
-  Iterable<Cell> get body => cells;
-
   int get length => cells.length;
+
+  /// The order the arrow travels in when it escapes: tail first, head last.
+  List<Cell> get travelPath => cells.reversed.toList(growable: false);
 
   Arrow copyWith({ArrowState? state}) => Arrow(
         id: id,
@@ -106,50 +109,35 @@ class Arrow {
 
 /// The immutable placement of an arrow as described by a level file.
 ///
-/// The head is at ([row], [col]); the body extends `length` cells in the
-/// direction *opposite* to [dir], so [dir] always points outward from the head.
+/// [cells] is the path, head first, and [dir] is the direction the head points.
 class ArrowSpec {
-  const ArrowSpec({
-    required this.row,
-    required this.col,
-    required this.dir,
-    required this.length,
-  });
+  const ArrowSpec({required this.cells, required this.dir});
 
-  final int row;
-  final int col;
+  final List<Cell> cells;
   final Dir dir;
-  final int length;
 
-  /// Expands this spec into its ordered list of cells (head first).
-  List<Cell> resolveCells() {
-    final int dr = dir.dr;
-    final int dc = dir.dc;
-    return List<Cell>.generate(
-      length,
-      (int i) => Cell(row - i * dr, col - i * dc),
-      growable: false,
-    );
-  }
+  /// The arrow's path, head first.
+  List<Cell> resolveCells() => cells;
 
   /// Parses a spec, throwing [FormatException] on malformed input.
   factory ArrowSpec.fromJson(Map<String, dynamic> json) {
-    final Object? r = json['r'];
-    final Object? c = json['c'];
+    final Object? rawCells = json['cells'];
     final Object? d = json['d'];
-    final Object? len = json['len'];
-    if (r is! num || c is! num || d is! String) {
-      throw const FormatException('arrow needs numeric r/c and a string d');
+    if (rawCells is! List || rawCells.isEmpty || d is! String) {
+      throw const FormatException('arrow needs a non-empty cells list and a d');
     }
-    final int length = len is num ? len.toInt() : 1;
-    if (length < 1) {
-      throw const FormatException('arrow length must be >= 1');
+    final List<Cell> cells = <Cell>[];
+    for (final Object? entry in rawCells) {
+      if (entry is! List || entry.length < 2) {
+        throw const FormatException('arrow cell must be [r, c]');
+      }
+      final Object? r = entry[0];
+      final Object? c = entry[1];
+      if (r is! num || c is! num) {
+        throw const FormatException('arrow cell coordinates must be numeric');
+      }
+      cells.add(Cell(r.toInt(), c.toInt()));
     }
-    return ArrowSpec(
-      row: r.toInt(),
-      col: c.toInt(),
-      dir: DirX.fromKey(d),
-      length: length,
-    );
+    return ArrowSpec(cells: cells, dir: DirX.fromKey(d));
   }
 }

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../core/services/ads_service.dart';
 import '../../core/services/audio_service.dart';
 import '../../core/storage/progress_service.dart';
 import '../../core/storage/settings_service.dart';
@@ -14,7 +15,7 @@ import 'logic/engine.dart';
 import 'widgets/action_bar.dart';
 import 'widgets/board_view.dart';
 
-/// The play screen: board, counters and the Undo / Restart / Hint controls.
+/// The play screen: hearts, board, and the hint / undo / zoom controls.
 class GameplayScreen extends StatefulWidget {
   const GameplayScreen({super.key, required this.level});
 
@@ -37,8 +38,11 @@ class _GameplayScreenState extends State<GameplayScreen>
 
   bool _busy = false;
   bool _resultShown = false;
-  int _hintsUsed = 0;
-  int _mistakes = 0;
+  bool _zoomed = false;
+  bool _adBusy = false;
+
+  /// Hints revealed on *this* level, which is what the star rule looks at.
+  int _hintsThisLevel = 0;
 
   DateTime _started = DateTime.now();
   int _elapsed = 0;
@@ -46,9 +50,10 @@ class _GameplayScreenState extends State<GameplayScreen>
   Timer? _hintTimer;
 
   bool get _timed => SettingsService.instance.challengeMode;
+  ProgressService get _progress => ProgressService.instance;
 
   /// Transparent star rule: 1 star for clearing the level, +1 for at most two
-  /// rejected attempts, +1 for never using a hint. Time is never penalised.
+  /// refused attempts, +1 for never using a hint. Time is never penalised.
   static int starsFor({required int mistakes, required int hintsUsed}) {
     var stars = 1;
     if (mistakes <= 2) stars++;
@@ -62,16 +67,18 @@ class _GameplayScreenState extends State<GameplayScreen>
     _engine = ArrowQuestEngine(widget.level);
     _ctrl = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 340),
+      duration: const Duration(milliseconds: 420),
     );
     _ctrl.addListener(_onTick);
     _ctrl.addStatusListener(_onStatus);
+    _progress.setCurrentLevel(widget.level.id);
     if (_timed) {
       _started = DateTime.now();
       _ticker = Timer.periodic(const Duration(seconds: 1), (Timer _) {
         if (mounted) {
           setState(
-              () => _elapsed = DateTime.now().difference(_started).inSeconds);
+            () => _elapsed = DateTime.now().difference(_started).inSeconds,
+          );
         }
       });
     }
@@ -123,14 +130,21 @@ class _GameplayScreenState extends State<GameplayScreen>
 
     if (outcome.result == MoveResult.ignored) return;
 
+    if (outcome.result == MoveResult.failed) {
+      AudioService.instance.blocked();
+      setState(() {});
+      _showOutOfHearts();
+      return;
+    }
+
     if (outcome.result == MoveResult.blocked) {
       AudioService.instance.blocked();
-      setState(() => _mistakes = _engine.mistakes);
+      setState(() {});
       if (SettingsService.instance.reducedMotion) return;
       _busy = true;
       _blocked = outcome.arrow;
       _blockedT = 0;
-      _ctrl.duration = const Duration(milliseconds: 180);
+      _ctrl.duration = const Duration(milliseconds: 220);
       _ctrl.forward(from: 0);
       return;
     }
@@ -145,18 +159,39 @@ class _GameplayScreenState extends State<GameplayScreen>
     _busy = true;
     _ghost = outcome.arrow;
     _ghostT = 0;
-    _ctrl.duration = const Duration(milliseconds: 340);
+    _ctrl.duration = const Duration(milliseconds: 460);
     _ctrl.forward(from: 0);
+  }
+
+  void _showOutOfHearts() {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext ctx) => AlertDialog(
+        title: const Text('Out of hearts'),
+        content: const Text(
+          'Three arrows got in the way, so this level starts again from the '
+          'top.',
+          style: TextStyle(height: 1.5),
+        ),
+        actions: <Widget>[
+          FilledButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+              _restart();
+            },
+            child: const Text('Restart level'),
+          ),
+        ],
+      ),
+    );
   }
 
   void _undo() {
     if (_busy) return;
     if (!_engine.undo()) return;
     AudioService.instance.tap();
-    setState(() {
-      _hintHead = null;
-      _mistakes = _engine.mistakes;
-    });
+    setState(() => _hintHead = null);
   }
 
   void _restart() {
@@ -165,30 +200,80 @@ class _GameplayScreenState extends State<GameplayScreen>
     setState(() {
       _engine.restart();
       _hintHead = null;
-      _hintsUsed = 0;
-      _mistakes = 0;
+      _hintsThisLevel = 0;
       _elapsed = 0;
       _started = DateTime.now();
     });
   }
 
-  void _hint() {
+  Future<void> _hint() async {
     if (_busy || _engine.isOver) return;
+
+    if (_progress.hintsAvailable <= 0) {
+      await _offerRewardedHint();
+      return;
+    }
+    await _progress.useHint();
+    _revealHint();
+  }
+
+  void _revealHint() {
     final Cell? cell = _engine.hint();
     if (cell == null) {
       _toast('No arrow can escape right now — try Restart.');
       return;
     }
     AudioService.instance.tap();
-    ProgressService.instance.recordHint();
     setState(() {
       _hintHead = cell;
-      _hintsUsed++;
+      _hintsThisLevel++;
     });
     _hintTimer?.cancel();
-    _hintTimer = Timer(const Duration(milliseconds: 2000), () {
+    _hintTimer = Timer(const Duration(milliseconds: 2600), () {
       if (mounted) setState(() => _hintHead = null);
     });
+  }
+
+  Future<void> _offerRewardedHint() async {
+    if (_adBusy) return;
+    if (!AdsService.instance.ready) {
+      _toast('Hints are empty — you get more by watching a short ad.');
+      return;
+    }
+    final bool? watch = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext ctx) => AlertDialog(
+        title: const Text('Hints are empty'),
+        content: const Text(
+          'Watch a short video to earn one hint?',
+          style: TextStyle(height: 1.5),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: const Text('Not now'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: const Text('Watch ad'),
+          ),
+        ],
+      ),
+    );
+    if (watch != true || !mounted) return;
+
+    setState(() => _adBusy = true);
+    final bool earned = await AdsService.instance.showRewarded();
+    if (!mounted) return;
+    setState(() => _adBusy = false);
+    if (!earned) {
+      _toast('No reward this time — try again.');
+      return;
+    }
+    await _progress.grantHint();
+    await _progress.useHint();
+    if (!mounted) return;
+    _revealHint();
   }
 
   Future<void> _finish() async {
@@ -199,15 +284,18 @@ class _GameplayScreenState extends State<GameplayScreen>
 
     final int seconds =
         _timed ? DateTime.now().difference(_started).inSeconds : 0;
-    final int stars = starsFor(mistakes: _mistakes, hintsUsed: _hintsUsed);
+    final int stars = starsFor(
+      mistakes: _engine.mistakes,
+      hintsUsed: _hintsThisLevel,
+    );
 
-    await ProgressService.instance.completeLevel(
+    await _progress.completeLevel(
       id: widget.level.id,
       stars: stars,
       moves: _engine.moves,
       seconds: seconds,
-      hintsUsed: _hintsUsed,
-      mistakes: _mistakes,
+      hintsUsed: 0,
+      mistakes: _engine.mistakes,
       arrowsCleared: widget.level.arrows.length,
     );
     if (!mounted) return;
@@ -236,7 +324,9 @@ class _GameplayScreenState extends State<GameplayScreen>
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-          content: Text(message), duration: const Duration(milliseconds: 1400)),
+        content: Text(message),
+        duration: const Duration(milliseconds: 1600),
+      ),
     );
   }
 
@@ -246,11 +336,12 @@ class _GameplayScreenState extends State<GameplayScreen>
       builder: (BuildContext ctx) => AlertDialog(
         title: const Text('How to play'),
         content: const Text(
-          'Tap an arrow to send it out in the direction it points.\n\n'
-          'If the path from its head to the edge is clear, the whole arrow '
-          'escapes. If another arrow is in the way, the move is refused and '
-          'the arrow stays put.\n\n'
-          'Clear every arrow to finish the level.',
+          'Every arrow is a little path with a head. Tap an arrow to send it '
+          'along its own path and off the board.\n\n'
+          'It only leaves if the straight run from its head to the edge is '
+          'clear. If another arrow is in the way the move is refused and you '
+          'lose a heart — lose all three and the level restarts.\n\n'
+          'Clear every arrow to finish.',
           style: TextStyle(height: 1.5),
         ),
         actions: <Widget>[
@@ -280,7 +371,9 @@ class _GameplayScreenState extends State<GameplayScreen>
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Text('Level ${level.id}'),
+        title: Text(
+          _timed ? 'Timer · $_time' : 'Difficulty · ${level.difficulty.label}',
+        ),
         actions: <Widget>[
           IconButton(
             tooltip: 'How to play',
@@ -305,28 +398,34 @@ class _GameplayScreenState extends State<GameplayScreen>
           child: Column(
             children: <Widget>[
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  _Stat(
-                    label: 'CLEARED',
-                    value: '${_engine.cleared}/${_engine.totalArrows}',
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          'Level ${level.id}',
+                          style: TextStyle(
+                            color: palette.text,
+                            fontSize: 26,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                        Text(
+                          level.difficulty.label,
+                          style: TextStyle(
+                            color: palette.textDim,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  _Stat(label: 'MOVES', value: '${_engine.moves}'),
-                  if (_timed) _Stat(label: 'TIME', value: _time),
-                  _Stat(label: 'HINTS', value: '$_hintsUsed'),
+                  _Hearts(hearts: _engine.hearts, palette: palette),
                 ],
               ),
               const SizedBox(height: 10),
-              Text(
-                level.chapter.toUpperCase(),
-                style: TextStyle(
-                  color: palette.textDim,
-                  fontSize: 11,
-                  letterSpacing: 2,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              const SizedBox(height: 8),
               Expanded(
                 child: BoardView(
                   rows: _engine.rows,
@@ -339,16 +438,26 @@ class _GameplayScreenState extends State<GameplayScreen>
                   blockedT: _blockedT,
                   hintHead: _hintHead,
                   hintT: 0.5,
-                  zoomable: _engine.rows > 8 || _engine.cols > 8,
+                  zoomable: _zoomed,
                 ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 14),
               ActionBar(
                 canUndo: _engine.canUndo && !_busy,
-                canHint: !_busy && !_engine.isOver,
+                canHint: !_busy && !_engine.isOver && !_adBusy,
+                hintCount: _progress.hintsAvailable,
+                zoomed: _zoomed,
                 onUndo: _undo,
-                onRestart: _restart,
                 onHint: _hint,
+                onToggleZoom: () {
+                  AudioService.instance.tap();
+                  setState(() => _zoomed = !_zoomed);
+                },
+              ),
+              const SizedBox(height: 10),
+              Text(
+                '${_engine.arrowsLeft} arrows remaining',
+                style: TextStyle(color: palette.textDim, fontSize: 13),
               ),
             ],
           ),
@@ -358,33 +467,25 @@ class _GameplayScreenState extends State<GameplayScreen>
   }
 }
 
-class _Stat extends StatelessWidget {
-  const _Stat({required this.label, required this.value});
+class _Hearts extends StatelessWidget {
+  const _Hearts({required this.hearts, required this.palette});
 
-  final String label;
-  final String value;
+  final int hearts;
+  final AppPalette palette;
 
   @override
   Widget build(BuildContext context) {
-    final AppPalette palette = AppPalette.of(context);
-    return Column(
+    return Row(
       children: <Widget>[
-        Text(
-          value,
-          style: TextStyle(
-            color: palette.text,
-            fontSize: 18,
-            fontWeight: FontWeight.w800,
+        for (int i = 0; i < ArrowQuestEngine.maxHearts; i++)
+          Padding(
+            padding: const EdgeInsets.only(left: 4),
+            child: Icon(
+              i < hearts ? Icons.favorite : Icons.favorite_border,
+              color: i < hearts ? palette.error : palette.textDim,
+              size: 26,
+            ),
           ),
-        ),
-        Text(
-          label,
-          style: TextStyle(
-            color: palette.textDim,
-            fontSize: 10,
-            letterSpacing: 1.5,
-          ),
-        ),
       ],
     );
   }

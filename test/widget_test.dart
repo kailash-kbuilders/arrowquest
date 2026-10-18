@@ -5,7 +5,7 @@ import 'package:arrowquest/features/data/levels/level_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Widget-level tests: the app launches, navigates and toggles settings.
+/// Widget-level tests: the app launches, navigates, plays and toggles settings.
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -37,6 +37,14 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
   }
 
+  Future<void> openFirstLevel(WidgetTester tester) async {
+    await pumpApp(tester);
+    await openLevelMap(tester);
+    await tester.tap(find.text('1'));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+  }
+
   testWidgets('smoke: launches to the home screen without exceptions',
       (WidgetTester tester) async {
     await pumpApp(tester);
@@ -57,35 +65,41 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('a level starts from the map and shows its controls',
+  testWidgets('the level map shows all 100 levels in one grid',
       (WidgetTester tester) async {
     await pumpApp(tester);
     await openLevelMap(tester);
 
-    await tester.tap(find.text('1'));
-    await tester.pump();
-    await tester.pump(const Duration(seconds: 1));
+    // Only level 1 is unlocked on a fresh install, so exactly one number shows.
+    expect(find.text('1'), findsOneWidget);
+    expect(find.text('2'), findsNothing);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('a level starts and shows hearts, difficulty and controls',
+      (WidgetTester tester) async {
+    await openFirstLevel(tester);
 
     expect(find.text('Level 1'), findsOneWidget);
-    expect(find.text('Hint'), findsOneWidget);
-    expect(find.text('Undo'), findsOneWidget);
-    expect(find.text('Restart'), findsOneWidget);
+    expect(find.text('Difficulty · Easy'), findsOneWidget);
+    expect(find.textContaining('arrows remaining'), findsOneWidget);
+    expect(find.byTooltip('Hint'), findsOneWidget);
+    expect(find.byTooltip('Undo'), findsOneWidget);
+    expect(find.byTooltip('Zoom board'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
   testWidgets('hint and restart are safe to press',
       (WidgetTester tester) async {
-    await pumpApp(tester);
-    await openLevelMap(tester);
-    await tester.tap(find.text('1'));
-    await tester.pump();
-    await tester.pump(const Duration(seconds: 1));
+    await openFirstLevel(tester);
 
-    await tester.tap(find.text('Hint'));
-    await tester.pump(const Duration(milliseconds: 200));
-    await tester.tap(find.text('Restart'));
-    await tester.pump(const Duration(milliseconds: 200));
+    final int before = ProgressService.instance.hintsAvailable;
+    await tester.tap(find.byTooltip('Hint'));
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(ProgressService.instance.hintsAvailable, before - 1);
 
+    await tester.tap(find.byTooltip('Restart'));
+    await tester.pump(const Duration(milliseconds: 300));
     expect(tester.takeException(), isNull);
   });
 

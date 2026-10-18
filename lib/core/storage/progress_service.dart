@@ -19,14 +19,22 @@ class ProgressService extends ChangeNotifier {
   static const String _kCompleted = 'aq_completed';
   static const String _kStars = 'aq_stars';
   static const String _kBest = 'aq_best_moves';
+  static const String _kHints = 'aq_hints';
+  static const String _kCurrent = 'aq_current_level';
   static const String _kTotalArrows = 'aq_total_arrows';
   static const String _kTotalSeconds = 'aq_total_seconds';
   static const String _kTotalHints = 'aq_total_hints';
   static const String _kTotalMistakes = 'aq_total_mistakes';
 
+  /// Hints a player starts with, and gets back on a progress reset.
+  static const int startingHints = 3;
+  static const int maxHints = 99;
+
   SharedPreferences? _prefs;
 
   int _unlocked = 1;
+  int _current = 1;
+  int _hints = startingHints;
   final Set<int> _completed = <int>{};
   final Map<int, int> _stars = <int, int>{};
   final Map<int, int> _bestMoves = <int, int>{};
@@ -42,6 +50,8 @@ class ProgressService extends ChangeNotifier {
     try {
       final SharedPreferences p = await _prefsInstance();
       _unlocked = p.getInt(_kUnlocked) ?? 1;
+      _current = p.getInt(_kCurrent) ?? 1;
+      _hints = p.getInt(_kHints) ?? startingHints;
       _completed
         ..clear()
         ..addAll(_decodeIntSet(p.getString(_kCompleted)));
@@ -81,11 +91,24 @@ class ProgressService extends ChangeNotifier {
     if (_totalSeconds < 0) _totalSeconds = 0;
     if (_totalHints < 0) _totalHints = 0;
     if (_totalMistakes < 0) _totalMistakes = 0;
+    _current = _current < 1
+        ? 1
+        : (_current > AppConstants.totalLevels
+            ? AppConstants.totalLevels
+            : _current);
+    _hints = _hints < 0 ? 0 : (_hints > maxHints ? maxHints : _hints);
   }
 
   // ---- Reads -------------------------------------------------------------
 
   int get unlocked => _unlocked;
+
+  /// The level the player was last on — what "Continue" resumes.
+  int get currentLevel => _current;
+
+  /// Hints left in the wallet. More are earned by watching a rewarded ad.
+  int get hintsAvailable => _hints;
+
   int get levelsCompleted => _completed.length;
   int get totalStars => _stars.values.fold(0, (int sum, int v) => sum + v);
   int get maxStarsTotal => AppConstants.totalLevels * AppConstants.maxStars;
@@ -133,9 +156,28 @@ class ProgressService extends ChangeNotifier {
     await _save();
   }
 
-  /// Adds a hint to the lifetime counter (called when a hint is revealed).
-  Future<void> recordHint() async {
+  /// Spends one hint (and adds it to the lifetime counter).
+  Future<void> useHint() async {
+    _hints = _hints > 0 ? _hints - 1 : 0;
     _totalHints += 1;
+    notifyListeners();
+    await _save();
+  }
+
+  /// Adds a hint to the wallet — earned by watching a rewarded ad.
+  Future<void> grantHint() async {
+    _hints = _hints < maxHints ? _hints + 1 : maxHints;
+    notifyListeners();
+    await _save();
+  }
+
+  /// Remembers which level the player is on, so the app resumes there.
+  Future<void> setCurrentLevel(int id) async {
+    final int clamped = id < 1
+        ? 1
+        : (id > AppConstants.totalLevels ? AppConstants.totalLevels : id);
+    if (clamped == _current) return;
+    _current = clamped;
     notifyListeners();
     await _save();
   }
@@ -143,6 +185,8 @@ class ProgressService extends ChangeNotifier {
   /// Wipes every trace of progress.
   Future<void> resetProgress() async {
     _unlocked = 1;
+    _current = 1;
+    _hints = startingHints;
     _completed.clear();
     _stars.clear();
     _bestMoves.clear();
@@ -163,6 +207,8 @@ class ProgressService extends ChangeNotifier {
       // here and parsed back in _decodeIntMap.
       await p.setString(_kStars, json.encode(_stringKeyed(_stars)));
       await p.setString(_kBest, json.encode(_stringKeyed(_bestMoves)));
+      await p.setInt(_kHints, _hints);
+      await p.setInt(_kCurrent, _current);
       await p.setInt(_kTotalArrows, _totalArrows);
       await p.setInt(_kTotalSeconds, _totalSeconds);
       await p.setInt(_kTotalHints, _totalHints);

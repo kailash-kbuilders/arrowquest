@@ -19,6 +19,10 @@ Color dirColor(AppPalette palette, Dir dir) {
   }
 }
 
+double _clamp01(double v) => v < 0 ? 0 : (v > 1 ? 1 : v);
+
+int _clampIndex(int i, int n) => i < 0 ? 0 : (i >= n ? n - 1 : i);
+
 /// Geometry for a board of [rows] x [cols] laid out inside [size].
 class BoardGeometry {
   const BoardGeometry._({
@@ -48,6 +52,8 @@ class BoardGeometry {
 
   Offset center(Cell c) =>
       Offset(originX + (c.c + 0.5) * cell, originY + (c.r + 0.5) * cell);
+
+  bool holds(Cell c) => c.r >= 0 && c.r < rows && c.c >= 0 && c.c < cols;
 
   /// The grid cell under a local position, or null if outside the board.
   Cell? cellAt(Offset local) {
@@ -79,11 +85,12 @@ class BoardPainter extends CustomPainter {
   final List<Arrow> arrows;
   final AppPalette palette;
 
-  /// An arrow that has just escaped, drawn sliding off the board.
+  /// An arrow that has just escaped, drawn flowing along its own path and off
+  /// the board.
   final Arrow? ghost;
   final double ghostT;
 
-  /// An arrow whose move was rejected, drawn shaking in place.
+  /// An arrow whose move was refused, drawn shaking in place.
   final Arrow? blockedArrow;
   final double blockedT;
 
@@ -117,15 +124,15 @@ class BoardPainter extends CustomPainter {
           geo.originY + r * cell,
           cell,
           cell,
-        ).deflate(cell * 0.06);
+        ).deflate(cell * 0.07);
         canvas.drawRRect(
-          RRect.fromRectAndRadius(rect, Radius.circular(cell * 0.18)),
+          RRect.fromRectAndRadius(rect, Radius.circular(cell * 0.16)),
           gridPaint,
         );
       }
     }
 
-    // Hint pulse, drawn beneath the arrow so it reads as a halo.
+    // Hint glow, drawn beneath the arrow so it reads as a halo.
     final Cell? hint = hintHead;
     if (hint != null) {
       for (final Arrow a in arrows) {
@@ -138,75 +145,113 @@ class BoardPainter extends CustomPainter {
 
     // Live arrows.
     for (final Arrow a in arrows) {
-      _drawArrow(canvas, geo, a, opacity: 1, offset: Offset.zero);
+      _drawArrow(canvas, geo, a);
     }
 
-    // Blocked feedback.
+    // Refused-move feedback.
     final Arrow? blocked = blockedArrow;
     if (blocked != null) {
       final double shake =
-          math.sin(blockedT * math.pi * 3) * cell * 0.16 * (1 - blockedT);
+          math.sin(blockedT * math.pi * 3) * cell * 0.18 * (1 - blockedT);
       final Offset perp =
           Offset(-blocked.dir.dr.toDouble(), blocked.dir.dc.toDouble());
-      _drawArrow(canvas, geo, blocked, opacity: 1, offset: perp * shake);
+      _drawArrow(canvas, geo, blocked, offset: perp * shake);
     }
 
-    // Escape animation.
+    // Escape: the arrow flows along its own path and out of the board.
     final Arrow? escaping = ghost;
     if (escaping != null) {
-      final double raw = ghostT < 0 ? 0 : (ghostT > 1 ? 1 : ghostT);
-      final double eased = Curves.easeOutCubic.transform(raw);
-      final double distance = (rows + cols + 3) * cell;
-      final Offset dir =
-          Offset(escaping.dir.dc.toDouble(), escaping.dir.dr.toDouble());
+      final double eased = Curves.easeOutCubic.transform(_clamp01(ghostT));
+      final List<Cell> extended = _extendedPath(escaping);
+      final int onBoard = escaping.length + _rayLength(escaping);
+      final double travel = (onBoard + escaping.length).toDouble();
       _drawArrow(
         canvas,
         geo,
         escaping,
-        opacity: math.max(0.0, math.min(1.0, 1 - eased)),
-        offset: dir * (distance * eased),
+        extended: extended,
+        shift: eased * travel,
+        opacity: 1 - _clamp01((ghostT - 0.55) / 0.45),
       );
     }
   }
 
+  int _rayLength(Arrow arrow) {
+    var n = 0;
+    var cur = arrow.head;
+    while (true) {
+      final Cell next = cur.step(arrow.dir);
+      if (!_inBounds(next)) break;
+      n++;
+      cur = next;
+    }
+    return n;
+  }
+
+  bool _inBounds(Cell c) => c.r >= 0 && c.r < rows && c.c >= 0 && c.c < cols;
+
+  /// Tail -> head, then the exit ray, then enough cells past the edge that the
+  /// arrow can leave the board completely.
+  List<Cell> _extendedPath(Arrow arrow) {
+    final List<Cell> out = <Cell>[...arrow.travelPath];
+    var cur = arrow.head;
+    while (true) {
+      final Cell next = cur.step(arrow.dir);
+      if (!_inBounds(next)) break;
+      out.add(next);
+      cur = next;
+    }
+    final int extra = arrow.length * 2 + 2;
+    for (var i = 0; i < extra; i++) {
+      cur = cur.step(arrow.dir);
+      out.add(cur);
+    }
+    return out;
+  }
+
+  Offset _pointAt(List<Cell> cells, double s, BoardGeometry geo) {
+    final int n = cells.length;
+    final int i = _clampIndex(s.floor(), n);
+    final int j = _clampIndex(i + 1, n);
+    final double frac = _clamp01(s - i);
+    return Offset.lerp(geo.center(cells[i]), geo.center(cells[j]), frac)!;
+  }
+
   void _drawHint(Canvas canvas, BoardGeometry geo, Arrow arrow) {
-    final double cell = geo.cell;
-    final Rect rect = _unionRect(geo, arrow).inflate(cell * 0.06);
-    final double pulse = 0.35 + 0.45 * (1 - (hintT - 0.5).abs() * 2);
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(rect, Radius.circular(cell * 0.28)),
+    final double pulse = 0.30 + 0.40 * (1 - (hintT - 0.5).abs() * 2);
+    final List<Offset> points = _points(geo, arrow);
+    canvas.drawPath(
+      _polyline(points),
       Paint()
         ..color = palette.primary.withAlpha((255 * pulse).round())
         ..style = PaintingStyle.stroke
-        ..strokeWidth = cell * 0.09,
+        ..strokeWidth = geo.cell * 0.72
+        ..strokeCap = StrokeCap.round
+        ..strokeJoin = StrokeJoin.round,
     );
   }
 
-  Rect _unionRect(BoardGeometry geo, Arrow arrow) {
-    var minR = arrow.cells.first.r;
-    var maxR = arrow.cells.first.r;
-    var minC = arrow.cells.first.c;
-    var maxC = arrow.cells.first.c;
-    for (final Cell c in arrow.cells) {
-      minR = math.min(minR, c.r);
-      maxR = math.max(maxR, c.r);
-      minC = math.min(minC, c.c);
-      maxC = math.max(maxC, c.c);
+  List<Offset> _points(BoardGeometry geo, Arrow arrow) =>
+      arrow.travelPath.map(geo.center).toList(growable: false);
+
+  Path _polyline(List<Offset> points) {
+    final Path path = Path();
+    if (points.isEmpty) return path;
+    path.moveTo(points.first.dx, points.first.dy);
+    for (var i = 1; i < points.length; i++) {
+      path.lineTo(points[i].dx, points[i].dy);
     }
-    return Rect.fromLTWH(
-      geo.originX + minC * geo.cell,
-      geo.originY + minR * geo.cell,
-      (maxC - minC + 1) * geo.cell,
-      (maxR - minR + 1) * geo.cell,
-    );
+    return path;
   }
 
   void _drawArrow(
     Canvas canvas,
     BoardGeometry geo,
     Arrow arrow, {
-    required double opacity,
-    required Offset offset,
+    double opacity = 1,
+    Offset offset = Offset.zero,
+    List<Cell>? extended,
+    double shift = 0,
   }) {
     final double cell = geo.cell;
     final Color base = dirColor(palette, arrow.dir);
@@ -214,28 +259,41 @@ class BoardPainter extends CustomPainter {
     final Color body = base.withAlpha(alpha);
     final Color tip = Color.lerp(base, Colors.white, 0.55)!.withAlpha(alpha);
 
-    // Body: one rounded bar spanning the arrow's cells.
-    final Rect rect = _unionRect(geo, arrow).deflate(cell * 0.13).shift(offset);
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(rect, Radius.circular(cell * 0.24)),
-      Paint()..color = body,
+    final List<Offset> points;
+    if (extended == null) {
+      points = _points(geo, arrow).map((Offset p) => p + offset).toList();
+    } else {
+      points = <Offset>[
+        for (var j = 0; j < arrow.length; j++)
+          _pointAt(extended, shift + j, geo) + offset,
+      ];
+    }
+
+    canvas.drawPath(
+      _polyline(points),
+      Paint()
+        ..color = body
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = cell * 0.42
+        ..strokeCap = StrokeCap.round
+        ..strokeJoin = StrokeJoin.round,
     );
 
-    // Head: a triangle pointing in the arrow's direction.
-    final Offset center = geo.center(arrow.head) + offset;
-    final Offset dir = Offset(arrow.dir.dc.toDouble(), arrow.dir.dr.toDouble());
-    final Offset perp = Offset(-dir.dy, dir.dx);
-    final Offset tipPoint = center + dir * (cell * 0.46);
-    final Offset baseCenter = center - dir * (cell * 0.06);
-    final double halfWidth = cell * 0.30;
-    final Path path = Path()
+    // Head triangle at the leading end.
+    final Offset headPoint = points.last;
+    final Offset d = Offset(arrow.dir.dc.toDouble(), arrow.dir.dr.toDouble());
+    final Offset perp = Offset(-d.dy, d.dx);
+    final Offset tipPoint = headPoint + d * (cell * 0.46);
+    final Offset baseCenter = headPoint - d * (cell * 0.10);
+    final double halfWidth = cell * 0.32;
+    final Path head = Path()
       ..moveTo(tipPoint.dx, tipPoint.dy)
       ..lineTo(baseCenter.dx + perp.dx * halfWidth,
           baseCenter.dy + perp.dy * halfWidth)
       ..lineTo(baseCenter.dx - perp.dx * halfWidth,
           baseCenter.dy - perp.dy * halfWidth)
       ..close();
-    canvas.drawPath(path, Paint()..color = tip);
+    canvas.drawPath(head, Paint()..color = tip);
   }
 
   @override

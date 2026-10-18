@@ -78,6 +78,34 @@ jobs:
               print("labelled the app as ArrowQuest")
           PY
 
+      # AdMob needs the app id declared in the manifest, plus INTERNET for the
+      # release build. Both live outside android/, which is regenerated each run.
+      - name: Add AdMob app id and INTERNET permission
+        run: |
+          python3 - <<'PY'
+          import pathlib
+          p = pathlib.Path("android/app/src/main/AndroidManifest.xml")
+          if not p.exists():
+              raise SystemExit("AndroidManifest.xml not found")
+          s = p.read_text()
+          if "android.permission.INTERNET" not in s:
+              s = s.replace(
+                  "<application",
+                  '    <uses-permission android:name="android.permission.INTERNET"/>\n    <application',
+                  1,
+              )
+          if "com.google.android.gms.ads.APPLICATION_ID" not in s:
+              meta = (
+                  '        <meta-data\n'
+                  '            android:name="com.google.android.gms.ads.APPLICATION_ID"\n'
+                  '            android:value="ca-app-pub-3940256099942544~3347511713"/>\n'
+                  '    </application>'
+              )
+              s = s.replace("</application>", meta, 1)
+          p.write_text(s)
+          print("AdMob app id + INTERNET permission in place")
+          PY
+
       # The launcher icons live outside android/ because that folder is
       # regenerated on every run, so they are copied in each time.
       - name: Install launcher icons

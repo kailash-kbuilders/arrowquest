@@ -1,7 +1,7 @@
 name: arrowquest
 description: "ArrowQuest: Escape Puzzle — a 100-level arrow-escaping puzzle game."
 publish_to: 'none'
-version: 1.0.0+1
+version: 1.1.0+2
 
 environment:
   sdk: '>=3.3.0 <4.0.0'
@@ -10,9 +10,10 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.6
-  # Kept as a range so the newest version compatible with the runner's Flutter
+  # Kept as ranges so the newest version compatible with the runner's Flutter
   # SDK is resolved instead of a hard pin failing to resolve.
   shared_preferences: '>=2.2.0 <3.0.0'
+  google_mobile_ads: '>=5.0.0 <6.0.0'
 
 dev_dependencies:
   flutter_test:

@@ -141,4 +141,58 @@ void main() {
     expect(progress.totalStars, 0);
     expect(progress.totalArrowsRemoved, 0);
   });
+
+  group('hint wallet', () {
+    test('a fresh install starts with three hints', () {
+      expect(progress.hintsAvailable, ProgressService.startingHints);
+    });
+
+    test('using a hint spends one and counts it', () async {
+      await progress.useHint();
+      expect(progress.hintsAvailable, 2);
+      expect(progress.totalHintsUsed, 1);
+    });
+
+    test('the wallet never goes negative', () async {
+      for (int i = 0; i < 6; i++) {
+        await progress.useHint();
+      }
+      expect(progress.hintsAvailable, 0);
+    });
+
+    test('a rewarded hint is added and survives a reload', () async {
+      await progress.grantHint();
+      expect(progress.hintsAvailable, 4);
+      await progress.init();
+      expect(progress.hintsAvailable, 4);
+    });
+
+    test('a progress reset refills the wallet', () async {
+      await progress.useHint();
+      await progress.useHint();
+      await progress.resetProgress();
+      expect(progress.hintsAvailable, ProgressService.startingHints);
+    });
+  });
+
+  group('resume point', () {
+    test('the current level is remembered across a reload', () async {
+      await progress.setCurrentLevel(17);
+      await progress.init();
+      expect(progress.currentLevel, 17);
+    });
+
+    test('the current level is clamped to the level range', () async {
+      await progress.setCurrentLevel(9999);
+      expect(progress.currentLevel, AppConstants.totalLevels);
+      await progress.setCurrentLevel(-4);
+      expect(progress.currentLevel, 1);
+    });
+
+    test('a progress reset sends the player back to level 1', () async {
+      await progress.setCurrentLevel(9);
+      await progress.resetProgress();
+      expect(progress.currentLevel, 1);
+    });
+  });
 }

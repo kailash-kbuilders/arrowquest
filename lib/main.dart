@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'app.dart';
+import 'core/services/ads_service.dart';
 import 'core/storage/progress_service.dart';
 import 'core/storage/settings_service.dart';
 
@@ -29,6 +30,12 @@ Future<void> main() async {
       }
 
       runApp(const ArrowQuestApp());
+
+      // Ads are optional and must never delay or break startup, so the SDK is
+      // initialised after the first frame — and every call is defensive.
+      WidgetsBinding.instance.addPostFrameCallback((Duration _) {
+        AdsService.instance.initialize();
+      });
     },
     (Object error, StackTrace stack) {
       debugPrint('Uncaught error: $error');

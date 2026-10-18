@@ -6,8 +6,11 @@ enum MoveResult {
   /// The arrow escaped the board.
   escaped,
 
-  /// Another arrow was in the exit ray — the move was rejected.
+  /// Another arrow was in the exit ray — the move was refused and a heart lost.
   blocked,
+
+  /// The last heart was just lost — the level has to start over.
+  failed,
 
   /// Nothing to do (empty cell, or the level is already over).
   ignored,
@@ -27,6 +30,7 @@ class _Snapshot {
     required this.occupancy,
     required this.moves,
     required this.mistakes,
+    required this.hearts,
     required this.won,
   });
 
@@ -34,6 +38,7 @@ class _Snapshot {
   final Map<Cell, int> occupancy;
   final int moves;
   final int mistakes;
+  final int hearts;
   final bool won;
 }
 
@@ -42,15 +47,20 @@ class _Snapshot {
 ///
 /// Rules
 /// -----
-/// * Tap an arrow: the straight exit ray is scanned from its head out to the
-///   board edge.
-/// * Ray clear of every other arrow  -> the whole arrow escapes the board.
-/// * Ray blocked by another arrow    -> the move is rejected; nothing moves.
+/// * Each arrow is a bent path of connected cells with a head at one end.
+/// * Tap an arrow: the straight exit ray is scanned from its head to the edge.
+/// * Ray clear of every other arrow -> the whole arrow slides along its own path
+///   and off the board.
+/// * Ray blocked -> the move is refused, the arrow does not move, and one of the
+///   three hearts is lost. Lose all three and the level restarts.
 /// * Clear every arrow to win.
 class ArrowQuestEngine {
   ArrowQuestEngine(this.level) {
     _reset();
   }
+
+  /// Hearts a level starts with.
+  static const int maxHearts = 3;
 
   final Level level;
 
@@ -62,6 +72,7 @@ class ArrowQuestEngine {
 
   int moves = 0;
   int mistakes = 0;
+  int hearts = maxHearts;
   bool won = false;
 
   // ---- Queries -----------------------------------------------------------
@@ -73,6 +84,7 @@ class ArrowQuestEngine {
   int get cleared => totalArrows - arrowsLeft;
   bool get isOver => won;
   bool get canUndo => _history.isNotEmpty;
+  bool get outOfHearts => hearts <= 0;
 
   /// A read-only view of the board.
   List<Arrow> get arrows => List<Arrow>.unmodifiable(_arrows);
@@ -119,28 +131,32 @@ class ArrowQuestEngine {
   /// Whether tapping this arrow right now would clear it.
   bool canEscape(Arrow arrow) => !won && blockerFor(arrow) == null;
 
-  /// A cell whose arrow can legally escape, preferring a move that frees the
-  /// most other arrows. Falls back to the level's stored solution.
+  /// A cell whose arrow can legally escape.
+  ///
+  /// The reference solution is consulted first, and it is always right: a move
+  /// only ever *frees* cells, so the first arrow still on the board that appears
+  /// in the reference order is guaranteed to have a clear exit ray — whatever
+  /// order the player has cleared things in.
   Cell? hint() {
     if (won) return null;
-    Cell? best;
-    var bestScore = -1;
-    for (final Arrow arrow in _arrows) {
-      if (blockerFor(arrow) != null) continue;
-      final int score = _unlockScore(arrow);
-      if (score > bestScore) {
-        bestScore = score;
-        best = arrow.head;
-      }
-    }
-    if (best != null) return best;
 
-    // The stored solution is always a legal continuation.
     for (final Cell cell in level.solution) {
       final Arrow? a = arrowAt(cell.r, cell.c);
       if (a != null && blockerFor(a) == null) return a.head;
     }
-    return null;
+
+    // Defensive fallback: any escapable arrow, preferring one that frees more.
+    Cell? best;
+    var bestScore = -1;
+    for (final Arrow a in _arrows) {
+      if (blockerFor(a) != null) continue;
+      final int score = _unlockScore(a);
+      if (score > bestScore) {
+        bestScore = score;
+        best = a.head;
+      }
+    }
+    return best;
   }
 
   /// How many currently-blocked arrows this one is the blocker for.
@@ -163,9 +179,10 @@ class ArrowQuestEngine {
 
     if (blockerFor(arrow) != null) {
       mistakes++;
-      arrow.state = ArrowState.blocked;
-      return MoveOutcome(
-          MoveResult.blocked, arrow.copyWith(state: ArrowState.blocked));
+      hearts = hearts > 0 ? hearts - 1 : 0;
+      final Arrow blocked = arrow.copyWith(state: ArrowState.blocked);
+      if (hearts == 0) return MoveOutcome(MoveResult.failed, blocked);
+      return MoveOutcome(MoveResult.blocked, blocked);
     }
 
     _pushHistory();
@@ -193,17 +210,20 @@ class ArrowQuestEngine {
     final _Snapshot s = _history.removeLast();
     _arrows
       ..clear()
-      ..addAll(s.arrows
-          .map((Arrow a) => Arrow(id: a.id, cells: a.cells, dir: a.dir)));
+      ..addAll(s.arrows.map(
+        (Arrow a) => Arrow(id: a.id, cells: a.cells, dir: a.dir),
+      ));
     _occupancy
       ..clear()
       ..addAll(s.occupancy);
     moves = s.moves;
     mistakes = s.mistakes;
+    hearts = s.hearts;
     won = s.won;
     return true;
   }
 
+  /// Puts the level back to its exact starting state, hearts included.
   void restart() => _reset();
 
   // ---- Internals ---------------------------------------------------------
@@ -226,6 +246,7 @@ class ArrowQuestEngine {
     }
     moves = 0;
     mistakes = 0;
+    hearts = maxHearts;
     won = false;
   }
 
@@ -237,6 +258,7 @@ class ArrowQuestEngine {
       occupancy: Map<Cell, int>.of(_occupancy),
       moves: moves,
       mistakes: mistakes,
+      hearts: hearts,
       won: won,
     ));
     if (_history.length > _maxHistory) _history.removeAt(0);

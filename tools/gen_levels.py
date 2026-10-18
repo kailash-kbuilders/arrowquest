@@ -1,30 +1,29 @@
 #!/usr/bin/env python3
 """Generate the ArrowQuest level pack (100 levels).
 
-Mechanic (see docs/PRD.md)
---------------------------
-The board holds arrows. Each arrow is a straight path of connected cells with a
-head at its leading end and a facing direction. Tapping an arrow checks the
-straight exit ray that runs from its head to the board edge:
+Mechanic
+--------
+Each arrow is a *bent path* of connected cells with a head at one end and a
+facing direction. Tapping an arrow scans the straight exit ray from its head to
+the board edge:
 
-  * ray clear of every other arrow  -> the whole arrow escapes off the board;
-  * ray blocked by another arrow    -> the move is rejected (the arrow does not
-    move at all).
+  * ray clear of every other arrow -> the whole arrow slides along its own path
+    and off the board;
+  * ray blocked by another arrow   -> the move is refused and the arrow stays.
 
 Clear every arrow to finish.
 
 Why generated levels can never be unsolvable
 --------------------------------------------
-A level is built *backwards from the solved state*. We place arrows one at a
-time in reverse removal order. When an arrow is placed, the arrows already on
-the board are exactly the ones that would still be present when it is removed
-in the forward game — so we only have to insist that its own exit ray is clear
-of them. That single check guarantees the reverse of the placement order is a
-valid forward solution.
+A level is built backwards from the solved state. Arrows are placed one at a
+time in reverse removal order; when an arrow is placed, the arrows already on
+the board are exactly the ones still present when it is removed in the forward
+game. So a single check — "this arrow's exit ray is clear of the arrows already
+placed, and clear of its own body" — guarantees the reverse of the placement
+order is a valid solution.
 
-Each finished level is then replayed through an independent forward simulator
-(and a monotone greedy solver) before it is accepted; nothing ships unless the
-replay clears the board.
+Every finished level is replayed through an independent forward simulator and a
+monotone greedy solver before it is accepted.
 """
 import json
 import os
@@ -32,132 +31,114 @@ import random
 
 DIRS = {"U": (-1, 0), "D": (1, 0), "L": (0, -1), "R": (0, 1)}
 
-CHAPTERS = [
-    "First Steps", "Getting Blocked", "Crossings", "Tangled", "Long Chains",
-    "Dense", "Maze", "Complex", "Advanced", "Expert",
-]
-
-OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                   "assets", "levels", "levels.json")
+OUT = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "assets", "levels", "levels.json",
+)
 
 
-def cells(r, c, d, length):
-    dr, dc = DIRS[d]
-    return [(r - i * dr, c - i * dc) for i in range(length)]
-
-
-def ray(r, c, d, rows, cols):
+def ray(head, d, rows, cols):
     dr, dc = DIRS[d]
     out = []
-    nr, nc = r + dr, c + dc
-    while 0 <= nr < rows and 0 <= nc < cols:
-        out.append((nr, nc))
-        nr += dr
-        nc += dc
+    r, c = head[0] + dr, head[1] + dc
+    while 0 <= r < rows and 0 <= c < cols:
+        out.append((r, c))
+        r += dr
+        c += dc
     return out
 
 
-def build_level(rows, cols, target_arrows, max_len, block_bias, rng):
-    """Return (arrows, solution) or None.
+def neighbors(cell, rows, cols):
+    r, c = cell
+    out = []
+    for dr, dc in DIRS.values():
+        nr, nc = r + dr, c + dc
+        if 0 <= nr < rows and 0 <= nc < cols:
+            out.append((nr, nc))
+    return out
 
-    arrows   : list of (r, c, d, length) in board order
-    solution : list of (r, c) heads, in the order they must be cleared
-    """
-    occupied = {}          # cell -> arrow index
-    placed = []            # reverse removal order (last removed first)
 
-    for _ in range(target_arrows):
-        blocking, plain = [], []
-        for r in range(rows):
-            for c in range(cols):
-                if (r, c) in occupied:
-                    continue
-                for d in DIRS:
-                    for length in range(1, max_len + 1):
-                        cs = cells(r, c, d, length)
-                        if any(not (0 <= cr < rows and 0 <= cc < cols)
-                               for cr, cc in cs):
-                            break
-                        if any(cell in occupied for cell in cs):
-                            break
-                        rc = ray(r, c, d, rows, cols)
-                        if not rc:
-                            continue
-                        if any(cell in occupied for cell in rc):
-                            continue
+def build_arrow(occupied, rows, cols, min_len, max_len, rng, tries=40):
+    """Return (path, dir) with head first, or None."""
+    for _ in range(tries):
+        head = (rng.randrange(rows), rng.randrange(cols))
+        if head in occupied:
+            continue
+        d = rng.choice(list(DIRS))
+        rc = ray(head, d, rows, cols)
+        if any(cell in occupied for cell in rc):
+            continue
+        forbidden = set(rc)
+        forbidden.add(head)
 
-                        # Does this arrow sit in the exit ray of an arrow
-                        # already on the board? That is what makes a level hard.
-                        blocks = 0
-                        for (orow, ocol, od, olen) in placed:
-                            if any(cell in set(ray(orow, ocol, od, rows, cols))
-                                   for cell in cs):
-                                blocks += 1
+        path = [head]
+        last = None
+        target = rng.randint(min_len, max_len)
+        while len(path) < target:
+            cur = path[-1]
+            cands = [
+                n for n in neighbors(cur, rows, cols)
+                if n not in occupied and n not in forbidden and n not in path
+            ]
+            if not cands:
+                break
+            # Bias towards carrying straight on, so arrows read as clean lines
+            # with the occasional corner rather than scribbles.
+            straight = []
+            if last is not None:
+                back = (2 * cur[0] - last[0], 2 * cur[1] - last[1])
+                straight = [n for n in cands if n == back]
+            if straight and rng.random() < 0.62:
+                nxt = straight[0]
+            else:
+                nxt = rng.choice(cands)
+            last = cur
+            path.append(nxt)
 
-                        entry = (len(rc), blocks, r, c, d, length)
-                        (blocking if blocks else plain).append(entry)
-
-        pool = plain
-        if blocking and rng.random() < block_bias:
-            pool = blocking
-        if not pool:
-            pool = blocking or plain
-        if not pool:
-            break
-
-        pool.sort(key=lambda t: (-t[0], -t[1]))
-        top = pool[: max(1, len(pool) // 3)]
-        _, _, r, c, d, length = rng.choice(top)
-        for cell in cells(r, c, d, length):
-            occupied[cell] = len(placed)
-        placed.append((r, c, d, length))
-
-    if len(placed) < 3:
-        return None
-
-    arrows = list(reversed(placed))          # board / placement order
-    solution = [(r, c) for (r, c, _d, _l) in reversed(placed)]
-    return arrows, solution
+        if len(path) < min_len:
+            continue
+        return path, d
+    return None
 
 
 def simulate(arrows, solution, rows, cols):
     """Replay the recorded solution. True iff the board ends empty."""
-    occupied = set()
-    for (r, c, d, length) in arrows:
-        occupied.update(cells(r, c, d, length))
+    occupied = {}
+    for a in arrows:
+        for cell in a["cells"]:
+            occupied[tuple(cell)] = True
 
     for (r, c) in solution:
-        d = None
-        length = 0
-        for (ar, ac, ad, al) in arrows:
-            if (ar, ac) == (r, c):
-                d, length = ad, al
+        found = None
+        for a in arrows:
+            if tuple(a["cells"][0]) == (r, c):
+                found = a
                 break
-        if d is None:
+        if found is None:
             return False
-        body = cells(r, c, d, length)
-        if any(cell not in occupied for cell in body):
+        head = tuple(found["cells"][0])
+        if any(tuple(cell) not in occupied for cell in found["cells"]):
             return False
-        if any(cell in occupied for cell in ray(r, c, d, rows, cols)):
+        if any(cell in occupied for cell in ray(head, found["d"], rows, cols)):
             return False
-        for cell in body:
-            occupied.discard(cell)
+        for cell in found["cells"]:
+            occupied.pop(tuple(cell), None)
     return not occupied
 
 
 def greedy_solvable(arrows, rows, cols):
-    """Independent monotone solver: repeatedly remove any clear arrow."""
     remaining = list(arrows)
     changed = True
     while changed:
         changed = False
         occupied = set()
-        for (r, c, d, length) in remaining:
-            occupied.update(cells(r, c, d, length))
+        for a in remaining:
+            for cell in a["cells"]:
+                occupied.add(tuple(cell))
         keep = []
         for a in remaining:
-            r, c, d, length = a
-            if any(cell in occupied for cell in ray(r, c, d, rows, cols)):
+            head = tuple(a["cells"][0])
+            if any(cell in occupied for cell in ray(head, a["d"], rows, cols)):
                 keep.append(a)
             else:
                 changed = True
@@ -167,118 +148,116 @@ def greedy_solvable(arrows, rows, cols):
 
 def validate(arrows, rows, cols):
     seen = set()
-    for (r, c, d, length) in arrows:
-        if d not in DIRS:
+    for a in arrows:
+        if a["d"] not in DIRS:
             return False
-        if length < 1:
+        cells = [tuple(c) for c in a["cells"]]
+        if len(cells) < 1:
             return False
-        for (cr, cc) in cells(r, c, d, length):
-            if not (0 <= cr < rows and 0 <= cc < cols):
+        for i, cell in enumerate(cells):
+            if not (0 <= cell[0] < rows and 0 <= cell[1] < cols):
                 return False
-            if (cr, cc) in seen:
+            if cell in seen:
                 return False
-            seen.add((cr, cc))
+            seen.add(cell)
+            if i:
+                prev = cells[i - 1]
+                if abs(prev[0] - cell[0]) + abs(prev[1] - cell[1]) != 1:
+                    return False
+        # the body must not sit in its own exit ray
+        if set(ray(cells[0], a["d"], rows, cols)) & set(cells):
+            return False
     return True
 
 
 def blocked_count(arrows, rows, cols):
     occupied = set()
-    for (r, c, d, length) in arrows:
-        occupied.update(cells(r, c, d, length))
+    for a in arrows:
+        for cell in a["cells"]:
+            occupied.add(tuple(cell))
     n = 0
-    for (r, c, d, length) in arrows:
-        if any(cell in occupied for cell in ray(r, c, d, rows, cols)):
+    for a in arrows:
+        head = tuple(a["cells"][0])
+        if any(cell in occupied for cell in ray(head, a["d"], rows, cols)):
             n += 1
     return n
 
 
 def params(i):
-    if i <= 10:
-        lo, hi = 5, 7
-    elif i <= 30:
-        lo, hi = 7, 9
-    elif i <= 60:
-        lo, hi = 9, 11
-    else:
-        lo, hi = 11, 14
-    span = hi - lo
-    band_start = {5: 1, 7: 11, 9: 31, 11: 61}[lo]
-    band_len = {5: 10, 7: 20, 9: 30, 11: 40}[lo]
-    frac = (i - band_start) / max(1, band_len - 1)
-    size = lo + round(frac * span)
+    """Board size, arrow count and path length for level i (progressive)."""
+    t = (i - 1) / 99.0  # 0.0 .. 1.0
 
-    density = 0.24 + 0.22 * (i / 100.0)
-    target = max(3, int(round(size * size * density)))
+    size = int(round(7 + t * 9))          # 7 -> 16
+    size = max(7, min(16, size))
 
-    if i <= 10:
-        max_len, block_bias = 1, 0.0
-    elif i <= 30:
-        max_len, block_bias = 2, 0.35
-    elif i <= 60:
-        max_len, block_bias = 3, 0.55
-    else:
-        max_len, block_bias = 4, 0.7
-    return size, size, target, max_len, block_bias
+    # Arrow count rises steadily; the generator stops early if the board
+    # saturates, so these are targets rather than guarantees.
+    target = int(round(9 + t * 46))       # 9 -> 55
+
+    min_len = 3 if i > 6 else 2
+    max_len = int(round(4 + t * 5))       # 4 -> 9
+
+    return size, size, target, min_len, max_len
+
+
+def difficulty(i):
+    if i <= 35:
+        return "Easy"
+    if i <= 70:
+        return "Medium"
+    return "Hard"
 
 
 def main():
     rng = random.Random(20261018)
     levels = []
+
     for i in range(1, 101):
-        rows, cols, target, max_len, block_bias = params(i)
-        chosen = None
-        for _ in range(120):
-            got = build_level(rows, cols, target, max_len, block_bias, rng)
+        rows, cols, target, min_len, max_len = params(i)
+
+        arrows = []
+        occupied = set()
+        solution = []
+
+        for _ in range(target):
+            got = build_arrow(occupied, rows, cols, min_len, max_len, rng)
             if got is None:
                 continue
-            arrows, solution = got
-            if not validate(arrows, rows, cols):
-                continue
-            if not simulate(arrows, solution, rows, cols):
-                continue
-            if not greedy_solvable(arrows, rows, cols):
-                continue
-            if i > 10 and blocked_count(arrows, rows, cols) < 2:
-                continue
-            chosen = (arrows, solution)
-            break
-        if chosen is None:
-            for _ in range(200):
-                got = build_level(rows, cols, max(3, target - 4), max_len,
-                                  block_bias, rng)
-                if got is None:
-                    continue
-                arrows, solution = got
-                if validate(arrows, rows, cols) and \
-                        simulate(arrows, solution, rows, cols) and \
-                        greedy_solvable(arrows, rows, cols):
-                    chosen = (arrows, solution)
-                    break
-        if chosen is None:
-            raise SystemExit(f"could not build level {i}")
-        arrows, solution = chosen
-        assert simulate(arrows, solution, rows, cols), f"level {i} failed"
-        assert greedy_solvable(arrows, rows, cols), f"level {i} unsolvable"
+            path, d = got
+            arrows.append({"d": d, "cells": [list(c) for c in path]})
+            occupied.update(path)
+            solution.append(list(path[0]))
 
+        # The forward clearing order is the reverse of the placement order.
+        solution.reverse()
+        arrows.reverse()
+
+        if len(arrows) < 4:
+            raise SystemExit(f"level {i} built only {len(arrows)} arrows")
+
+        assert validate(arrows, rows, cols), f"level {i} is malformed"
+        assert simulate(arrows, solution, rows, cols), f"level {i} failed replay"
+        assert greedy_solvable(arrows, rows, cols), f"level {i} is unsolvable"
+
+        avg_len = sum(len(a["cells"]) for a in arrows) / len(arrows)
         levels.append({
             "id": i,
-            "chapter": CHAPTERS[(i - 1) // 10],
             "rows": rows,
             "cols": cols,
-            "par": len(solution),
-            "solution": [{"r": r, "c": c} for (r, c) in solution],
-            "arrows": [
-                {"r": r, "c": c, "d": d, "len": length}
-                for (r, c, d, length) in arrows
-            ],
+            "difficulty": difficulty(i),
+            "par": len(arrows),
+            "solution": solution,
+            "arrows": arrows,
         })
-        print(f"L{i:>3} {rows:>2}x{cols:<2} arrows={len(arrows):>3} "
-              f"blocked={blocked_count(arrows, rows, cols):>3} "
-              f"sol={len(solution):>3}")
+        print(
+            f"L{i:>3} {rows:>2}x{cols:<2} {difficulty(i):<6} "
+            f"arrows={len(arrows):>3} blocked={blocked_count(arrows, rows, cols):>3} "
+            f"avgLen={avg_len:>4.1f} cells={sum(len(a['cells']) for a in arrows):>4}"
+        )
 
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w") as fh:
-        json.dump({"levels": levels}, fh, indent=1)
+        json.dump({"levels": levels}, fh, separators=(",", ":"))
     print(f"\nwrote {len(levels)} levels -> {OUT}")
 
 
