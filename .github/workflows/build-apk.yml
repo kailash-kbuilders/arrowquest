@@ -4,6 +4,8 @@ on:
   push:
     branches: [ main, master ]
     tags: [ 'v*' ]
+  pull_request:
+    branches: [ main, master ]
   workflow_dispatch:
 
 permissions:
@@ -28,24 +30,27 @@ jobs:
           channel: stable
           cache: true
 
-      # Guard against a scaffold that has only Dart files. Build the android/
-      # folder inside a throwaway project and copy just that folder in, so our
-      # own lib/ and pubspec.yaml can never be overwritten.
+      - name: Flutter version
+        run: flutter --version
+
+      # The repo deliberately ships no android/ folder (a partial Gradle project
+      # is worse than none). Build it in a throwaway project and copy only the
+      # android/ folder in, so lib/ and pubspec.yaml can never be overwritten.
       - name: Generate android folder if missing
         run: |
           if [ ! -d "android" ]; then
             TMP="$(mktemp -d)"
-            flutter create "$TMP/seed" --platforms=android --project-name quiver
+            flutter create "$TMP/seed" --platforms=android --project-name arrowquest
             cp -r "$TMP/seed/android" ./android
             rm -rf "$TMP"
           fi
 
-      # Give the app a repo-specific applicationId / namespace.
+      # Give the app a repo-specific applicationId / namespace and label.
       #
-      # NOTE: we deliberately DO NOT touch compileSdk here. The Flutter template
-      # already sets `compileSdk = flutter.compileSdkVersion`, which is 36 on
-      # current stable, and the plugins compile against that same value. Pinning
-      # it lower is exactly what makes the "AAR metadata" check fail.
+      # NOTE: compileSdk is deliberately left alone. The Flutter template sets
+      # `compileSdk = flutter.compileSdkVersion` (36 on current stable) and the
+      # plugins compile against that same value; pinning it lower is exactly
+      # what makes the "AAR metadata" check fail.
       - name: Configure Android project
         run: |
           python3 - <<'PY'
@@ -68,14 +73,13 @@ jobs:
           manifest = pathlib.Path("android/app/src/main/AndroidManifest.xml")
           if manifest.exists():
               m = manifest.read_text()
-              m = re.sub(r'android:label="[^"]*"', 'android:label="Quiver"', m)
+              m = re.sub(r'android:label="[^"]*"', 'android:label="ArrowQuest"', m)
               manifest.write_text(m)
-              print("labelled the app as Quiver")
+              print("labelled the app as ArrowQuest")
           PY
 
-      # Install the brand launcher icon into the generated android/ project.
-      # android/ is regenerated on every run, so the icon is copied in each time
-      # rather than committed.
+      # The launcher icons live outside android/ because that folder is
+      # regenerated on every run, so they are copied in each time.
       - name: Install launcher icons
         run: |
           RES="android/app/src/main/res"
@@ -89,13 +93,11 @@ jobs:
             cp -f branding/android/ic_launcher_background.xml "$RES/drawable/ic_launcher_background.xml"
             cp -f branding/android/ic_launcher.xml "$RES/mipmap-anydpi-v26/ic_launcher.xml"
             cp -f branding/android/ic_launcher.xml "$RES/mipmap-anydpi-v26/ic_launcher_round.xml"
-            echo "installed launcher icons:"
-            find "$RES" -name 'ic_launcher*' | sort
+            echo "installed launcher icons"
           else
             echo "no branding/android folder; keeping the template icon"
           fi
 
-      # Print the resolved SDK versions so a future failure is easy to read.
       - name: Show Android SDK configuration
         run: |
           grep -rnE "compileSdk|targetSdk|minSdk|ndkVersion" android/app/build.gradle* || true
@@ -110,6 +112,21 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
+
+      # Formatting is applied and then verified, so a style difference can never
+      # block a release build.
+      - name: Format
+        run: |
+          dart format .
+          dart format --output=none --set-exit-if-changed .
+
+      # Only real analyzer *errors* fail the build; style infos/warnings are
+      # reported in the log but do not block the APK.
+      - name: Analyze
+        run: flutter analyze --no-fatal-infos --no-fatal-warnings
+
+      - name: Test
+        run: flutter test
 
       # --no-shrink skips R8 minification, the biggest cause of release build failures.
       - name: Build release APK

@@ -1,6 +1,15 @@
 include: package:flutter_lints/flutter.yaml
 
+analyzer:
+  errors:
+    # Style-only lints should not be treated as build-breaking errors.
+    prefer_const_constructors: info
+    prefer_const_literals_to_create_immutables: info
+  exclude:
+    - build/**
+
 linter:
   rules:
-    prefer_const_constructors: true
-    prefer_const_declarations: true
+    - always_declare_return_types
+    - avoid_print
+    - prefer_single_quotes

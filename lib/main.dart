@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'screens/home_screen.dart';
-import 'services/progress_service.dart';
-import 'theme/app_colors.dart';
+import 'app.dart';
+import 'core/storage/progress_service.dart';
+import 'core/storage/settings_service.dart';
 
 Future<void> main() async {
   runZonedGuarded(
@@ -15,45 +15,23 @@ Future<void> main() async {
         FlutterError.presentError(details);
       };
 
-      // Saved progress is best-effort: a storage problem must never stop the
-      // app from starting.
+      // Storage is best-effort: a corrupt or unavailable save must never stop
+      // the game from starting. Both services fall back to in-memory defaults.
+      try {
+        await SettingsService.instance.init();
+      } catch (_) {
+        // Ignore — defaults are already in place.
+      }
       try {
         await ProgressService.instance.init();
       } catch (_) {
-        // Fall back to in-memory defaults.
+        // Ignore — defaults are already in place.
       }
 
-      runApp(const QuiverApp());
+      runApp(const ArrowQuestApp());
     },
     (Object error, StackTrace stack) {
       debugPrint('Uncaught error: $error');
     },
   );
-}
-
-class QuiverApp extends StatelessWidget {
-  const QuiverApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Quiver',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        brightness: Brightness.dark,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColors.accent,
-          brightness: Brightness.dark,
-        ),
-        scaffoldBackgroundColor: AppColors.bg,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: AppColors.bg,
-          elevation: 0,
-          centerTitle: false,
-        ),
-      ),
-      home: const HomeScreen(),
-    );
-  }
 }

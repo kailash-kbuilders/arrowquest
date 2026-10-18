@@ -1,23 +1,23 @@
-name: quiver
-description: "An arrow-clearing puzzle. Tap an arrow and it slides out in its own direction — unless something is in the way."
+name: arrowquest
+description: "ArrowQuest: Escape Puzzle — a 100-level arrow-escaping puzzle game."
 publish_to: 'none'
-version: 0.1.0+1
+version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: '>=3.3.0 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.6
-  # Range is deliberately broad so the newest version that supports the runner's
-  # Flutter SDK is selected, rather than failing to resolve.
+  # Kept as a range so the newest version compatible with the runner's Flutter
+  # SDK is resolved instead of a hard pin failing to resolve.
   shared_preferences: '>=2.2.0 <3.0.0'
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
+  flutter_lints: ^4.0.0
 
 flutter:
   uses-material-design: true

@@ -1,6 +1,6 @@
 # Branding
 
-The Quiver mark is one chunky arrow flying out of a faint grid of board cells —
+The ArrowQuest mark is one chunky arrow flying out of a faint grid of board cells —
 the game in a single glance. Two flat colours, one restrained background
 gradient, rounded joins throughout. Deliberately designed rather than an AI
 gradient mesh.
