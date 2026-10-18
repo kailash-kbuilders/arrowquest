@@ -76,12 +76,13 @@ class AdsService extends ChangeNotifier {
     }
     _interstitial = null;
     try {
-      ad.fullScreenContentCallback = FullScreenContentCallback(
-        onAdDismissedFullScreenContent: (Ad shown) {
+      ad.fullScreenContentCallback = FullScreenContentCallback<InterstitialAd>(
+        onAdDismissedFullScreenContent: (InterstitialAd shown) {
           shown.dispose();
           _loadInterstitial();
         },
-        onAdFailedToShowFullScreenContent: (Ad shown, AdError error) {
+        onAdFailedToShowFullScreenContent:
+            (InterstitialAd shown, AdError error) {
           shown.dispose();
           _loadInterstitial();
         },
@@ -131,13 +132,13 @@ class AdsService extends ChangeNotifier {
     }
 
     try {
-      ad.fullScreenContentCallback = FullScreenContentCallback(
-        onAdDismissedFullScreenContent: (Ad shown) {
+      ad.fullScreenContentCallback = FullScreenContentCallback<RewardedAd>(
+        onAdDismissedFullScreenContent: (RewardedAd shown) {
           shown.dispose();
           _loadRewarded();
           finish();
         },
-        onAdFailedToShowFullScreenContent: (Ad shown, AdError error) {
+        onAdFailedToShowFullScreenContent: (RewardedAd shown, AdError error) {
           shown.dispose();
           _loadRewarded();
           finish();

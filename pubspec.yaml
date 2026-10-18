@@ -13,7 +13,9 @@ dependencies:
   # Kept as ranges so the newest version compatible with the runner's Flutter
   # SDK is resolved instead of a hard pin failing to resolve.
   shared_preferences: '>=2.2.0 <3.0.0'
-  google_mobile_ads: '>=5.0.0 <6.0.0'
+  # 8.x is the line that builds against the Gradle version the current Flutter
+  # stable template ships (5.x used `configurations.all`, removed in Gradle 9).
+  google_mobile_ads: '>=8.0.0 <9.0.0'
 
 dev_dependencies:
   flutter_test:
