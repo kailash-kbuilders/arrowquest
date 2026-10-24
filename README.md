@@ -8,8 +8,10 @@ run from its head to the edge is clear. If another arrow is in the way, the move
 is refused, the arrow stays put, and you lose a heart. Lose all three and the
 level starts again.
 
-100 levels in one continuous run, no chapters: the boards get bigger, the paths
-get longer and the tangles get worse as you go.
+100 levels in one continuous run, no chapters: the boards get bigger and the
+mazes get far denser as you go. Level 1 has 8 arrows on a 7×7 board; level 100
+packs **93 arrows onto a 22×22 board**, with well over half of them blocked at
+the start.
 
 - **Product requirements:** [`docs/PRD.md`](docs/PRD.md)
 - **Branding:** [`branding/README.md`](branding/README.md)
@@ -55,12 +57,15 @@ python3 tools/gen_levels.py
 
 | Levels | Board | Arrows | Difficulty |
 | --- | --- | --- | --- |
-| 1–15 | 7×7 – 8×8 | ~9–14 | Easy |
-| 16–35 | 8×8 – 10×10 | ~14–17 | Easy |
-| 36–70 | 10×10 – 13×13 | ~17–25 | Medium |
-| 71–100 | 13×13 – 16×16 | ~25–41 | Hard |
+| 1–15 | 7×7 – 9×9 | 8–25 | Easy |
+| 16–35 | 9×9 – 12×12 | 24–41 | Easy |
+| 36–70 | 12×12 – 17×17 | 42–77 | Medium |
+| 71–100 | 18×18 – 22×22 | 76–93 | Hard |
 
-Levels get steadily longer and denser; there are no chapters or categories.
+The arrow count is what carries the difficulty: the generator is steered towards
+placing bodies inside other arrows' exit rays, so a late level starts with 60+
+arrows that cannot move until the right ones are cleared first. There are no
+chapters or categories.
 
 ## Hearts, hints and stars
 
@@ -102,15 +107,16 @@ python3 tools/gen_sounds.py
 
 ## Look and layout
 
-Arrows are drawn as a rounded tube with a wide **dart-shaped head**, a tail dot
-and a darker outline, so the direction is obvious at a glance and overlapping
-paths still read as separate arrows. The art is deliberately its own thing —
-bold, coloured, and nothing like the thin black line art of other arrow puzzles.
+The default theme is **light**: a cream board with thin, sharp-cornered
+near-black arrow paths — the clean maze look a dense arrow puzzle needs. The
+only coloured part of an arrow is its **head**, a small solid triangle that
+makes the direction unmistakable without turning the board into confetti. (A
+dark theme is one switch away in Settings.)
 
 The layout is responsive: the menu and end-of-level screens are centred and
 scrollable with a capped reading width, the board is capped so it stays a
 sensible size on tablets, and the level grid picks its column count from the
-available width.
+available width. Large boards can be zoomed and panned from the play screen.
 
 ## Ads
 

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../data/models/arrow.dart';
 
-/// Colour for a direction, from the active palette.
+/// Head colour for a direction, from the active palette.
 Color dirColor(AppPalette palette, Dir dir) {
   switch (dir) {
     case Dir.up:
@@ -65,10 +65,9 @@ class BoardGeometry {
 /// Paints the grid and every arrow, plus the transient escape, blocked and
 /// hint effects.
 ///
-/// Arrow look: a rounded tube for the body, a wide dart-shaped head, a tail
-/// dot, and a darker outline around the whole shape so overlapping paths still
-/// read as separate arrows. The head is deliberately much wider than the body,
-/// which is what makes the direction obvious at a glance on a dense board.
+/// Arrow look: a thin, sharp-cornered path in near-black ink with a small solid
+/// triangle at the head. The head is the only coloured part, so a dense board
+/// still reads as a clean black maze while the direction is unmistakable.
 class BoardPainter extends CustomPainter {
   BoardPainter({
     required this.rows,
@@ -113,11 +112,13 @@ class BoardPainter extends CustomPainter {
       cell * rows,
     );
     canvas.drawRRect(
-      RRect.fromRectAndRadius(boardRect, Radius.circular(cell * 0.30)),
-      Paint()..color = palette.panel,
+      RRect.fromRectAndRadius(boardRect, Radius.circular(cell * 0.22)),
+      Paint()..color = palette.board,
     );
 
-    final Paint gridPaint = Paint()..color = palette.panelHi;
+    // A very faint cell tint: enough to help the eye follow the grid without
+    // competing with the arrows.
+    final Paint cellPaint = Paint()..color = palette.boardCell.withAlpha(55);
     for (var r = 0; r < rows; r++) {
       for (var c = 0; c < cols; c++) {
         final Rect rect = Rect.fromLTWH(
@@ -125,15 +126,15 @@ class BoardPainter extends CustomPainter {
           geo.originY + r * cell,
           cell,
           cell,
-        ).deflate(cell * 0.07);
+        ).deflate(cell * 0.10);
         canvas.drawRRect(
-          RRect.fromRectAndRadius(rect, Radius.circular(cell * 0.16)),
-          gridPaint,
+          RRect.fromRectAndRadius(rect, Radius.circular(cell * 0.14)),
+          cellPaint,
         );
       }
     }
 
-    // Hint glow, under the arrow so it reads as a halo.
+    // Hint halo, under the arrow.
     final Cell? hint = hintHead;
     if (hint != null) {
       for (final Arrow a in arrows) {
@@ -232,31 +233,16 @@ class BoardPainter extends CustomPainter {
     return path;
   }
 
-  /// A dart: a triangle with a notch in the back, so the head reads as an
-  /// arrow rather than a plain blob.
-  Path _dart(Offset head, Offset dir, Offset perp, double cell) {
-    final Offset tip = head + dir * (cell * 0.50);
-    final Offset wingA = head - dir * (cell * 0.22) + perp * (cell * 0.30);
-    final Offset wingB = head - dir * (cell * 0.22) - perp * (cell * 0.30);
-    final Offset notch = head - dir * (cell * 0.02);
-    return Path()
-      ..moveTo(tip.dx, tip.dy)
-      ..lineTo(wingA.dx, wingA.dy)
-      ..lineTo(notch.dx, notch.dy)
-      ..lineTo(wingB.dx, wingB.dy)
-      ..close();
-  }
-
   // ---- Drawing -----------------------------------------------------------
 
   void _drawHint(Canvas canvas, BoardGeometry geo, Arrow arrow) {
-    final double pulse = 0.30 + 0.40 * (1 - (hintT - 0.5).abs() * 2);
+    final double pulse = 0.28 + 0.40 * (1 - (hintT - 0.5).abs() * 2);
     canvas.drawPath(
       _polyline(_points(geo, arrow)),
       Paint()
         ..color = palette.primary.withAlpha((255 * pulse).round())
         ..style = PaintingStyle.stroke
-        ..strokeWidth = geo.cell * 0.78
+        ..strokeWidth = geo.cell * 0.46
         ..strokeCap = StrokeCap.round
         ..strokeJoin = StrokeJoin.round,
     );
@@ -272,14 +258,9 @@ class BoardPainter extends CustomPainter {
     double shift = 0,
   }) {
     final double cell = geo.cell;
-    final Color base = dirColor(palette, arrow.dir);
     final int alpha = math.min(255, math.max(0, (255 * opacity).round()));
-    final Color body = base.withAlpha(alpha);
-    final Color edge = Color.lerp(base, Colors.black, 0.42)!.withAlpha(alpha);
-    final Color shine =
-        Color.lerp(base, Colors.white, 0.60)!.withAlpha((alpha * 0.55).round());
-    final Color tipColor =
-        Color.lerp(base, Colors.white, 0.72)!.withAlpha(alpha);
+    final Color ink = palette.ink.withAlpha(alpha);
+    final Color head = dirColor(palette, arrow.dir).withAlpha(alpha);
 
     final List<Offset> points;
     if (extended == null) {
@@ -290,62 +271,33 @@ class BoardPainter extends CustomPainter {
           _pointAt(extended, shift + j, geo) + offset,
       ];
     }
-    final Path spine = _polyline(points);
-    final double bodyWidth = cell * 0.30;
 
-    // 1. dark outline, so crossing paths stay legible
+    // The path: thin, sharp corners, no rounding — the maze look.
+    final double width = math.max(1.8, cell * 0.16);
     canvas.drawPath(
-      spine,
+      _polyline(points),
       Paint()
-        ..color = edge
+        ..color = ink
         ..style = PaintingStyle.stroke
-        ..strokeWidth = bodyWidth + cell * 0.12
-        ..strokeCap = StrokeCap.round
-        ..strokeJoin = StrokeJoin.round,
+        ..strokeWidth = width
+        ..strokeCap = StrokeCap.butt
+        ..strokeJoin = StrokeJoin.miter,
     );
 
-    // 2. tail dot — a small, distinctive cap at the back of every arrow
-    canvas.drawCircle(points.first, bodyWidth * 0.66, Paint()..color = edge);
-    canvas.drawCircle(points.first, bodyWidth * 0.44, Paint()..color = body);
-
-    // 3. the tube itself
-    canvas.drawPath(
-      spine,
-      Paint()
-        ..color = body
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = bodyWidth
-        ..strokeCap = StrokeCap.round
-        ..strokeJoin = StrokeJoin.round,
-    );
-
-    // 4. a soft highlight down the middle of the tube
-    if (points.length > 1) {
-      canvas.drawPath(
-        spine,
-        Paint()
-          ..color = shine
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = bodyWidth * 0.30
-          ..strokeCap = StrokeCap.round
-          ..strokeJoin = StrokeJoin.round,
-      );
-    }
-
-    // 5. the head
+    // The head: a small solid triangle, the only coloured part.
     final Offset headPoint = points.last;
-    final Offset dir = Offset(arrow.dir.dc.toDouble(), arrow.dir.dr.toDouble());
-    final Offset perp = Offset(-dir.dy, dir.dx);
-    final Path dart = _dart(headPoint, dir, perp, cell);
-    canvas.drawPath(
-      dart,
-      Paint()
-        ..color = edge
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = cell * 0.07
-        ..strokeJoin = StrokeJoin.round,
-    );
-    canvas.drawPath(dart, Paint()..color = tipColor);
+    final Offset d = Offset(arrow.dir.dc.toDouble(), arrow.dir.dr.toDouble());
+    final Offset perp = Offset(-d.dy, d.dx);
+    final double half = math.max(1.8, cell * 0.17);
+    final Offset tip = headPoint + d * (cell * 0.46);
+    final Offset baseA = headPoint - d * (cell * 0.10) + perp * half;
+    final Offset baseB = headPoint - d * (cell * 0.10) - perp * half;
+    final Path triangle = Path()
+      ..moveTo(tip.dx, tip.dy)
+      ..lineTo(baseA.dx, baseA.dy)
+      ..lineTo(baseB.dx, baseB.dy)
+      ..close();
+    canvas.drawPath(triangle, Paint()..color = head);
   }
 
   @override

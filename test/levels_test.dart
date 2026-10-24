@@ -43,8 +43,8 @@ void main() {
       );
       expect(level.rows, greaterThanOrEqualTo(7));
       expect(level.cols, greaterThanOrEqualTo(7));
-      expect(level.rows, lessThanOrEqualTo(16));
-      expect(level.cols, lessThanOrEqualTo(16));
+      expect(level.rows, lessThanOrEqualTo(22));
+      expect(level.cols, lessThanOrEqualTo(22));
       expect(level.par, level.arrows.length);
       expect(
         level.solution.length,

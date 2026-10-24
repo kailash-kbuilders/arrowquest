@@ -23,7 +23,8 @@ class SettingsService extends ChangeNotifier {
   bool _music = false;
   bool _vibration = true;
   bool _reducedMotion = false;
-  bool _darkTheme = true;
+  // The light theme is the default: a cream board with near-black arrows.
+  bool _darkTheme = false;
   bool _challengeMode = false;
 
   Future<SharedPreferences> _prefsInstance() async =>
@@ -36,7 +37,7 @@ class SettingsService extends ChangeNotifier {
       _music = p.getBool(_kMusic) ?? false;
       _vibration = p.getBool(_kVibration) ?? true;
       _reducedMotion = p.getBool(_kReducedMotion) ?? false;
-      _darkTheme = p.getBool(_kDarkTheme) ?? true;
+      _darkTheme = p.getBool(_kDarkTheme) ?? false;
       _challengeMode = p.getBool(_kChallenge) ?? false;
     } catch (_) {
       // Keep defaults.
