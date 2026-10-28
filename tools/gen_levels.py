@@ -93,11 +93,12 @@ def ray_is_clear(r, c, d, rows, cols, runs):
     return r == 0 or run_u[r - 1][c] == r
 
 
-def grow_body(head, d, occupied, rows, cols, min_len, max_len, rng, blockable):
+def grow_body(head, d, occupied, rows, cols, min_len, max_len, rng, ray_count):
     """Extend a body from the head, keeping it out of the head's own ray.
 
-    [blockable] holds cells that sit inside some already-placed arrow's exit
-    ray; bodies are steered towards them so arrows actually block each other.
+    [ray_count] maps a cell to how many *free* arrows' exit rays pass through
+    it. Bodies are steered towards the highest count, i.e. towards ray
+    intersections, so one body can block several arrows at once.
     """
     forbidden = set(ray(head, d, rows, cols))
     forbidden.add(head)
@@ -116,13 +117,14 @@ def grow_body(head, d, occupied, rows, cols, min_len, max_len, rng, blockable):
             cands.append(n)
         if not cands:
             break
-        blockers = [n for n in cands if n in blockable]
+        best = max(ray_count.get(n, 0) for n in cands)
+        top = [n for n in cands if ray_count.get(n, 0) == best]
         straight = []
         if last is not None:
             back = (2 * cur[0] - last[0], 2 * cur[1] - last[1])
             straight = [n for n in cands if n == back]
-        if blockers and rng.random() < 0.65:
-            nxt = rng.choice(blockers)
+        if best > 0 and rng.random() < 0.92:
+            nxt = rng.choice(top)
         elif straight and rng.random() < 0.55:
             nxt = straight[0]
         else:
@@ -130,6 +132,14 @@ def grow_body(head, d, occupied, rows, cols, min_len, max_len, rng, blockable):
         last = cur
         path.append(nxt)
     return path
+
+
+def _ray_counts(free_rays):
+    counts = {}
+    for rayset in free_rays:
+        for cell in rayset:
+            counts[cell] = counts.get(cell, 0) + 1
+    return counts
 
 
 def _weighted_pick(items, weights, rng):
@@ -155,6 +165,14 @@ def blockable_cells(placed, rows, cols):
 
 
 def build_level(rows, cols, target_arrows, min_len, max_len, rng):
+    """Build one level in reverse removal order.
+
+    Every arrow placed is steered so its body lands inside the exit ray of an
+    arrow that is *still free* — that is a greedy set-cover: each placement
+    takes another arrow off the "tap it right now" list. The result is a board
+    where almost nothing is legal on move one, which is what makes the puzzle a
+    puzzle instead of something you can clear by tapping around.
+    """
     occupied = set()
     placed = []  # reverse removal order (last removed first)
 
@@ -170,35 +188,153 @@ def build_level(rows, cols, target_arrows, min_len, max_len, rng):
                         candidates.append((r, c, d))
         if not candidates:
             break
-        blockable = blockable_cells(placed, rows, cols)
 
-        # Weight the pick towards heads that sit next to cells already inside
-        # another arrow's ray (so the body can block it) and towards short rays
-        # (which leave more room for later arrows).
-        weights = []
-        for (r, c, d) in candidates:
-            near = 0
-            for dr, dc in DIRS.values():
-                n = (r + dr, c + dc)
-                if 0 <= n[0] < rows and 0 <= n[1] < cols and n in blockable:
-                    near += 1
-            length = len(ray((r, c), d, rows, cols))
-            weights.append(1.0 + 5.0 * near + (3.0 if length <= 2 else 0.0))
-        pick = _weighted_pick(candidates, weights, rng)
-        head, d = (pick[0], pick[1]), pick[2]
-        body = grow_body(
-            head, d, occupied, rows, cols, min_len, max_len, rng, blockable
-        )
-        if len(body) < min_len:
+        # Try a handful of placements and keep the one whose body crosses the
+        # most *still-free* arrows' exit rays. That greedy cover is what drags
+        # the number of legal first moves down towards a handful.
+        free_rays = [p["ray"] for p in placed if not p["blocked"]]
+        ray_count = _ray_counts(free_rays)
+
+        rng.shuffle(candidates)
+        best = None
+        for (r, c, d) in candidates[:20]:
+            body = grow_body(
+                (r, c), d, occupied, rows, cols, min_len, max_len, rng, ray_count
+            )
+            if len(body) < min_len:
+                continue
+            body_set = set(body)
+            hits = sum(1 for rayset in free_rays if body_set & rayset)
+            key = (hits, len(body))
+            if best is None or key > best[0]:
+                best = (key, body, d)
+        if best is None:
             continue
+        _, body, d = best
+
+        body_set = set(body)
+        for p in placed:
+            if p["blocked"]:
+                continue
+            if body_set & p["ray"]:
+                p["blocked"] = True
+
         for cell in body:
             occupied.add(cell)
-        placed.append((body, d))
+        placed.append({
+            "body": body,
+            "d": d,
+            "blocked": False,
+            "ray": set(ray(body[0], d, rows, cols)),
+        })
+
+    # ---- Repair pass -----------------------------------------------------
+    # Keep adding arrows whose body covers the exit rays of *two or more* still
+    # free arrows. Each one costs one new free arrow but removes at least two,
+    # so the number of legal first moves falls — and the arrow count goes up.
+    for _ in range(200):
+        free = [p for p in placed if not p["blocked"]]
+        if len(free) <= 2:
+            break
+        free_rays = [p["ray"] for p in free]
+        runs = free_runs(occupied, rows, cols)
+        candidates = []
+        for r in range(rows):
+            for c in range(cols):
+                if (r, c) in occupied:
+                    continue
+                for d in DIRS:
+                    if ray_is_clear(r, c, d, rows, cols, runs):
+                        candidates.append((r, c, d))
+        if not candidates:
+            break
+        ray_count = _ray_counts(free_rays)
+        rng.shuffle(candidates)
+        best = None
+        for (r, c, d) in candidates[:90]:
+            body = grow_body(
+                (r, c), d, occupied, rows, cols, min_len, max_len + 12, rng, ray_count
+            )
+            if len(body) < min_len:
+                continue
+            body_set = set(body)
+            hits = sum(1 for rayset in free_rays if body_set & rayset)
+            if hits < 2:
+                continue
+            key = (hits, len(body))
+            if best is None or key > best[0]:
+                best = (key, body, d)
+        if best is None:
+            break
+        _, body, d = best
+        body_set = set(body)
+        for p in placed:
+            if p["blocked"]:
+                continue
+            if body_set & p["ray"]:
+                p["blocked"] = True
+        for cell in body:
+            occupied.add(cell)
+        placed.append({
+            "body": body,
+            "d": d,
+            "blocked": False,
+            "ray": set(ray(body[0], d, rows, cols)),
+        })
+
+    # ---- Pairing pass ----------------------------------------------------
+    # A single arrow sitting where two free arrows' exit rays cross blocks both.
+    # Repeatedly find such a crossing and drop a short arrow on it: each one
+    # removes two legal first moves and adds one, so the free count falls.
+    for _ in range(400):
+        free = [p for p in placed if not p["blocked"]]
+        if len(free) <= 2:
+            break
+        runs = free_runs(occupied, rows, cols)
+        found = None
+        for i in range(len(free)):
+            if found:
+                break
+            for j in range(i + 1, len(free)):
+                inter = free[i]["ray"] & free[j]["ray"]
+                for cell in inter:
+                    if cell in occupied:
+                        continue
+                    for d in DIRS:
+                        if not ray_is_clear(cell[0], cell[1], d, rows, cols, runs):
+                            continue
+                        # how many free rays does this one cell cover?
+                        covered = [
+                            p for p in free if cell in p["ray"]
+                        ]
+                        if len(covered) < 2:
+                            continue
+                        found = (cell, d, covered)
+                        break
+                    if found:
+                        break
+                if found:
+                    break
+        if not found:
+            break
+        cell, d, covered = found
+        for p in covered:
+            p["blocked"] = True
+        occupied.add(cell)
+        placed.append({
+            "body": [cell],
+            "d": d,
+            "blocked": False,
+            "ray": set(ray(cell, d, rows, cols)),
+        })
 
     if len(placed) < 4:
         return None
-    arrows = [{"d": d, "cells": [list(c) for c in body]} for body, d in reversed(placed)]
-    solution = [list(body[0]) for body, _ in reversed(placed)]
+    arrows = [
+        {"d": p["d"], "cells": [list(c) for c in p["body"]]}
+        for p in reversed(placed)
+    ]
+    solution = [list(p["body"][0]) for p in reversed(placed)]
     return arrows, solution
 
 
@@ -268,6 +404,20 @@ def validate(arrows, rows, cols):
     return True
 
 
+def free_count(arrows, rows, cols):
+    """How many arrows can be tapped on the very first move."""
+    occupied = set()
+    for a in arrows:
+        for cell in a["cells"]:
+            occupied.add(tuple(cell))
+    n = 0
+    for a in arrows:
+        head = tuple(a["cells"][0])
+        if not any(cell in occupied for cell in ray(head, a["d"], rows, cols)):
+            n += 1
+    return n
+
+
 def blocked_count(arrows, rows, cols):
     occupied = set()
     for a in arrows:
@@ -291,7 +441,7 @@ def params(i):
     # Arrow counts climb hard: the last levels want ~110 arrows on a 22x22
     # board. The generator stops early if the board saturates, so this is a
     # target rather than a guarantee.
-    target = int(round(8 + t * 118))       # 8 -> 126
+    target = int(round(8 + t * 104))       # 8 -> 112
 
     # Short bodies are the key to arrow count: the same filled area yields far
     # more arrows, which is exactly the dense look the levels are after.
@@ -317,8 +467,8 @@ def main():
 
         need_blocked = 0 if i <= 10 else (3 if i <= 40 else 8)
         best = None
-        best_score = -1.0
-        for attempt in range(14):
+        best_score = -1e9
+        for attempt in range(12):
             got = build_level(rows, cols, target, min_len, max_len, rng)
             if got is None:
                 continue
@@ -330,11 +480,14 @@ def main():
             if not greedy_solvable(arrows, rows, cols):
                 continue
             blocked = blocked_count(arrows, rows, cols)
-            score = len(arrows) + 0.4 * blocked
+            free = free_count(arrows, rows, cols)
+            # Dense is good; almost nothing free on move one is better — that is
+            # what stops a level being solved by tapping around blindly.
+            score = len(arrows) - 7.0 * free + 0.2 * blocked
             if score > best_score:
                 best_score = score
                 best = (arrows, solution)
-            if len(arrows) >= target and blocked >= need_blocked:
+            if len(arrows) >= target and blocked >= need_blocked and free <= 2:
                 break
         if best is None:
             raise SystemExit(f"could not build level {i}")
@@ -358,6 +511,7 @@ def main():
             f"L{i:>3} {rows:>2}x{cols:<2} {difficulty(i):<6} "
             f"arrows={len(arrows):>3}/{target:<3} "
             f"blocked={blocked_count(arrows, rows, cols):>3} "
+            f"free={free_count(arrows, rows, cols):>3} "
             f"avgLen={avg:>4.1f} fill={100 * filled / (rows * cols):>4.1f}%"
         )
 

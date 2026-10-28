@@ -260,7 +260,8 @@ class BoardPainter extends CustomPainter {
     final double cell = geo.cell;
     final int alpha = math.min(255, math.max(0, (255 * opacity).round()));
     final Color ink = palette.ink.withAlpha(alpha);
-    final Color head = dirColor(palette, arrow.dir).withAlpha(alpha);
+    // Exactly like the reference: the head is the same ink as the path.
+    final Color head = ink;
 
     final List<Offset> points;
     if (extended == null) {
@@ -288,7 +289,7 @@ class BoardPainter extends CustomPainter {
     final Offset headPoint = points.last;
     final Offset d = Offset(arrow.dir.dc.toDouble(), arrow.dir.dr.toDouble());
     final Offset perp = Offset(-d.dy, d.dx);
-    final double half = math.max(1.8, cell * 0.17);
+    final double half = math.max(2.0, cell * 0.20);
     final Offset tip = headPoint + d * (cell * 0.46);
     final Offset baseA = headPoint - d * (cell * 0.10) + perp * half;
     final Offset baseB = headPoint - d * (cell * 0.10) - perp * half;

@@ -9,9 +9,9 @@ is refused, the arrow stays put, and you lose a heart. Lose all three and the
 level starts again.
 
 100 levels in one continuous run, no chapters: the boards get bigger and the
-mazes get far denser as you go. Level 1 has 8 arrows on a 7×7 board; level 100
-packs **93 arrows onto a 22×22 board**, with well over half of them blocked at
-the start.
+mazes get far denser as you go. Level 1 is already a real puzzle — 8 arrows on a
+7×7 board with only **two legal first moves**. Level 100 packs **68 arrows onto a
+22×22 board**; well over half of them cannot move until the right ones are cleared.
 
 - **Product requirements:** [`docs/PRD.md`](docs/PRD.md)
 - **Branding:** [`branding/README.md`](branding/README.md)
@@ -57,15 +57,15 @@ python3 tools/gen_levels.py
 
 | Levels | Board | Arrows | Difficulty |
 | --- | --- | --- | --- |
-| 1–15 | 7×7 – 9×9 | 8–25 | Easy |
-| 16–35 | 9×9 – 12×12 | 24–41 | Easy |
-| 36–70 | 12×12 – 17×17 | 42–77 | Medium |
-| 71–100 | 18×18 – 22×22 | 76–93 | Hard |
+| 1–15 | 7×7 – 9×9 | 8–18 | Easy |
+| 16–35 | 9×9 – 12×12 | 19–32 | Easy |
+| 36–70 | 12×12 – 17×17 | 28–42 | Medium |
+| 71–100 | 18×18 – 22×22 | 57–68 | Hard |
 
-The arrow count is what carries the difficulty: the generator is steered towards
-placing bodies inside other arrows' exit rays, so a late level starts with 60+
-arrows that cannot move until the right ones are cleared first. There are no
-chapters or categories.
+What carries the difficulty is how *few* arrows can move on move one. The
+generator deliberately steers each new arrow's body into the exit rays of the
+arrows that are still free, so a level opens with only a couple of legal taps —
+and a wrong tap costs a heart. There are no chapters or categories.
 
 ## Hearts, hints and stars
 
@@ -108,10 +108,10 @@ python3 tools/gen_sounds.py
 ## Look and layout
 
 The default theme is **light**: a cream board with thin, sharp-cornered
-near-black arrow paths — the clean maze look a dense arrow puzzle needs. The
-only coloured part of an arrow is its **head**, a small solid triangle that
-makes the direction unmistakable without turning the board into confetti. (A
-dark theme is one switch away in Settings.)
+near-black arrows, each ending in a solid triangular head. Path and head share
+the same ink, so a dense board reads as one clean black maze — the direction of
+every arrow comes from its head alone. (A dark theme is one switch away in
+Settings.)
 
 The layout is responsive: the menu and end-of-level screens are centred and
 scrollable with a capped reading width, the board is capped so it stays a
