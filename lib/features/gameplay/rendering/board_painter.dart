@@ -274,7 +274,7 @@ class BoardPainter extends CustomPainter {
     }
 
     // The path: thin, sharp corners, no rounding — the maze look.
-    final double width = math.max(1.8, cell * 0.16);
+    final double width = math.max(1.5, cell * 0.105);
     canvas.drawPath(
       _polyline(points),
       Paint()
@@ -289,10 +289,11 @@ class BoardPainter extends CustomPainter {
     final Offset headPoint = points.last;
     final Offset d = Offset(arrow.dir.dc.toDouble(), arrow.dir.dr.toDouble());
     final Offset perp = Offset(-d.dy, d.dx);
-    final double half = math.max(2.0, cell * 0.20);
-    final Offset tip = headPoint + d * (cell * 0.46);
-    final Offset baseA = headPoint - d * (cell * 0.10) + perp * half;
-    final Offset baseB = headPoint - d * (cell * 0.10) - perp * half;
+    final double half = math.max(3.6, cell * 0.26);
+    final Offset tip = headPoint + d * math.max(4.5, cell * 0.42);
+    final double back = math.max(1.5, cell * 0.12);
+    final Offset baseA = headPoint - d * back + perp * half;
+    final Offset baseB = headPoint - d * back - perp * half;
     final Path triangle = Path()
       ..moveTo(tip.dx, tip.dy)
       ..lineTo(baseA.dx, baseA.dy)

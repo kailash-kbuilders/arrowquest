@@ -107,11 +107,12 @@ python3 tools/gen_sounds.py
 
 ## Look and layout
 
-The default theme is **light**: a cream board with thin, sharp-cornered
-near-black arrows, each ending in a solid triangular head. Path and head share
-the same ink, so a dense board reads as one clean black maze — the direction of
-every arrow comes from its head alone. (A dark theme is one switch away in
-Settings.)
+The default theme is **light**: a cream board with sharp-cornered near-black
+arrows. The shaft is deliberately thin (about 0.1 × a cell) and the head is
+large — roughly five times the shaft width, with a minimum size in pixels — so
+the direction is obvious even on a 22×22 board where each cell is only ~16 px.
+Path and head share one ink, so a dense board still reads as a single clean
+black maze. (A dark theme is one switch away in Settings.)
 
 The layout is responsive: the menu and end-of-level screens are centred and
 scrollable with a capped reading width, the board is capped so it stays a
